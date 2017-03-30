@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mipsy.MainController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <BorderPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+          
+         <top>
+
+             <VBox>
+                 <children>
+                     <MenuBar BorderPane.alignment="CENTER">
+                         <menus>
+                             <Menu mnemonicParsing="false" text="File">
+                                 <items>
+                                     <MenuItem mnemonicParsing="false" text="Close" />
+                                 </items>
+                             </Menu>
+                             <Menu mnemonicParsing="false" text="Edit">
+                                 <items>
+                                     <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                             </Menu>
+                             <Menu mnemonicParsing="false" text="Help">
+                                 <items>
+                                     <MenuItem id="menuAbout" fx:id="menuAbout" mnemonicParsing="false" onAction="#menuAbout" text="About" />
+                                 </items>
+                             </Menu>
+                         </menus>
+                     </MenuBar>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                    <items>
+                      <Button mnemonicParsing="false" text="Run" />
+                        <Button mnemonicParsing="false" text="Step" />
+                        <Button mnemonicParsing="false" text="Reset" />
+                    </items>
+                  </ToolBar>
+
+                 </children>
+             </VBox>
+             
+         </top>
+         <bottom>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab text="Log">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </bottom>
+         <center>
+            <Accordion BorderPane.alignment="CENTER">
+              <panes>
+                <TitledPane animated="false" text="Code">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Registers">
+                     <content>
+                        <ListView fx:id="lvRegisters" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Data">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </TitledPane>
+                  <TitledPane animated="false" text="Pipeline">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+
+                           </children></AnchorPane>
+                    </content>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+         </center></BorderPane>
+   </children>
+</GridPane>
