@@ -26,7 +26,7 @@ public class EX extends DataPhase {
     public int EX_OUT4;
 
     private MUXComponent mux2 = new MUXComponent("MUX2");
-    private ALUComponent alu2 = new ALUComponent("ALU3");
+    private ALUComponent alu2 = new ALUComponent("ALU2");
     private ALUComponent alu3 = new ALUComponent("ALU3");
     private ALUControllerComponent aluControl = new ALUControllerComponent("ALU_C");
 
