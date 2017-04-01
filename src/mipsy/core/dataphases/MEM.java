@@ -24,6 +24,7 @@ public class MEM extends DataPhase {
 
     public MEM(MIPSCore core) {
         super(core);
+        dataMemory.setMemory(core.memory);
     }
 
     @Override
