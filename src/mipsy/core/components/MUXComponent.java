@@ -4,10 +4,10 @@ package mipsy.core.components;
  * Created by Adnan on 4/1/2017.
  */
 public class MUXComponent {
-    public int a;
-    public int b;
+    private int a;
+    private int b;
 
-    public int selector;
+    private int selector;
 
     public void setSelector(int selector) {
         this.selector = selector;

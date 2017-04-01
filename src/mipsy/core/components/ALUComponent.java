@@ -54,6 +54,10 @@ public class ALUComponent {
         return result;
     }
 
+    public int getZero() {
+        return result == 0 ? 1 : 0;
+    }
+
     public void setOpA(int opA) {
         this.opA = opA;
     }

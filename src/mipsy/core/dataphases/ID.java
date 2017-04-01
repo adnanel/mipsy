@@ -14,6 +14,13 @@ import java.util.function.Consumer;
 public class ID extends DataPhase {
 
     //http://prntscr.com/er45i5
+    /*
+    ID_OUT0 - IF_OUT0
+    ID_OUT1 - read data 1
+    ID_OUT2 - SignExtend output
+    ID_OUT3 - read data 2
+    ID_OUT4 - IF_OUT1[15:0]
+     */
     public int ID_OUT0;
     public int ID_OUT1;
     public int ID_OUT2;
