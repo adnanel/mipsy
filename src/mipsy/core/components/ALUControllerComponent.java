@@ -23,7 +23,16 @@ public class ALUControllerComponent {
         this.aluOp = aluOp;
     }
 
+
     public int getResult(Consumer<String> logger) {
+        int res = _getResult(logger);
+
+        logger.accept(String.format("%s: AluOP = %d, Instruction[5:0] = %d, output is %d", name, aluOp, instruction, res));
+
+        return res;
+    }
+
+    private int _getResult(Consumer<String> logger) {
         aluOp = Utility.SubBits(aluOp, 0, 2);
 
         if ( aluOp == 0 )       return 0b0010;

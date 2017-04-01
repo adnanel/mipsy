@@ -54,7 +54,7 @@ public class EX extends DataPhase {
         aluControl.setAluOp(core.controlComponent.getAluOp());
 
         logger.accept("EX: Sending ALU_C output to ALU3 control");
-        alu3.setControl(aluControl.getResult());
+        alu3.setControl(aluControl.getResult(logger));
 
         logger.accept("EX: Sending ALUSrc to MUX2");
         mux2.setSelector(core.controlComponent.getAluSrc());
