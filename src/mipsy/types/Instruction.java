@@ -24,6 +24,9 @@ public abstract class Instruction {
     }
 
     //daje instrukciju kodirano
+    // http://www.math.unipd.it/~sperduti/ARCHITETTURE-1/mips32.pdf
+    // https://www.eg.bucknell.edu/~csci320/mips_web/
+
     public abstract int getCoded();
 
     protected Instruction(List<String> args) {

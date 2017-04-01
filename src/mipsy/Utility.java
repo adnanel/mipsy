@@ -1,5 +1,7 @@
 package mipsy;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 /**
  * Created by Adnan on 3/30/2017.
  */
@@ -13,17 +15,20 @@ public class Utility {
         } else return Integer.parseInt(s);
     }
 
+    public static String ReverseString(String s) {
+        StringBuilder res = new StringBuilder();
+        for ( int i = s.length() - 1; i >= 0; -- i )
+            res = res.append(s.charAt(i));
+        return res.toString();
+    }
 
     //vraca bitove broja kao novi broj, npr SubBits(001000, 0, 4) ce vratiti 1000, gleda se od desna na lijevo
     public static int SubBits(int n, int from, int to) {
-        int a = from;
-        from = to;
-        to = a;
-
         String s = Integer.toBinaryString(n);
         while ( s.length() < Integer.SIZE ) s = "0" + s;
+        s = ReverseString(s);
 
-        s = s.substring( s.length() - from - 1, s.length() - to - 1 );
+        s = ReverseString(s.substring( from, to ));
 
         return Integer.parseInt( s, 2 );
     }

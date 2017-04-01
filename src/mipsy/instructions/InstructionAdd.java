@@ -16,24 +16,26 @@ public class InstructionAdd extends Instruction {
     @Override
     public int getCoded() {
         // http://www.math.unipd.it/~sperduti/ARCHITETTURE-1/mips32.pdf
+        // https://www.eg.bucknell.edu/~csci320/mips_web/
 
-        // add se kodira sa 6 nula
+
+        // najvisih 6 bitova su nula
         int res = 0;
 
-        //iducih 5 su dest register
-        res = Register.getRegisterNumber(dest);
-
-        //iducih 5 su opA
-        res = (res << 5) | Register.getRegisterNumber(opA);
+        //iducih 5 su opA register
+        res = Register.getRegisterNumber(opA);
 
         //iducih 5 su opB
         res = (res << 5) | Register.getRegisterNumber(opB);
+
+        //iducih 5 su dest
+        res = (res << 5) | Register.getRegisterNumber(dest);
 
         //iducih 5 bita se puni nulama
         res = res << 5;
 
         //iducih 6 bita se popuni sa 0x20
-        res = (res << 5) | 0x20;
+        res = (res << 6) | 0x20;
 
         return res;
     }
