@@ -23,7 +23,7 @@ public class EX extends DataPhase {
     public int EX_OUT3;
     public int EX_OUT4;
 
-    private MUXComponent mux2 = new MUXComponent("mux2");
+    private MUXComponent mux2 = new MUXComponent("MUX2");
     public ALUComponent alu2 = new ALUComponent("ALU3");
     public ALUComponent alu3 = new ALUComponent("ALU3");
 
@@ -49,7 +49,7 @@ public class EX extends DataPhase {
         mux2.setB(prev.ID_OUT2);
 
         //todo send ALUSrc to mux2
-        
+
         logger.accept("EX: Sending MUX2 output to ALU3(OP2)");
         alu3.setOpB( mux2.getResult(logger) );
 

@@ -29,7 +29,7 @@ public class ID extends DataPhase {
     public int ID_OUT4;
 
     private RegistersComponent registersComponent = new RegistersComponent();
-    private MUXComponent muxComponent = new MUXComponent("mux1");
+    private MUXComponent muxComponent = new MUXComponent("MUX1");
 
     public ID(MIPSCore core) {
         super(core);
