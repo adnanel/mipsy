@@ -4,33 +4,133 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import mipsy.core.MIPSCore;
+import mipsy.types.Instruction;
+import mipsy.types.MemoryEntry;
+import mipsy.types.MipsyProject;
+import mipsy.types.Register;
 import mipsy.ui.RegisterCell;
+import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
 
+import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class MainController implements Initializable {
+    private MIPSCore mipsCore;
+
     @FXML
     private ListView lvRegisters;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // change next line to DB load
-        List<String> values = Arrays.asList("one", "two", "three");
+    @FXML
+    private TextField tfMemFrom;
+    @FXML
+    private TextField tfMemTo;
 
-        lvRegisters.setItems(FXCollections.observableList(values));
 
+    @FXML
+    private ListView lvMem1;
+    @FXML
+    private ListView lvMem2;
+    @FXML
+    private ListView lvMem3;
+
+    @FXML
+    private TextArea taLog;
+
+    @FXML
+    private TextArea taCode;
+
+    Consumer<String> logger = new Consumer<String>() {
+        @Override
+        public void accept(String s) {
+            Date date = new Date();
+            String timestamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - ";
+            taLog.setText(taLog.getText() + timestamp + s + "\n");
+        }
+    };
+
+    private void fillMemory(int from, int to, HashMap<Integer, MemoryEntry> memory) {
+        List<MemoryEntry> mem1 = new ArrayList<>();
+        List<MemoryEntry> mem2 = new ArrayList<>();
+        List<MemoryEntry> mem3 = new ArrayList<>();
+        List<MemoryEntry>[] arr = new List[]{mem1, mem2, mem3};
+
+        for ( int i = from, k = 0; i <= to; ++ i, ++ k ) {
+            k = k % 3;
+
+            MemoryEntry entry;
+            if ( memory.containsKey(i) )
+                entry = memory.get(i);
+            else
+                entry = new MemoryEntry(i, 0);
+
+            arr[k].add(entry);
+        }
+
+        lvMem1.setItems(FXCollections.observableList(mem1));
+        lvMem2.setItems(FXCollections.observableList(mem2));
+        lvMem3.setItems(FXCollections.observableList(mem3));
+
+        lvMem1.setCellFactory(listView -> new ListViewCellMemory(memory));
+        lvMem2.setCellFactory(listView -> new ListViewCellMemory(memory));
+        lvMem3.setCellFactory(listView -> new ListViewCellMemory(memory));
+    }
+
+    private void fillCode(List<Instruction> code) {
+        StringBuilder sb = new StringBuilder();
+        for ( Instruction i : code ) {
+            sb.append(i).append('\n');
+        }
+
+        taCode.setText(sb.toString());
+    }
+
+    private void fillRegisters(HashMap<String, Register> registers) {
+        List<Register> reg = new ArrayList<>(registers.values());
+        lvRegisters.setItems(FXCollections.observableList(reg));
         lvRegisters.setCellFactory(listView -> new ListViewCellRegister());
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // Initialize the 32 MIPS registers...
+        List<Register> registers = Register.makeEmptyRegisters();
+
+        //Initialize our MIPS...
+        mipsCore = new MIPSCore(registers, new HashMap<>());
+
+        fillRegisters(mipsCore.registers);
+    }
+
+    private int getMemTo() {
+        try {
+            return Integer.parseInt( tfMemTo.getText() );
+        } catch ( Exception ex ) {
+            tfMemTo.setText("0");
+            return 0;
+        }
+    }
+
+    private int getMemFrom() {
+        try {
+            return Integer.parseInt( tfMemFrom.getText() );
+        } catch ( Exception ex ) {
+            tfMemFrom.setText("0");
+            return 0;
+        }
+    }
+
+    @FXML
+    protected void memRangeShow(ActionEvent event) {
+        fillMemory(getMemFrom(), getMemTo(), mipsCore.memory);
+    }
 
     @FXML
     protected void menuAbout(ActionEvent event) {
@@ -38,6 +138,7 @@ public class MainController implements Initializable {
         alert.setTitle("About");
         alert.setHeaderText("MIPSy " + AppInfo.VERSION);
         alert.setContentText(
+                "a MIPS Simulator\n\n" +
                 "Authors:\n\n" +
                 "Adnan Elezović ( aelezovic2@etf.unsa.ba )\n" +
                 "Haris Halilović ( hhalilovic1@etf.unsa.ba )");
@@ -47,5 +148,38 @@ public class MainController implements Initializable {
                 System.out.println("Pressed OK.");
             }
         });
+    }
+
+
+    @FXML
+    protected void toolbarStepMIPS(ActionEvent event) {
+        mipsCore.step(logger);
+    }
+
+    @FXML
+    protected void memScroll(ActionEvent event) {
+        // todo probaj nekako da se sva tri LVa skrolaju paralelno...
+    }
+
+    @FXML
+    protected void menuOpenFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open MIPSy project file");
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("MIPSy project file", "*.mipsy"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        File f = fileChooser.showOpenDialog(Main.PrimaryStage);
+
+        if ( f != null && f.exists() ) {
+            MipsyProject project = MipsyProject.loadFile(f.getAbsolutePath(), logger );
+
+            mipsCore = new MIPSCore(project.registers, project.memory, project.instructions);
+
+            fillCode(project.instructions);
+            fillRegisters(mipsCore.registers);
+        }
     }
 }

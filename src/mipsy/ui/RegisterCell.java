@@ -1,10 +1,13 @@
 package mipsy.ui;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import mipsy.types.Register;
 
 import java.io.IOException;
 
@@ -21,13 +24,25 @@ public class RegisterCell
     @FXML
     private TextField registerValue;
 
-    public RegisterCell()
+    private Register register;
+
+    public RegisterCell(Register register, boolean readonly)
     {
+        this.register = register;
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("registercell.fxml"));
         fxmlLoader.setController(this);
         try
         {
             fxmlLoader.load();
+
+            registerValue.setOnKeyReleased(event -> register.value = getValue());
+
+            setValue(register.value);
+            setLabel(register.name);
+
+            registerValue.setEditable(!readonly);
+            registerValue.setDisable(readonly);
         }
         catch (IOException e)
         {
@@ -52,6 +67,7 @@ public class RegisterCell
         try {
             return Integer.parseInt(registerValue.getText());
         } catch ( Exception ex ) {
+            setValue(0);
             return 0;
         }
     }

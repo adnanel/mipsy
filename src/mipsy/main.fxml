@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,12 +11,14 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -37,7 +41,7 @@
                          <menus>
                              <Menu mnemonicParsing="false" text="File">
                                  <items>
-                                     <MenuItem mnemonicParsing="false" text="Close" />
+                                     <MenuItem mnemonicParsing="false" onAction="#menuOpenFile" text="Open source file..." />
                                  </items>
                              </Menu>
                              <Menu mnemonicParsing="false" text="Edit">
@@ -55,7 +59,7 @@
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
                       <Button mnemonicParsing="false" text="Run" />
-                        <Button mnemonicParsing="false" text="Step" />
+                        <Button mnemonicParsing="false" onAction="#toolbarStepMIPS" text="Step" />
                         <Button mnemonicParsing="false" text="Reset" />
                     </items>
                   </ToolBar>
@@ -65,16 +69,16 @@
              
          </top>
          <bottom>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
                 <Tab text="Log">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <TextArea fx:id="taLog" editable="false" />
                   </content>
                 </Tab>
                 <Tab text="Untitled Tab 2">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane />
                   </content>
                 </Tab>
               </tabs>
@@ -87,7 +91,7 @@
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                            <center>
-                              <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                              <TextArea fx:id="taCode" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                            </center>
                         </BorderPane>
                      </content>
@@ -99,12 +103,42 @@
                 </TitledPane>
                 <TitledPane animated="false" text="Data">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <VBox>
+                           <children>
+                              <Label text="Because we have 2^30 memory words, we're only showing a predefined range of words." wrapText="true" />
+                              <HBox prefWidth="200.0">
+                                 <children>
+                                    <Label text="Show memory words from:" />
+                                    <TextField fx:id="tfMemFrom" prefWidth="100.0" text="0" />
+                                    <Label text=" to " />
+                                    <TextField fx:id="tfMemTo" prefWidth="100.0" text="128" />
+                                    <Button fx:id="btMemoryRangeShow" mnemonicParsing="false" onAction="#memRangeShow" text="Show">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <ListView fx:id="lvMem1" HBox.hgrow="ALWAYS" />
+                                    <ListView fx:id="lvMem2" HBox.hgrow="ALWAYS" />
+                                    <ListView fx:id="lvMem3" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children></VBox>
+
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" text="Pipeline">
+                  <TitledPane animated="false" text="Datapath">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane>
                            <children>
 
                            </children></AnchorPane>

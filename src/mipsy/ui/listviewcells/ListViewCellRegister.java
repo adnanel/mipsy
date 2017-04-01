@@ -1,22 +1,23 @@
 package mipsy.ui.listviewcells;
 
 import javafx.scene.control.ListCell;
+import mipsy.types.Register;
 import mipsy.ui.RegisterCell;
 
 /**
  * Created by Adnan on 3/30/2017.
  */
-public class ListViewCellRegister extends ListCell<String>
+public class ListViewCellRegister extends ListCell<Register>
 {
     @Override
-    public void updateItem(String string, boolean empty)
+    public void updateItem(Register register, boolean empty)
     {
-        super.updateItem(string,empty);
-        if(string != null)
+        super.updateItem(register,empty);
+        if(register != null)
         {
-            RegisterCell data = new RegisterCell();
+            boolean readOnly = register.name.equalsIgnoreCase("$zero") || register.name.equalsIgnoreCase("$at");
 
-            data.setLabel(string);
+            RegisterCell data = new RegisterCell(register, readOnly);
 
             setGraphic(data.getBox());
         }

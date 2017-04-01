@@ -7,9 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    public static Stage PrimaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        PrimaryStage = primaryStage;
+
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("MIPSy " + AppInfo.VERSION);
 
