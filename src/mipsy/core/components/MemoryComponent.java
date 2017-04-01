@@ -44,6 +44,9 @@ public class MemoryComponent {
     }
 
     public int getReadData(Consumer<String> logger) {
-        return memory.get(address).value;
+        MemoryEntry entry = memory.get(address);
+        if ( entry == null ) entry = new MemoryEntry(address, 0);
+
+        return entry.value;
     }
 }
