@@ -55,7 +55,11 @@ public class MIPSCore {
 
 
     public void step(Consumer<String> logger) {
-        for ( DataPhase phase : dataPhases )
+        DataPhase prevPhase = null;
+        for ( DataPhase phase : dataPhases ) {
+            phase.receiveData(prevPhase);
             phase.step(logger);
+            prevPhase = phase;
+        }
     }
 }

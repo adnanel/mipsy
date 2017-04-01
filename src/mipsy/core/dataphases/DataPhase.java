@@ -10,13 +10,15 @@ import java.util.function.Consumer;
  */
 public class DataPhase {
     MIPSCore core;
-
+    DataPhase prevPhase;
 
     public DataPhase(MIPSCore core) {
         this.core = core;
     }
 
-    public void receiveData(DataPhase src) {}
+    public void receiveData(DataPhase src) {
+        prevPhase = src;
+    }
 
     public void step(Consumer<String> logger) {
     }
