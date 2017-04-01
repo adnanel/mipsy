@@ -32,6 +32,9 @@ public class EX extends DataPhase {
 
     public EX(MIPSCore core) {
         super(core);
+
+        //ALU2 je fiksirano na ADD op
+        alu2.setControl(ALUComponent.CONTROL_ADD);
     }
 
     @Override
