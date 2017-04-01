@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 /**
  * Created by Adnan on 3/31/2017.
  */
-public class DataPhase {
+public abstract class DataPhase {
     MIPSCore core;
     DataPhase prevPhase;
 
@@ -20,6 +20,5 @@ public class DataPhase {
         prevPhase = src;
     }
 
-    public void step(Consumer<String> logger) {
-    }
+    public abstract void step(Consumer<String> logger);
 }

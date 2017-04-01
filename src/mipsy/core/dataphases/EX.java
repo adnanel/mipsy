@@ -18,5 +18,6 @@ public class EX extends DataPhase {
         super(core);
     }
 
-    public void step(Consumer<String> logger, IF prevPhase ) {}
+    @Override
+    public void step(Consumer<String> logger ) {}
 }

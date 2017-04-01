@@ -29,7 +29,6 @@ public class ID extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) {
-        super.step(logger);
 
         registersComponent.setRegisters( core.registers );
 

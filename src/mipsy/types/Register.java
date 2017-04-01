@@ -32,11 +32,22 @@ public class Register {
         return res;
     }
 
+    public static int getRegisterNumber(String name) {
+        int i = 0;
+        for ( String s : getMipsRegisterNames() ) {
+            if (s.equalsIgnoreCase(name)) return i;
+            ++i;
+        }
+        return -1;
+    }
+
     public static String[] getMipsRegisterNames()  {
         return new String[] {
-            "$s0", "$s1", "$s2", "$s3", "$s4", "$s5", "$s6", "$s7",
-            "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7", "$t8", "$t9",
-            "$zero", "$a0", "$a1", "$a2", "$a3", "$v0", "$v1", "$gp", "$fp", "$sp", "$ra", "$at"
+                "$zero", "$at", "$v0", "$v1", "$a0", "$a1", "$a2", "$a3",
+                "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7",
+                "$s0", "$s1", "$s2", "$s3", "$s4", "$s5", "$s6", "$s7",
+                "$t8", "$t9",
+                "$gp", "$sp", "$fp", "$ra"
         };
     }
 

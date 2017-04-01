@@ -29,7 +29,6 @@ public class IF extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) {
-        super.step(logger);
 
         logger.accept("IF: Sending PC into ALU1(OP1) and InstructionMemory(Address)");
         Instruction currInstruction;
