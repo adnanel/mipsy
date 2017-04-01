@@ -35,7 +35,8 @@ public class Register {
     public static int getRegisterNumber(String name) {
         int i = 0;
         for ( String s : getMipsRegisterNames() ) {
-            if (s.equalsIgnoreCase(name)) return i;
+            if (s.equalsIgnoreCase(name))
+                return i;
             ++i;
         }
         return -1;

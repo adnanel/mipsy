@@ -46,11 +46,11 @@ public class ID extends DataPhase {
         ID_OUT0 = prev.IF_OUT0;
 
         logger.accept("ID: Sending IF_OUT1[25:21] to ReadReg1");
-        registersComponent.setReadRegister1( Utility.SubBits(prev.IF_OUT1, 21, 25) );
+        registersComponent.setReadRegister1( Utility.SubBits(prev.IF_OUT1, 21, 26) );
 
         logger.accept("ID: Sending IF_OUT1[20:16] to ReadReg2 and MUX1, input 0");
-        registersComponent.setReadRegister2( Utility.SubBits(prev.IF_OUT1, 16, 20));
-        muxComponent.setA(Utility.SubBits(prev.IF_OUT1, 16, 20));
+        registersComponent.setReadRegister2( Utility.SubBits(prev.IF_OUT1, 16, 21));
+        muxComponent.setA(Utility.SubBits(prev.IF_OUT1, 16, 21));
 
         logger.accept("ID: Sending read data 1 to ID_OUT1");
         ID_OUT1 = registersComponent.getReadData1(logger).value;
@@ -59,7 +59,7 @@ public class ID extends DataPhase {
         ID_OUT3 = registersComponent.getReadData2(logger).value;
 
         logger.accept("ID: Sending IF_OUT1[15:11] to MUX1, input 1");
-        muxComponent.setB( Utility.SubBits(prev.IF_OUT1, 11, 15));
+        muxComponent.setB( Utility.SubBits(prev.IF_OUT1, 11, 16));
 
         //todo treba poslati RegDST u muxComponent ovdje...
         //todo u registersComponent treba poslati RegWrite
@@ -68,9 +68,9 @@ public class ID extends DataPhase {
         registersComponent.setRegWrite(muxComponent.getResult(logger));
 
         logger.accept("ID: Sending IF_OUT1[15:0] to SignExtend and ID_OUT4");
-        ID_OUT4 = prev.IF_OUT1;
+        ID_OUT4 = Utility.SubBits( prev.IF_OUT1, 0, 16 );
 
         logger.accept("ID: Sending SignExtend output to ID_OUT2");
-        ID_OUT2 = SignExtendComponent.extend( Utility.SubBits( prev.IF_OUT1, 0, 15 ));
+        ID_OUT2 = SignExtendComponent.extend( ID_OUT4 );
     }
 }
