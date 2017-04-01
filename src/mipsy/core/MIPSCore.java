@@ -55,11 +55,15 @@ public class MIPSCore {
 
 
     public void step(Consumer<String> logger) {
+        ((WB)dataPhases[dataPhases.length - 1]).ifPhase = (IF)dataPhases[0];
+
+        logger.accept("----STEP BEGIN----");
         DataPhase prevPhase = null;
         for ( DataPhase phase : dataPhases ) {
             phase.receiveData(prevPhase);
             phase.step(logger);
             prevPhase = phase;
         }
+        logger.accept("----STEP END----");
     }
 }

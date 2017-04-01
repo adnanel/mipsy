@@ -1,6 +1,7 @@
 package mipsy.instructions;
 
 import mipsy.types.Instruction;
+import mipsy.types.Register;
 
 import java.util.List;
 
@@ -14,8 +15,27 @@ public class InstructionAdd extends Instruction {
 
     @Override
     public int getCoded() {
-        //todo
-        return 0;
+        // http://www.math.unipd.it/~sperduti/ARCHITETTURE-1/mips32.pdf
+
+        // add se kodira sa 6 nula
+        int res = 0;
+
+        //iducih 5 su dest register
+        res = Register.getRegisterNumber(dest);
+
+        //iducih 5 su opA
+        res = (res << 5) | Register.getRegisterNumber(opA);
+
+        //iducih 5 su opB
+        res = (res << 5) | Register.getRegisterNumber(opB);
+
+        //iducih 5 bita se puni nulama
+        res = res << 5;
+
+        //iducih 6 bita se popuni sa 0x20
+        res = (res << 5) | 0x20;
+
+        return res;
     }
 
     public InstructionAdd(List<String> args) {

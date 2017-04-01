@@ -17,7 +17,7 @@ public class IF extends DataPhase {
 
     // IF se sastoji od: http://prntscr.com/eqrei3
     private ALUComponent alu1 = new ALUComponent("ALU1");
-    private int pc = 0;
+    public int pc = 0;
     // instruction memory uzimamo iz MIPSCore
 
     public IF(MIPSCore core) {
@@ -29,7 +29,6 @@ public class IF extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) {
-
         logger.accept("IF: Sending PC into ALU1(OP1) and InstructionMemory(Address)");
         Instruction currInstruction;
 
@@ -39,9 +38,9 @@ public class IF extends DataPhase {
         } else
             currInstruction = core.instructions.get(pc);
 
-        logger.accept("IF: Current instruction code is " + currInstruction.toString() + ", coded as " + currInstruction.getCoded());
+        logger.accept("IF: Current instruction is \"" + currInstruction.toString() + "\", coded as " + currInstruction.getCoded());
 
-        alu1.setOpA(currInstruction.getCoded());
+        alu1.setOpA(pc);
 
         logger.accept("IF: ALU1 performs ADD operation, operands are const 4 and PC");
         alu1.execute(logger);
