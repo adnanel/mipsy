@@ -1,7 +1,9 @@
 package mipsy.core.dataphases;
 
+import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
+import mipsy.core.components.ALUControllerComponent;
 import mipsy.core.components.MUXComponent;
 
 import java.util.function.Consumer;
@@ -26,7 +28,7 @@ public class EX extends DataPhase {
     private MUXComponent mux2 = new MUXComponent("MUX2");
     private ALUComponent alu2 = new ALUComponent("ALU3");
     private ALUComponent alu3 = new ALUComponent("ALU3");
-
+    private ALUControllerComponent aluControl = new ALUControllerComponent("ALU_C");
 
     public EX(MIPSCore core) {
         super(core);
@@ -42,13 +44,23 @@ public class EX extends DataPhase {
         logger.accept("EX: Sending ID_OUT1 to ALU3(OP1)");
         alu3.setOpA(prev.ID_OUT1);
 
+        logger.accept("EX: Sending ID_OUT4[5:0] to ALU_C");
+        aluControl.setInstruction(Utility.SubBits(prev.ID_OUT4, 0, 6));
+
+        logger.accept("EX: Sending ALUOp to ALU_C");
+        aluControl.setAluOp(core.controlComponent.getAluOp());
+
+        logger.accept("EX: Sending ALU_C output to ALU3 control");
+        alu3.setControl(aluControl.getResult());
+
+        logger.accept("EX: Sending ALUSrc to MUX2");
+        mux2.setSelector(core.controlComponent.getAluSrc());
+
         logger.accept("EX: Sending ID_OUT3 to MUX2");
         mux2.setA(prev.ID_OUT3);
 
         logger.accept("EX: Sending ID_OUT2 to MUX2");
         mux2.setB(prev.ID_OUT2);
-
-        //todo send ALUSrc to mux2
 
         logger.accept("EX: Sending MUX2 output to ALU3(OP2)");
         alu3.setOpB( mux2.getResult(logger) );

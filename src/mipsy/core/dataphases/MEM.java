@@ -45,13 +45,13 @@ public class MEM extends DataPhase {
         mux3.setA(prev.EX_OUT0);
 
         logger.accept("MEM: Sending PCSrc to MUX3(PCSrc)");
-
+        mux3.setSelector(core.controlComponent.getPcSrc());
 
         logger.accept("MEM: Sending MemWrite to DataMem(MemWrite)");
-        //todo
+        dataMemory.setMemWrite(core.controlComponent.getMemWrite());
 
         logger.accept("MEM: Sending MemRead to DataMem(MemRead)");
-        //todo
+        dataMemory.setMemRead(core.controlComponent.getMemRead());
 
         logger.accept("MEM: Sending MUX3 output to MEM_OUT0");
         MEM_OUT0 = mux3.getResult(logger);

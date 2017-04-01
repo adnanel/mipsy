@@ -2,9 +2,7 @@ package mipsy.ui.listviewcells;
 
 import javafx.scene.control.ListCell;
 import mipsy.types.MemoryEntry;
-import mipsy.types.Register;
 import mipsy.ui.MemoryCell;
-import mipsy.ui.RegisterCell;
 
 import java.util.HashMap;
 

@@ -2,7 +2,6 @@ package mipsy.core.dataphases;
 
 import mipsy.core.MIPSCore;
 
-import java.util.HashMap;
 import java.util.function.Consumer;
 
 /**

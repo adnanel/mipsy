@@ -6,7 +6,6 @@ import mipsy.core.components.MUXComponent;
 import mipsy.core.components.RegistersComponent;
 import mipsy.core.components.SignExtendComponent;
 
-import javax.rmi.CORBA.Util;
 import java.util.function.Consumer;
 
 /**
@@ -29,7 +28,7 @@ public class ID extends DataPhase {
     public int ID_OUT4;
 
     private RegistersComponent registersComponent = new RegistersComponent();
-    private MUXComponent muxComponent = new MUXComponent("MUX1");
+    private MUXComponent mux1 = new MUXComponent("MUX1");
 
     public ID(MIPSCore core) {
         super(core);
@@ -50,7 +49,7 @@ public class ID extends DataPhase {
 
         logger.accept("ID: Sending IF_OUT1[20:16] to ReadReg2 and MUX1, input 0");
         registersComponent.setReadRegister2( Utility.SubBits(prev.IF_OUT1, 16, 21));
-        muxComponent.setA(Utility.SubBits(prev.IF_OUT1, 16, 21));
+        mux1.setA(Utility.SubBits(prev.IF_OUT1, 16, 21));
 
         logger.accept("ID: Sending read data 1 to ID_OUT1");
         ID_OUT1 = registersComponent.getReadData1(logger).value;
@@ -59,13 +58,16 @@ public class ID extends DataPhase {
         ID_OUT3 = registersComponent.getReadData2(logger).value;
 
         logger.accept("ID: Sending IF_OUT1[15:11] to MUX1, input 1");
-        muxComponent.setB( Utility.SubBits(prev.IF_OUT1, 11, 16));
+        mux1.setB( Utility.SubBits(prev.IF_OUT1, 11, 16));
 
-        //todo treba poslati RegDST u muxComponent ovdje...
-        //todo u registersComponent treba poslati RegWrite
+        logger.accept("ID: Sending RegDst to MUX1");
+        mux1.setSelector(core.controlComponent.getRegDst());
+
+        logger.accept("ID: Sending RegWrite to RegisterComponent(RegWrite)");
+        registersComponent.setRegWrite(core.controlComponent.getRegWrite());
 
         logger.accept("ID: Sending MUX1 output to WriteRegister");
-        registersComponent.setRegWrite(muxComponent.getResult(logger));
+        registersComponent.setRegWrite(mux1.getResult(logger));
 
         logger.accept("ID: Sending IF_OUT1[15:0] to SignExtend and ID_OUT4");
         ID_OUT4 = Utility.SubBits( prev.IF_OUT1, 0, 16 );

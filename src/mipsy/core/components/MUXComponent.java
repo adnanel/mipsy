@@ -16,6 +16,7 @@ public class MUXComponent {
         this.name = name;
     }
 
+
     public void setSelector(int selector) {
         this.selector = selector;
     }
@@ -30,6 +31,7 @@ public class MUXComponent {
 
     public int getResult(Consumer<String> logger) {
         int target = selector == 0 ? a : b;
+
         String targetOp = selector == 0 ? "a" : "b";
         logger.accept(String.format("%s: Selector is %d, sending %d(operand %s) to output",
                 name, selector, target, targetOp));

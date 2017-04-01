@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import mipsy.types.MemoryEntry;
-import mipsy.types.Register;
 
 import java.io.IOException;
 import java.util.HashMap;

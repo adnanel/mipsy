@@ -1,5 +1,6 @@
 package mipsy.core;
 
+import mipsy.core.components.ControlComponent;
 import mipsy.core.dataphases.*;
 import mipsy.types.Instruction;
 import mipsy.types.MemoryEntry;
@@ -14,11 +15,7 @@ import java.util.function.Consumer;
  * Created by Adnan on 3/30/2017.
  */
 public class MIPSCore {
-    private int pc = 0;
-
-    public int getPC() { return pc; }
-    public void setPC(int pc) { this.pc = pc; }
-
+    public ControlComponent controlComponent = new ControlComponent();
 
     public DataPhase[] dataPhases = new DataPhase[] {
             new IF(this),

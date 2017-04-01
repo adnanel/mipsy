@@ -6,14 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import mipsy.core.MIPSCore;
 import mipsy.types.Instruction;
 import mipsy.types.MemoryEntry;
 import mipsy.types.MipsyProject;
 import mipsy.types.Register;
-import mipsy.ui.RegisterCell;
 import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
 

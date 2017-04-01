@@ -2,10 +2,8 @@ package mipsy.core.dataphases;
 
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
-import mipsy.instructions.InstructionAdd;
 import mipsy.types.Instruction;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 /**

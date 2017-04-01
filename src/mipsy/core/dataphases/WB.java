@@ -27,6 +27,9 @@ public class WB extends DataPhase {
         logger.accept("WB: Sending MEM_OUT2 to MUX4");
         mux4.setB(prev.MEM_OUT2);
 
+        logger.accept("WB: Sending MemToReg to MUX4");
+        mux4.setSelector(core.controlComponent.getMemToReg());
+
         logger.accept("WB: Sending MEM_OUT0 to WB_OUT0");
         //WB_OUT0 = prev.MEM_OUT0;
 
