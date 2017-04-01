@@ -41,6 +41,13 @@ public class Register {
         return -1;
     }
 
+    public static Register getRegisterByNumber(
+            HashMap<String, Register> registers,
+            int number
+    ) {
+        return registers.get( getMipsRegisterNames()[number] );
+    }
+
     public static String[] getMipsRegisterNames()  {
         return new String[] {
                 "$zero", "$at", "$v0", "$v1", "$a0", "$a1", "$a2", "$a3",
