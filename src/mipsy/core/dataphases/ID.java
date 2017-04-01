@@ -45,10 +45,10 @@ public class ID extends DataPhase {
         registersComponent.setReadRegister2( Utility.SubBits(prev.IF_OUT1, 16, 20)) ;
 
         logger.accept("ID: Sending read data 1 to ID_OUT1");
-        ID_OUT1 = registersComponent.getReadData1().value;
-        
-        logger.accept("ID: Sending read data 2 to ID_OUT4");
-        ID_OUT4 = registersComponent.getReadData2().value;
+        ID_OUT1 = registersComponent.getReadData1(logger).value;
+
+        logger.accept("ID: Sending read data 2 to ID_OUT3");
+        ID_OUT3 = registersComponent.getReadData2(logger).value;
 
         logger.accept("ID: Sending IF_OUT1[15:11] to MUX1, input 1");
         muxComponent.setB( Utility.SubBits(prev.IF_OUT1, 11, 15));

@@ -3,6 +3,7 @@ package mipsy.core.components;
 import mipsy.types.Register;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 /**
  * Created by Adnan on 3/31/2017.
@@ -14,6 +15,7 @@ public class RegistersComponent {
     private int writeData;
     private int regWrite;
 
+    private String name = "Registers";
 
     HashMap<String, Register> registers;
 
@@ -33,12 +35,18 @@ public class RegistersComponent {
         this.regWrite = regWrite;
     }
 
-    public Register getReadData1() {
-        return registers.get( Register.getMipsRegisterNames()[readRegister1] );
+    public Register getReadData1(Consumer<String> logger) {
+        String regName = Register.getMipsRegisterNames()[readRegister1];
+
+        logger.accept(name + ": Reading register " + regName + " and sending to output read data 1");
+        return registers.get( regName );
     }
 
-    public Register getReadData2() {
-        return registers.get( Register.getMipsRegisterNames()[readRegister2] );
+    public Register getReadData2(Consumer<String> logger) {
+        String regName = Register.getMipsRegisterNames()[readRegister2];
+
+        logger.accept(name + ": Reading register " + regName + " and sending to output read data 2");
+        return registers.get( regName );
     }
 
     public void setRegisters(HashMap<String, Register> registers) {

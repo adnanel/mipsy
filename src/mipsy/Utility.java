@@ -16,7 +16,12 @@ public class Utility {
 
     //vraca bitove broja kao novi broj, npr SubBits(001000, 0, 4) ce vratiti 1000, gleda se od desna na lijevo
     public static int SubBits(int n, int from, int to) {
+        int a = from;
+        from = to;
+        to = a;
+
         String s = Integer.toBinaryString(n);
+        while ( s.length() < Integer.SIZE ) s = "0" + s;
 
         s = s.substring( s.length() - from - 1, s.length() - to - 1 );
 
