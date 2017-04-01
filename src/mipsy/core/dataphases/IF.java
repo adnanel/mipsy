@@ -4,6 +4,7 @@ import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
 import mipsy.types.Instruction;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -48,5 +49,12 @@ public class IF extends DataPhase {
 
         logger.accept("IF: Sending InstructionMemory output to IF_OUT1");
         IF_OUT1 = currInstruction.getCoded();
+
+        logger.accept("IF: Sending InstructionMemory output to Control");
+        core.controlComponent.setCurrInstruction(currInstruction.getCoded());
+
+        if (!Objects.equals(Instruction.DetectInstruction(currInstruction.getCoded()), currInstruction.getClass())) {
+            logger.accept("IF: WARNING: CURRENT INSTRUCTION NOT DETECTED!");
+        }
     }
 }

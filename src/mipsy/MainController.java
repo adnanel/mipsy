@@ -137,6 +137,7 @@ public class MainController implements Initializable {
         alert.setContentText(
                 "a MIPS Simulator\n\n" +
                 "Authors:\n\n" +
+                "Ena Hajdarević (ehajdarevi1@etf.unsa.ba)\n" +
                 "Adnan Elezović ( aelezovic2@etf.unsa.ba )\n" +
                 "Haris Halilović ( hhalilovic1@etf.unsa.ba )");
 

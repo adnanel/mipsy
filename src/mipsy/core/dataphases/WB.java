@@ -33,7 +33,7 @@ public class WB extends DataPhase {
         logger.accept("WB: Sending MEM_OUT0 to WB_OUT0");
         //WB_OUT0 = prev.MEM_OUT0;
 
-        logger.accept("WB: Sending MUX4 output to PC");
-        ifPhase.pc = mux4.getResult(logger);
+        logger.accept("WB: Sending MEM_OUT0 output to PC");
+        ifPhase.pc = prev.MEM_OUT0;
     }
 }
