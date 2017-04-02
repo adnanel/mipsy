@@ -34,7 +34,6 @@ public class InstructionAnd extends Instruction {
         //iducih 5 bita se puni nulama
         res = res << 5;
 
-        //iducih 6 bita se popuni sa 0x20
         res = (res << 6) | 0b100100;
 
         return res;

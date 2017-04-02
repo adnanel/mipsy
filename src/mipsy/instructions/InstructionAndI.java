@@ -29,7 +29,6 @@ public class InstructionAndI extends Instruction {
         //iducih 5 su dest
         res = (res << 5) | Register.getRegisterNumber(dest);
 
-        //iducih 6 bita se popuni sa 0x20
         res = (res << 16) | opB;
 
         return res;

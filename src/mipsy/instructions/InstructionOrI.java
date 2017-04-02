@@ -1,5 +1,6 @@
 package mipsy.instructions;
 
+import mipsy.Utility;
 import mipsy.types.Instruction;
 import mipsy.types.Register;
 
@@ -8,10 +9,10 @@ import java.util.List;
 /**
  * Created on 3/30/2017.
  */
-public class InstructionSub extends Instruction {
+public class InstructionOrI extends Instruction {
     public String dest;
     public String opA;
-    public String opB;
+    public int opB;
 
     @Override
     public int getCoded() {
@@ -20,39 +21,33 @@ public class InstructionSub extends Instruction {
 
 
         // najvisih 6 bitova su nula
-        int res = 0;
+        int res = 0b001101;
 
         //iducih 5 su opA register
-        res = Register.getRegisterNumber(opA);
-
-        //iducih 5 su opB
-        res = (res << 5) | Register.getRegisterNumber(opB);
+        res = (res << 5) | Register.getRegisterNumber(opA);
 
         //iducih 5 su dest
         res = (res << 5) | Register.getRegisterNumber(dest);
 
-        //iducih 5 bita se puni nulama
-        res = res << 5;
-
-        res = (res << 6) | 0b100010;
+        res = (res << 16) | opB;
 
         return res;
     }
 
-    public InstructionSub(List<String> args) {
+    public InstructionOrI(List<String> args) {
         super(args);
-        this.instruction = "sub";
+        this.instruction = "ori";
 
         if ( args.size() != 3 )
-            throw new IllegalArgumentException("Invalid arguments passed to sub! Expected 3, given " + args.size());
+            throw new IllegalArgumentException("Invalid arguments passed to ori! Expected 3, given " + args.size());
 
         dest = args.get(0);
         opA = args.get(1);
-        opB = args.get(2);
+        opB = Utility.ParseInt(args.get(2));
     }
 
     @Override
     public String toString() {
-        return String.format("sub %s, %s, %s", dest, opA, opB);
+        return String.format("ori %s, %s, %d", dest, opA, opB);
     }
 }
