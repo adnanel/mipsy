@@ -1,10 +1,7 @@
 package mipsy.types;
 
 
-import mipsy.instructions.InstructionAdd;
-import mipsy.instructions.InstructionBeq;
-import mipsy.instructions.InstructionLw;
-import mipsy.instructions.InstructionSw;
+import mipsy.instructions.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -26,6 +23,8 @@ public abstract class Instruction {
         SupportedInstructions.put("lw", InstructionLw.class);
         SupportedInstructions.put("sw", InstructionSw.class);
         SupportedInstructions.put("beq", InstructionBeq.class);
+        SupportedInstructions.put("sub", InstructionSub.class);
+        SupportedInstructions.put("addi", InstructionAddI.class);
     }
 
     //daje instrukciju kodirano
