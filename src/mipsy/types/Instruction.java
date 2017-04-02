@@ -43,6 +43,8 @@ public abstract class Instruction {
         SupportedInstructions.put("nor", InstructionNor.class);
         SupportedInstructions.put("andi", InstructionAndI.class);
         SupportedInstructions.put("ori", InstructionOrI.class);
+        SupportedInstructions.put("sll", InstructionSll.class);
+        SupportedInstructions.put("srl", InstructionSrl.class);
 
 
         //Conditional branch
