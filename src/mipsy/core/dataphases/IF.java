@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class IF extends DataPhase {
     public int IF_OUT0;
@@ -31,11 +31,11 @@ public class IF extends DataPhase {
         logger.accept("IF: Sending PC into ALU1(OP1) and InstructionMemory(Address)");
         Instruction currInstruction;
 
-        if ( core.instructions.size() <= pc ) {
+        if ( core.instructions.size() <= pc / 4 ) {
             logger.accept("IF: WARNING - No instruction at address " + pc + "! Using null instruction...");
             currInstruction = null; //todo, kada napravim null instrukciju dodaj je ovdje
         } else
-            currInstruction = core.instructions.get(pc);
+            currInstruction = core.instructions.get(pc / 4);
 
         logger.accept("IF: Current instruction is \"" + currInstruction.toString() + "\", coded as " + currInstruction.getCoded());
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class RegistersComponent {
     //input pins
@@ -14,6 +14,7 @@ public class RegistersComponent {
     private int readRegister2;
     private int writeData;
     private int regWrite;
+    private int writeRegister;
 
     private String name = "Registers";
 
@@ -23,12 +24,28 @@ public class RegistersComponent {
         this.readRegister1 = readRegister1;
     }
 
+    public void setWriteRegister(int writeRegister) {
+        this.writeRegister = writeRegister;
+    }
+
     public void setReadRegister2(int readRegister2) {
         this.readRegister2 = readRegister2;
     }
 
-    public void setWriteData(int writeData) {
+    public void setWriteData(Consumer<String> logger, int writeData) {
+        if ( regWrite == 0 ) {
+            logger.accept(String.format("%s: Not writing data because RegWrite = 0", name));
+            return;
+        }
+        String destRegister = Register.getMipsRegisterNames()[writeRegister];
+        logger.accept(String.format("%s: Writing %d into register %s", name, writeData, destRegister));
         this.writeData = writeData;
+
+        Register reg = registers.get(destRegister);
+        if ( reg == null ) {
+            reg = registers.put(destRegister, new Register(destRegister, 0));
+        }
+        reg.value = writeData;
     }
 
     public void setRegWrite(int regWrite) {

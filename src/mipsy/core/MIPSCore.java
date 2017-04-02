@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class MIPSCore {
     public ControlComponent controlComponent = new ControlComponent();
@@ -25,6 +25,11 @@ public class MIPSCore {
             new WB(this)
     };
 
+    public void reset() {
+        for ( DataPhase phase : dataPhases )
+            if ( phase instanceof IF )
+                ((IF)phase).pc = 0;
+    }
 
 
     public HashMap<String, Register> registers = new HashMap<>();

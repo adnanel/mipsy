@@ -3,7 +3,7 @@ package mipsy.core.components;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  *
  *
  * Pogledaj "4.4 A simple implementation scheme" u Petterson Hennesy, 5th edition.

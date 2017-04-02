@@ -3,7 +3,7 @@ package mipsy.core.components;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 4/1/2017.
+ * Created on 4/1/2017.
  */
 public class MUXComponent {
     private int a;

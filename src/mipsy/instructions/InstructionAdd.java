@@ -6,7 +6,7 @@ import mipsy.types.Register;
 import java.util.List;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class InstructionAdd extends Instruction {
     public String dest;

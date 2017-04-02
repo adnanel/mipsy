@@ -6,7 +6,7 @@ import mipsy.core.components.MUXComponent;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class WB extends DataPhase {
     public IF ifPhase;
@@ -22,10 +22,10 @@ public class WB extends DataPhase {
         MEM prev = (MEM)prevPhase;
 
         logger.accept("WB: Sending MEM_OUT1 to MUX4");
-        mux4.setA(prev.MEM_OUT1);
+        mux4.setB(prev.MEM_OUT1);
 
         logger.accept("WB: Sending MEM_OUT2 to MUX4");
-        mux4.setB(prev.MEM_OUT2);
+        mux4.setA(prev.MEM_OUT2);
 
         logger.accept("WB: Sending MemToReg to MUX4");
         mux4.setSelector(core.controlComponent.getMemToReg());
@@ -35,5 +35,11 @@ public class WB extends DataPhase {
 
         logger.accept("WB: Sending MEM_OUT0 output to PC");
         ifPhase.pc = prev.MEM_OUT0;
+
+        logger.accept("WB: Sending MUX4 output to Registers");
+        for ( DataPhase phase : core.dataPhases )
+            if ( phase instanceof ID ) {
+                ((ID) phase).registersComponent.setWriteData(logger, mux4.getResult(logger));
+            }
     }
 }

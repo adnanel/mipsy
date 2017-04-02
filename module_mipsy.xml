@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_mipsy" default="compile.module.mipsy">
+  <dirname property="module.mipsy.basedir" file="${ant.file.module_mipsy}"/>
+  
+  <property name="module.jdk.home.mipsy" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.mipsy" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.mipsy" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.mipsy" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="mipsy.output.dir" value="${module.mipsy.basedir}/out/production/mipsy"/>
+  <property name="mipsy.testoutput.dir" value="${module.mipsy.basedir}/out/test/mipsy"/>
+  
+  <path id="mipsy.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="mipsy.module.production.classpath">
+    <path refid="${module.jdk.classpath.mipsy}"/>
+  </path>
+  
+  <path id="mipsy.runtime.production.module.classpath">
+    <pathelement location="${mipsy.output.dir}"/>
+  </path>
+  
+  <path id="mipsy.module.classpath">
+    <path refid="${module.jdk.classpath.mipsy}"/>
+    <pathelement location="${mipsy.output.dir}"/>
+  </path>
+  
+  <path id="mipsy.runtime.module.classpath">
+    <pathelement location="${mipsy.testoutput.dir}"/>
+    <pathelement location="${mipsy.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.mipsy">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.mipsy">
+    <patternset refid="excluded.from.module.mipsy"/>
+  </patternset>
+  
+  <path id="mipsy.module.sourcepath">
+    <dirset dir="${module.mipsy.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.mipsy" depends="compile.module.mipsy.production,compile.module.mipsy.tests" description="Compile module mipsy"/>
+  
+  <target name="compile.module.mipsy.production" depends="register.custom.compilers" description="Compile module mipsy; production classes">
+    <mkdir dir="${mipsy.output.dir}"/>
+    <javac2 destdir="${mipsy.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.mipsy}/javac">
+      <compilerarg line="${compiler.args.mipsy}"/>
+      <bootclasspath refid="mipsy.module.bootclasspath"/>
+      <classpath refid="mipsy.module.production.classpath"/>
+      <src refid="mipsy.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.mipsy"/>
+    </javac2>
+    
+    <copy todir="${mipsy.output.dir}">
+      <fileset dir="${module.mipsy.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.mipsy.tests" depends="register.custom.compilers,compile.module.mipsy.production" description="compile module mipsy; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.mipsy" description="cleanup module">
+    <delete dir="${mipsy.output.dir}"/>
+    <delete dir="${mipsy.testoutput.dir}"/>
+  </target>
+</project>

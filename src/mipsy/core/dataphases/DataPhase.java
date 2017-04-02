@@ -5,7 +5,7 @@ import mipsy.core.MIPSCore;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public abstract class DataPhase {
     MIPSCore core;

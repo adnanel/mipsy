@@ -7,7 +7,7 @@ import mipsy.core.components.MemoryComponent;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class MEM extends DataPhase {
     /*
@@ -25,6 +25,7 @@ public class MEM extends DataPhase {
     public MEM(MIPSCore core) {
         super(core);
     }
+
 
     @Override
     public void step(Consumer<String> logger) {
@@ -58,6 +59,8 @@ public class MEM extends DataPhase {
 
         logger.accept("MEM: Sending DataMem(ReadData) to MEM_OUT1");
         MEM_OUT1 = dataMemory.getReadData(logger);
+
+        dataMemory.execute(logger);
 
         logger.accept("MEM: Sending EX_OUT3 to MEM_OUT2");
         MEM_OUT2 = prev.EX_OUT3;

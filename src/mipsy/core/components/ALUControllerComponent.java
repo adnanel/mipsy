@@ -5,7 +5,7 @@ import mipsy.Utility;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 4/1/2017.
+ * Created on 4/1/2017.
  */
 public class ALUControllerComponent {
     // http://prntscr.com/erb20h

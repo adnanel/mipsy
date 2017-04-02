@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class MipsyProject {
     public HashMap<Integer, MemoryEntry> memory = new HashMap<>();

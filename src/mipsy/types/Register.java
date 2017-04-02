@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class Register {
     private static String s;

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public abstract class Instruction {
     public String instruction;
@@ -67,6 +67,18 @@ public abstract class Instruction {
         this.arguments = args;
     }
 
+    public static List<Instruction> parseInstructions(String code) {
+        List<Instruction> res = new ArrayList<>();
+        code = code.replace(System.lineSeparator(), "\n");
+        code = code.replace("\r\n", "\n");
+
+        for ( String line : code.split("\n") ) {
+            Instruction instruction = Instruction.fromString(line);
+            res.add(instruction);
+        }
+
+        return res;
+    }
 
     public static Instruction fromString(String s) {
         String instruction;

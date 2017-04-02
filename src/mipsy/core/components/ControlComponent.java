@@ -6,7 +6,7 @@ import mipsy.instructions.InstructionSw;
 import mipsy.types.Instruction;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class ControlComponent {
     private int currInstruction;
@@ -25,8 +25,8 @@ public class ControlComponent {
         if ( currInstructionClass == InstructionSw.class )
             return 0;
         if ( currInstructionClass == InstructionBeq.class )
-            return 1;
-        return 0;
+            return 0;
+        return 1;
     }
 
     public int getRegDst() {

@@ -48,8 +48,9 @@ public class MainController implements Initializable {
         @Override
         public void accept(String s) {
             Date date = new Date();
-            String timestamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - ";
+            String timestamp = String.format("%2d:%2d:%2d: ", date.getHours(), date.getMinutes(), date.getSeconds());
             taLog.setText(taLog.getText() + timestamp + s + "\n");
+            taLog.positionCaret(taLog.getText().length());
         }
     };
 
@@ -151,7 +152,31 @@ public class MainController implements Initializable {
 
     @FXML
     protected void toolbarStepMIPS(ActionEvent event) {
+        taCode.setEditable(false);
+        mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
+
         mipsCore.step(logger);
+    }
+
+    @FXML
+    protected void toolbarResetMIPS(ActionEvent event) {
+        taCode.setEditable(true);
+        mipsCore.reset();
+        taLog.setText(taLog.getText() + "\n\n\n\n\n\n\n\n\n");
+
+        logger.accept("MIPSY RESET - PC SET TO 0");
+    }
+
+    @FXML
+    protected void toolbarRunMIPS(ActionEvent event) {
+        taLog.setText(taLog.getText() + "\n\n\n\n\n\n\n\n\n");
+        taLog.setScrollTop(9999999);
+        try {
+            logger.accept("MIPS - RUN BEGIN");
+            while ( true ) mipsCore.step(logger);
+        } catch ( Exception ex ) {
+            logger.accept("MIPS - RUN FINISHED" );
+        }
     }
 
     @FXML

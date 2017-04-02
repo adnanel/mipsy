@@ -5,7 +5,7 @@ import mipsy.types.Register;
 import mipsy.ui.RegisterCell;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class ListViewCellRegister extends ListCell<Register>
 {

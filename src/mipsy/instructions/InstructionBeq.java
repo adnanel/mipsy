@@ -5,7 +5,7 @@ import mipsy.types.Instruction;
 import java.util.List;
 
 /**
- * Created by Adnan on 4/1/2017.
+ * Created on 4/1/2017.
  */
 public class InstructionBeq extends Instruction {
     protected InstructionBeq(List<String> args) {

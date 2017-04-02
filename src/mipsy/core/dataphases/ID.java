@@ -9,7 +9,7 @@ import mipsy.core.components.SignExtendComponent;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 3/31/2017.
+ * Created on 3/31/2017.
  */
 public class ID extends DataPhase {
 
@@ -27,7 +27,7 @@ public class ID extends DataPhase {
     public int ID_OUT3;
     public int ID_OUT4;
 
-    private RegistersComponent registersComponent = new RegistersComponent();
+    public RegistersComponent registersComponent = new RegistersComponent();
     private MUXComponent mux1 = new MUXComponent("MUX1");
 
     public ID(MIPSCore core) {
@@ -67,7 +67,7 @@ public class ID extends DataPhase {
         registersComponent.setRegWrite(core.controlComponent.getRegWrite());
 
         logger.accept("ID: Sending MUX1 output to WriteRegister");
-        registersComponent.setRegWrite(mux1.getResult(logger));
+        registersComponent.setWriteRegister(mux1.getResult(logger));
 
         logger.accept("ID: Sending IF_OUT1[15:0] to SignExtend and ID_OUT4");
         ID_OUT4 = Utility.SubBits( prev.IF_OUT1, 0, 16 );

@@ -3,7 +3,7 @@ package mipsy.types;
 import mipsy.Utility;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class MemoryEntry {
     public Integer address;

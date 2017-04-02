@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 
 /**
- * Created by Adnan on 4/1/2017.
+ * Created on 4/1/2017.
  */
 public class MemoryComponent {
     private HashMap<Integer, MemoryEntry> memory;
@@ -44,9 +44,28 @@ public class MemoryComponent {
     }
 
     public int getReadData(Consumer<String> logger) {
+        if ( memRead == 0 ) {
+            logger.accept(String.format("%s: Not reading memory because MemRead = 0", name));
+            return 0;
+        }
         MemoryEntry entry = memory.get(address);
         if ( entry == null ) entry = new MemoryEntry(address, 0);
 
         return entry.value;
+    }
+
+
+    public void execute(Consumer<String> logger) {
+        if ( memWrite == 0 ) {
+            logger.accept(String.format("%s: Not writing to memory because MemWrite = 0", name));
+            return;
+        }
+
+        logger.accept(String.format("%s: Writing %d to address %d", name, writeData, address));
+
+        MemoryEntry entry = memory.get(address);
+        if ( entry == null ) entry = memory.put(address, new MemoryEntry(address, 0));
+
+        entry.value = writeData;
     }
 }

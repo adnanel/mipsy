@@ -1,7 +1,7 @@
 package mipsy;
 
 /**
- * Created by Adnan on 3/30/2017.
+ * Created on 3/30/2017.
  */
 public class Utility {
     //parses s as int, but supports hex numbers (when s starts with "0x")
