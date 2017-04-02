@@ -63,8 +63,7 @@ public class MemoryComponent {
 
         logger.accept(String.format("%s: Writing %d to address %d", name, writeData, address));
 
-        MemoryEntry entry = memory.get(address);
-        if ( entry == null ) entry = memory.put(address, new MemoryEntry(address, 0));
+        MemoryEntry entry = memory.computeIfAbsent(address, a -> new MemoryEntry(a, 0));
 
         entry.value = writeData;
     }

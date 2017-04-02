@@ -24,6 +24,8 @@ public abstract class Instruction {
         //Initialize our supported instructions here
         SupportedInstructions.put("add", InstructionAdd.class);
         SupportedInstructions.put("lw", InstructionLw.class);
+        SupportedInstructions.put("sw", InstructionSw.class);
+
     }
 
     //daje instrukciju kodirano

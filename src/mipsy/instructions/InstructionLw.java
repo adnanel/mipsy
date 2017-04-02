@@ -10,7 +10,6 @@ import java.util.List;
  * Created on 4/1/2017.
  */
 
-//todo
 public class InstructionLw extends Instruction {
     // example: lw  $s2, 0($a2)
     //          lw  rt, offset(base)

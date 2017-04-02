@@ -41,10 +41,7 @@ public class RegistersComponent {
         logger.accept(String.format("%s: Writing %d into register %s", name, writeData, destRegister));
         this.writeData = writeData;
 
-        Register reg = registers.get(destRegister);
-        if ( reg == null ) {
-            reg = registers.put(destRegister, new Register(destRegister, 0));
-        }
+        Register reg = registers.computeIfAbsent(destRegister, r -> new Register(r, 0));
         reg.value = writeData;
     }
 
