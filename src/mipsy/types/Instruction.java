@@ -49,6 +49,7 @@ public abstract class Instruction {
 
         //Conditional branch
         SupportedInstructions.put("beq", InstructionBeq.class);
+        SupportedInstructions.put("bne", InstructionBne.class);
     }
 
     //daje instrukciju kodirano
