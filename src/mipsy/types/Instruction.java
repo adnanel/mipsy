@@ -30,6 +30,7 @@ public abstract class Instruction {
         SupportedInstructions.put("sh", InstructionSh.class);
         SupportedInstructions.put("lb", InstructionLb.class);
         SupportedInstructions.put("lbu", InstructionLbu.class);
+        SupportedInstructions.put("sb", InstructionSb.class);
     }
 
     //daje instrukciju kodirano
