@@ -19,12 +19,15 @@ public abstract class Instruction {
     private static HashMap<String, Class> SupportedInstructions = new HashMap<>();
     static {
         //Initialize our supported instructions here
+
+        //Arithmetic
         SupportedInstructions.put("add", InstructionAdd.class);
-        SupportedInstructions.put("lw", InstructionLw.class);
-        SupportedInstructions.put("sw", InstructionSw.class);
-        SupportedInstructions.put("beq", InstructionBeq.class);
         SupportedInstructions.put("sub", InstructionSub.class);
         SupportedInstructions.put("addi", InstructionAddI.class);
+
+        //Data transfer
+        SupportedInstructions.put("lw", InstructionLw.class);
+        SupportedInstructions.put("sw", InstructionSw.class);
         SupportedInstructions.put("lh", InstructionLh.class);
         SupportedInstructions.put("lhu", InstructionLhu.class);
         SupportedInstructions.put("sh", InstructionSh.class);
@@ -33,6 +36,13 @@ public abstract class Instruction {
         SupportedInstructions.put("sb", InstructionSb.class);
         SupportedInstructions.put("ll", InstructionLl.class);
         SupportedInstructions.put("lui", InstructionLui.class);
+
+        //Logical
+        SupportedInstructions.put("and", InstructionAnd.class);
+        
+
+        //Conditional branch
+        SupportedInstructions.put("beq", InstructionBeq.class);
     }
 
     //daje instrukciju kodirano
