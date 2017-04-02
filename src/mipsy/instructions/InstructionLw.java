@@ -19,7 +19,7 @@ public class InstructionLw extends Instruction {
     private int offset;
     private String baseReg;
 
-    protected InstructionLw(List<String> args) {
+    public InstructionLw(List<String> args) {
         super(args);
 
         this.instruction = "lw";
@@ -44,11 +44,11 @@ public class InstructionLw extends Instruction {
     public int getCoded() {
         int res = 0b100011;
 
-        res = (res << 6) | Register.getRegisterNumber(baseReg);
+        res = (res << 5) | Register.getRegisterNumber(baseReg);
 
         res = (res << 5) | Register.getRegisterNumber(destReg);
 
-        res = (res << 5) | offset;
+        res = (res << 16) | offset;
 
         return res;
     }

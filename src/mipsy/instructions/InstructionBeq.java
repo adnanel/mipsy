@@ -8,7 +8,7 @@ import java.util.List;
  * Created on 4/1/2017.
  */
 public class InstructionBeq extends Instruction {
-    protected InstructionBeq(List<String> args) {
+    public InstructionBeq(List<String> args) {
         super(args);
     }
 

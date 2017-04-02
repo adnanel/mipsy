@@ -9,7 +9,7 @@ import java.util.List;
  */
 //todo
 public class InstructionSw extends Instruction {
-    protected InstructionSw(List<String> args) {
+    public InstructionSw(List<String> args) {
         super(args);
     }
 

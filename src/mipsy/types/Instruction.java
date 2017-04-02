@@ -23,6 +23,7 @@ public abstract class Instruction {
     static {
         //Initialize our supported instructions here
         SupportedInstructions.put("add", InstructionAdd.class);
+        SupportedInstructions.put("lw", InstructionLw.class);
     }
 
     //daje instrukciju kodirano
