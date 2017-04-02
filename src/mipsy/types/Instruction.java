@@ -39,7 +39,8 @@ public abstract class Instruction {
 
         //Logical
         SupportedInstructions.put("and", InstructionAnd.class);
-        
+        SupportedInstructions.put("or", InstructionOr.class);
+
 
         //Conditional branch
         SupportedInstructions.put("beq", InstructionBeq.class);
