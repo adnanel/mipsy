@@ -17,6 +17,14 @@ public class Register {
     public Register(String name, int value) {
         this.value = value;
         this.name = name;
+
+        boolean found = false;
+        for ( String s : getMipsRegisterNames() )
+            if ( s.equalsIgnoreCase(name.trim())) {
+                found = true;
+                break;
+            }
+        if ( !found ) throw new IllegalArgumentException("Invalid register name! " + name);
     }
 
     public static void FillMissing(HashMap<String, Register> registers) {
