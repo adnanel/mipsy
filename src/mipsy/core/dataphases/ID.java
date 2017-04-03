@@ -41,38 +41,44 @@ public class ID extends DataPhase {
 
         IF prev = (IF)prevPhase;
 
-        logger.accept("ID: Sending IF_OUT0 to ID_OUT0");
+        logger.accept(String.format("ID: Sending IF_OUT0 (%d) to ID_OUT0", prev.IF_OUT0));
         ID_OUT0 = prev.IF_OUT0;
 
-        logger.accept("ID: Sending IF_OUT1[25:21] to ReadReg1");
+        logger.accept(String.format("ID: Sending IF_OUT1[25:21] (%d) to ReadReg1", Utility.SubBits(prev.IF_OUT0, 21, 26)));
         registersComponent.setReadRegister1( Utility.SubBits(prev.IF_OUT1, 21, 26) );
 
-        logger.accept("ID: Sending IF_OUT1[20:16] to ReadReg2 and MUX1, input 0");
+        logger.accept(String.format("ID: Sending IF_OUT1[20:16] (%d) to ReadReg2 and MUX1, input 0", Utility.SubBits(prev.IF_OUT1, 16, 21)));
         registersComponent.setReadRegister2( Utility.SubBits(prev.IF_OUT1, 16, 21));
         mux1.setA(Utility.SubBits(prev.IF_OUT1, 16, 21));
 
-        logger.accept("ID: Sending read data 1 to ID_OUT1");
-        ID_OUT1 = registersComponent.getReadData1(logger).value;
+        int readData1 = registersComponent.getReadData1(logger).value;
+        logger.accept(String.format("ID: Sending read data 1 (%d) to ID_OUT1", readData1));
+        ID_OUT1 = readData1;
 
-        logger.accept("ID: Sending read data 2 to ID_OUT3");
-        ID_OUT3 = registersComponent.getReadData2(logger).value;
+        int readData2 = registersComponent.getReadData2(logger).value;
+        logger.accept(String.format("ID: Sending read data 2 (%d) to ID_OUT3", readData2));
+        ID_OUT3 = readData2;
 
-        logger.accept("ID: Sending IF_OUT1[15:11] to MUX1, input 1");
-        mux1.setB( Utility.SubBits(prev.IF_OUT1, 11, 16));
+        int n = Utility.SubBits(prev.IF_OUT1, 11, 16);
+        logger.accept(String.format("ID: Sending IF_OUT1[15:11] (%d) to MUX1, input 1", n));
+        mux1.setB( n );
 
-        logger.accept("ID: Sending RegDst to MUX1");
-        mux1.setSelector(core.controlComponent.getRegDst());
+        int regdst = core.controlComponent.getRegDst();
+        logger.accept(String.format("ID: Sending RegDst (%d) to MUX1", regdst));
+        mux1.setSelector(regdst);
 
-        logger.accept("ID: Sending RegWrite to RegisterComponent(RegWrite)");
-        registersComponent.setRegWrite(core.controlComponent.getRegWrite());
+        int regwrite = core.controlComponent.getRegWrite();
+        logger.accept(String.format("ID: Sending RegWrite (%d) to RegisterComponent(RegWrite)", regwrite));
+        registersComponent.setRegWrite(regwrite);
 
         logger.accept("ID: Sending MUX1 output to WriteRegister");
         registersComponent.setWriteRegister(mux1.getResult(logger));
 
-        logger.accept("ID: Sending IF_OUT1[15:0] to SignExtend and ID_OUT4");
+        logger.accept(String.format("ID: Sending IF_OUT1[15:0] (%d) to SignExtend and ID_OUT4", Utility.SubBits( prev.IF_OUT1, 0, 16 )));
         ID_OUT4 = Utility.SubBits( prev.IF_OUT1, 0, 16 );
 
-        logger.accept("ID: Sending SignExtend output to ID_OUT2");
-        ID_OUT2 = SignExtendComponent.extend( ID_OUT4 );
+        int seout = SignExtendComponent.extend( ID_OUT4 );
+        logger.accept(String.format("ID: Sending SignExtend output (%d) to ID_OUT2", seout ) );
+        ID_OUT2 = seout;
     }
 }

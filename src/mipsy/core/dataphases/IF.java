@@ -28,7 +28,7 @@ public class IF extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) {
-        logger.accept("IF: Sending PC into ALU1(OP1) and InstructionMemory(Address)");
+        logger.accept(String.format("IF: Sending PC(%d) into ALU1(OP1) and InstructionMemory(Address)", pc));
         Instruction currInstruction;
 
         if ( core.instructions.size() <= pc / 4 ) {
@@ -44,13 +44,15 @@ public class IF extends DataPhase {
         logger.accept("IF: ALU1 performs ADD operation, operands are const 4 and PC");
         alu1.execute(logger);
 
-        logger.accept("IF: Sending ALU1 output into IF_OUT0");
+
         IF_OUT0 = alu1.getResult();
+        logger.accept(String.format("IF: Sending ALU1 output (%d) into IF_OUT0", IF_OUT0));
 
-        logger.accept("IF: Sending InstructionMemory output to IF_OUT1");
         IF_OUT1 = currInstruction.getCoded();
+        logger.accept(String.format("IF: Sending InstructionMemory output (%d) to IF_OUT1", IF_OUT1));
 
-        logger.accept("IF: Sending InstructionMemory output to Control");
+
+        logger.accept(String.format("IF: Sending InstructionMemory output (%d) to Control", currInstruction.getCoded()));
         core.controlComponent.setCurrInstruction(currInstruction.getCoded());
 
         if (!Objects.equals(Instruction.DetectInstruction(currInstruction.getCoded()), currInstruction.getClass())) {

@@ -33,7 +33,7 @@ public class MipsyProject {
                     line = line.trim().toLowerCase();
                     if ( line.length() == 0 ) return;
                     if ( line.charAt(0) == '#' ) return;
-                    
+
                     try {
                         if ( line.equalsIgnoreCase(".data")) {
                             mode = MODE_DATA;
