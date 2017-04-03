@@ -57,6 +57,7 @@ public abstract class Instruction {
 
         //Unconditional jumps
         SupportedInstructions.put("j", InstructionJ.class);
+        SupportedInstructions.put("jr", InstructionJr.class);
     }
 
     //daje instrukciju kodirano
