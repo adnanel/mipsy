@@ -74,6 +74,9 @@ public class EX extends DataPhase {
         logger.accept("EX: Sending LEFT_SHIFT output to ALU2(OP2)");
         alu2.setOpB(lshift);
 
+        logger.accept(String.format("EX: Sending ID_OUT0 (%d) to ALU2(OP1)", prev.ID_OUT0));
+        alu2.setOpA(prev.ID_OUT0);
+
         alu2.execute(logger);
         logger.accept("EX: Sending ALU2 result EX_OUT1");
         EX_OUT1 = alu2.getResult();

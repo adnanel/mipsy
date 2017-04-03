@@ -21,25 +21,24 @@ public class WB extends DataPhase {
     public void step(Consumer<String> logger) {
         MEM prev = (MEM)prevPhase;
 
-        logger.accept("WB: Sending MEM_OUT1 to MUX4");
+        logger.accept(String.format("WB: Sending MEM_OUT1 (%d) to MUX4", prev.MEM_OUT1));
         mux4.setB(prev.MEM_OUT1);
 
-        logger.accept("WB: Sending MEM_OUT2 to MUX4");
+        logger.accept(String.format("WB: Sending MEM_OUT2 (%d) to MUX4", prev.MEM_OUT2));
         mux4.setA(prev.MEM_OUT2);
 
-        logger.accept("WB: Sending MemToReg to MUX4");
-        mux4.setSelector(core.controlComponent.getMemToReg());
+        int res = core.controlComponent.getMemToReg();
+        logger.accept(String.format("WB: Sending MemToReg (%d) to MUX4", res));
+        mux4.setSelector(res);
 
-        logger.accept("WB: Sending MEM_OUT0 to WB_OUT0");
-        //WB_OUT0 = prev.MEM_OUT0;
-
-        logger.accept("WB: Sending MEM_OUT0 output to PC");
+        logger.accept(String.format("WB: Sending MEM_OUT0 (%d) output to PC", prev.MEM_OUT0));
         ifPhase.pc = prev.MEM_OUT0;
 
-        logger.accept("WB: Sending MUX4 output to Registers");
+        int mux4Out = mux4.getResult(logger);
+        logger.accept(String.format("WB: Sending MUX4 output (%d) to Registers", mux4Out));
         for ( DataPhase phase : core.dataPhases )
             if ( phase instanceof ID ) {
-                ((ID) phase).registersComponent.setWriteData(logger, mux4.getResult(logger));
+                ((ID) phase).registersComponent.setWriteData(logger, mux4Out);
             }
     }
 }
