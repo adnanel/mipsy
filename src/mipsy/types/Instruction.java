@@ -50,6 +50,7 @@ public abstract class Instruction {
         //Conditional branch
         SupportedInstructions.put("beq", InstructionBeq.class);
         SupportedInstructions.put("bne", InstructionBne.class);
+        SupportedInstructions.put("slt", InstructionSlt.class);
     }
 
     //daje instrukciju kodirano
