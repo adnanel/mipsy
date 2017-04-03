@@ -68,10 +68,10 @@ public class EX extends DataPhase {
         logger.accept("EX: Sending MUX2 output to ALU3(OP2)");
         alu3.setOpB( mux2.getResult(logger) );
 
-        logger.accept("EX: Sending ID_OUT2 to LEFT_SHIFT ");
-        int lshift = prev.ID_OUT2 >> 2;
+        logger.accept(String.format("EX: Sending ID_OUT2 (%d) to LEFT_SHIFT ", prev.ID_OUT2));
+        int lshift = prev.ID_OUT2 << 2;
 
-        logger.accept("EX: Sending LEFT_SHIFT output to ALU2(OP2)");
+        logger.accept(String.format("EX: Sending LEFT_SHIFT (%d) output to ALU2(OP2)", lshift));
         alu2.setOpB(lshift);
 
         logger.accept(String.format("EX: Sending ID_OUT0 (%d) to ALU2(OP1)", prev.ID_OUT0));
