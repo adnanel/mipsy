@@ -66,9 +66,13 @@ public class ControlComponent {
         return 0;
     }
 
-    public int getPcSrc() {
-        if ( currInstructionClass == InstructionBeq.class ) return 1;
-        return 0; //todo
+    public int getPcSrc(int Alu3ZeroFlag) {
+        // http://prntscr.com/es0qri
+        // ANDamo Branch (iz tabele iznad) i ALU3 zero flag
+
+        boolean branch = currInstructionClass == InstructionBeq.class;
+        boolean zero = Alu3ZeroFlag == 1;
+        return branch && zero ? 1 : 0;
     }
 
     public int getMemToReg() {
