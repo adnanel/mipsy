@@ -37,7 +37,7 @@ public class IF extends DataPhase {
         } else
             currInstruction = core.instructions.get(pc / 4);
 
-        logger.accept("IF: Current instruction is \"" + currInstruction.toString() + "\", coded as " + currInstruction.getCoded());
+        logger.accept("IF: Current instruction is \"" + currInstruction.toString() + "\", coded as 0x" + Integer.toHexString(currInstruction.getCoded()));
 
         alu1.setOpA(pc);
 

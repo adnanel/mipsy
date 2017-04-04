@@ -48,7 +48,7 @@ public class MainController implements Initializable {
         @Override
         public void accept(String s) {
             Date date = new Date();
-            String timestamp = String.format("%2d:%2d:%2d: ", date.getHours(), date.getMinutes(), date.getSeconds());
+            String timestamp = String.format("%02d:%02d:%02d: ", date.getHours(), date.getMinutes(), date.getSeconds());
             taLog.setText(taLog.getText() + timestamp + s + "\n");
             taLog.positionCaret(taLog.getText().length());
         }
