@@ -70,28 +70,28 @@ public class ALUComponent {
         switch ( control ) {
             case CONTROL_ADD:
                 result = opA + opB;
-                logger.accept(String.format("%s: Calculating %s + %s, result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating %s + %s, result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
             case CONTROL_AND:
                 result = opA & opB;
-                logger.accept(String.format("%s: Calculating band(%s,%s), result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating band(%s,%s), result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
             case CONTROL_OR:
                 result = opA | opB;
-                logger.accept(String.format("%s: Calculating bor(%s,%s), result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating bor(%s,%s), result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
             case CONTROL_SUBTRACT:
                 result = opA - opB;
-                logger.accept(String.format("%s: Calculating %s - %s, result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating %s - %s, result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
             case CONTROL_SET_ON_LESS_THAN:
                 //todo ovo provjeriti, mislim da postavlja 1 ako je opA < opB, 0 otherwise
                 result = opA < opB ? 1 : 0;
-                logger.accept(String.format("%s: Calculating slt(%s,%s), result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating slt(%s,%s), result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
             case CONTROL_NOR:
                 result = ~(opA | opB);
-                logger.accept(String.format("%s: Calculating nor(%s,%s), result is %s", name, Integer.toHexString(opA), Integer.toHexString(opB), Integer.toHexString(result)));
+                logger.accept(String.format("%s: Calculating nor(%s,%s), result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
         }
     }

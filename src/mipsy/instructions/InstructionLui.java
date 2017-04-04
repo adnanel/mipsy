@@ -42,6 +42,6 @@ public class InstructionLui extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("lui %s, %s", dest, Integer.toHexString(immediate));
+        return String.format("lui %s, %s", dest, "0x" + Integer.toHexString(immediate));
     }
 }

@@ -41,6 +41,6 @@ public class InstructionBeq extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("beq %s, %s, %s", opA, opB, Integer.toHexString(offset));
+        return String.format("beq %s, %s, %s", opA, opB, "0x" + Integer.toHexString(offset));
     }
 }

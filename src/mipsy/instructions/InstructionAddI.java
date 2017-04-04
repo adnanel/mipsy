@@ -44,6 +44,6 @@ public class InstructionAddI extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("addi %s, %s, %s", dest, opA, Integer.toHexString(opB));
+        return String.format("addi %s, %s, %s", dest, opA, "0x" + Integer.toHexString(opB));
     }
 }

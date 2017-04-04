@@ -41,6 +41,6 @@ public class InstructionSlti extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("slti %s, %s, %s", opA, opB, Integer.toHexString(offset));
+        return String.format("slti %s, %s, %s", opA, opB, "0x" + Integer.toHexString(offset));
     }
 }

@@ -61,12 +61,12 @@ public class MipsyProject {
                                     break;
                                 case MODE_DATA:
                                     MemoryEntry entry = MemoryEntry.fromString(line);
-                                    logger.accept(String.format("Memory[%s] = %s", Integer.toHexString(entry.address), Integer.toHexString(entry.value)));
+                                    logger.accept(String.format("Memory[%s] = %s", "0x" + Integer.toHexString(entry.address), "0x" + Integer.toHexString(entry.value)));
                                     project.memory.put(entry.address, entry);
                                     break;
                                 case MODE_REGS:
                                     Register reg = Register.fromString(line);
-                                    logger.accept(String.format("Setting %s to %s", reg.name, Integer.toHexString(reg.value)));
+                                    logger.accept(String.format("Setting %s to %s", reg.name, "0x" + Integer.toHexString(reg.value)));
                                     project.registers.put(reg.name, reg);
                                     break;
                                 case MODE_META:

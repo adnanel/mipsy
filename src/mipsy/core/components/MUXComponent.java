@@ -34,7 +34,7 @@ public class MUXComponent {
 
         String targetOp = selector == 0 ? "a" : "b";
         logger.accept(String.format("%s: Selector is %s, sending %s(operand %s) to output",
-                name, Integer.toHexString(selector), Integer.toHexString(target), targetOp));
+                name, "0x" + Integer.toHexString(selector), "0x" + Integer.toHexString(target), targetOp));
 
         return target;
     }
