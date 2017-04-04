@@ -164,7 +164,7 @@ public class MainController implements Initializable {
     protected void toolbarResetMIPS(ActionEvent event) {
         taCode.setEditable(true);
         mipsCore.reset();
-        taLog.setText(taLog.getText() + "\n\n\n\n\n\n\n\n\n");
+        taLog.setText("");
 
         logger.accept("MIPSY RESET - PC SET TO 0");
     }

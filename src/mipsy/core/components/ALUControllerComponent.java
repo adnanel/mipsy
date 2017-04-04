@@ -39,14 +39,16 @@ public class ALUControllerComponent {
         if ( aluOp % 2 == 1 )   return 0b0110;
 
         if ( (aluOp >> 1) > 0 ) {
-            instruction <<= 2;
-            instruction >>= 2;
+            //prema tabeli, gledamo samo bitove [F3:F0]
+            instruction = Utility.SubBits(instruction, 0, 4);
 
             if ( instruction == 0 ) return 0b0010;
             if ( instruction == 2 ) return 0b0110;
             if ( instruction == 4 ) return 0b0000;
             if ( instruction == 5 ) return 0b0001;
             if ( instruction == 10) return 0b0111;
+
+            logger.accept(String.format("%s: Undefined ALUOp combination!", name));
         } else {
             logger.accept(String.format("%s: Undefined ALUOp combination!", name));
         }

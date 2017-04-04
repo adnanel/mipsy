@@ -53,10 +53,7 @@ public class IF extends DataPhase {
 
 
         logger.accept(String.format("IF: Sending InstructionMemory output (%d) to Control", currInstruction.getCoded()));
-        core.controlComponent.setCurrInstruction(currInstruction.getCoded());
+        core.controlComponent.setCurrInstruction(currInstruction);
 
-        if (!Objects.equals(Instruction.DetectInstruction(currInstruction.getCoded()), currInstruction.getClass())) {
-            logger.accept("IF: WARNING: CURRENT INSTRUCTION NOT DETECTED!");
-        }
     }
 }

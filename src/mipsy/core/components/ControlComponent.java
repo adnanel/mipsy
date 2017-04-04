@@ -14,9 +14,9 @@ public class ControlComponent {
 
     // http://prntscr.com/erbcwf
 
-    public void setCurrInstruction(int currInstruction) {
-        this.currInstruction = currInstruction;
-        this.currInstructionClass = Instruction.DetectInstruction(currInstruction);
+    public void setCurrInstruction(Instruction currInstruction) {
+        this.currInstruction = currInstruction.getCoded();
+        this.currInstructionClass = currInstruction.getClass();
     }
 
     public int getRegWrite() {

@@ -67,38 +67,6 @@ public abstract class Instruction {
 
     public abstract int getCoded();
 
-    public static Class DetectInstruction(int encoded) {
-        String bin = Integer.toBinaryString(encoded);
-        while ( bin.length() < Integer.SIZE ) bin = "0" + bin;
-
-        String first6 = bin.substring(0, 6);
-
-        if ( first6.equalsIgnoreCase("100011") )
-            return InstructionLw.class;
-
-        if ( first6.equalsIgnoreCase("101011") )
-            return InstructionSw.class;
-
-        if ( first6.equalsIgnoreCase("000100") )
-            return InstructionBeq.class;
-
-        if ( first6.equalsIgnoreCase("000000") ) {
-            // r type
-            String last11 = bin.substring(21);
-            String l5 = last11.substring(0, 5);
-            last11 = last11.substring(5);
-
-            //last11 - zadnjih 6 bitova
-            //l5 - 5 bitova prije zadnjih 6
-
-            if ( l5.equalsIgnoreCase("00000")
-                    && last11.equalsIgnoreCase("100000"))
-                return InstructionAdd.class;
-        }
-
-        return null;
-    }
-
     protected Instruction(List<String> args) {
         this.arguments = args;
     }
