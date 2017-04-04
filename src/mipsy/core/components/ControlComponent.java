@@ -1,5 +1,6 @@
 package mipsy.core.components;
 
+import mipsy.instructions.InstructionAddI;
 import mipsy.instructions.InstructionBeq;
 import mipsy.instructions.InstructionLw;
 import mipsy.instructions.InstructionSw;
@@ -26,17 +27,23 @@ public class ControlComponent {
             return 0;
         if ( currInstructionClass == InstructionBeq.class )
             return 0;
+        if ( currInstructionClass == InstructionAddI.class )
+            return 1;
+
         return 1;
     }
 
     public int getRegDst() {
         if ( currInstructionClass == InstructionLw.class ) return 0;
+        if ( currInstructionClass == InstructionAddI.class ) return 0;
+
         return 1;
     }
 
     public int getAluSrc() {
         if ( currInstructionClass == InstructionLw.class ) return 1;
         if ( currInstructionClass == InstructionSw.class ) return 1;
+        if ( currInstructionClass == InstructionAddI.class ) return 1;
         return 0;
     }
 
@@ -47,6 +54,8 @@ public class ControlComponent {
         if ( currInstructionClass == InstructionSw.class ) {
             op1 = op0 = 0;
         } else if ( currInstructionClass == InstructionLw.class ) {
+            op1 = op0 = 0;
+        } else if ( currInstructionClass == InstructionAddI.class ) {
             op1 = op0 = 0;
         } else if ( currInstructionClass == InstructionBeq.class ) {
             op0 = 1;
