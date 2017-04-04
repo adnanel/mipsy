@@ -48,6 +48,12 @@ public class ALUControllerComponent {
             if ( instruction == 5 ) return 0b0001;
             if ( instruction == 10) return 0b0111;
 
+            //todo, NOR ne prepoznaje, [F3:F3] je 1100 ( dec. 12 )
+            //todo sto ovi gore IFovi ne prepoznaju...
+
+            //sad za sad je nor hardkodiran...
+            if ( instruction == 12 ) return 0b1100;
+
             logger.accept(String.format("%s: Undefined ALUOp combination!", name));
         } else {
             logger.accept(String.format("%s: Undefined ALUOp combination!", name));
