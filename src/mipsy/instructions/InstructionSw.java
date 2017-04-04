@@ -54,6 +54,6 @@ public class InstructionSw extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("sw %s, %d(%s)", destReg, offset, baseReg);
+        return String.format("sw %s, %s(%s)", destReg, Integer.toHexString(offset), baseReg);
     }
 }

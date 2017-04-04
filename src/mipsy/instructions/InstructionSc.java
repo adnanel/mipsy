@@ -51,6 +51,6 @@ public class InstructionSc extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("sc %s, %d(%s)", destReg, offset, baseReg);
+        return String.format("sc %s, %s(%s)", destReg, Integer.toHexString(offset), baseReg);
     }
 }

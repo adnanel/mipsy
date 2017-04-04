@@ -61,7 +61,7 @@ public class MemoryComponent {
             return;
         }
 
-        logger.accept(String.format("%s: Writing %d to address %d", name, writeData, address));
+        logger.accept(String.format("%s: Writing %s to address %s", name, Integer.toHexString(writeData), Integer.toHexString(address)));
 
         MemoryEntry entry = memory.computeIfAbsent(address, a -> new MemoryEntry(a, 0));
 

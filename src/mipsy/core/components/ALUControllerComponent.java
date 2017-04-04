@@ -27,7 +27,7 @@ public class ALUControllerComponent {
     public int getResult(Consumer<String> logger) {
         int res = _getResult(logger);
 
-        logger.accept(String.format("%s: AluOP = %d, Instruction[5:0] = %d, output is %d", name, aluOp, instruction, res));
+        logger.accept(String.format("%s: AluOP = %s, Instruction[5:0] = %s, output is %s", name, Integer.toHexString(aluOp), Integer.toHexString(instruction), Integer.toHexString(res)));
 
         return res;
     }

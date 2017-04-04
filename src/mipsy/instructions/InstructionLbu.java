@@ -51,6 +51,6 @@ public class InstructionLbu extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("lbu %s, %d(%s)", destReg, offset, baseReg);
+        return String.format("lbu %s, %s(%s)", destReg, Integer.toHexString(offset), baseReg);
     }
 }

@@ -41,6 +41,6 @@ public class InstructionBne extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("bne %s, %s, %d", opA, opB, offset);
+        return String.format("bne %s, %s, %s", opA, opB, Integer.toHexString(offset));
     }
 }

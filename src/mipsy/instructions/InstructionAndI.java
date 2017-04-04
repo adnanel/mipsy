@@ -48,6 +48,6 @@ public class InstructionAndI extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("andi %s, %s, %d", dest, opA, opB);
+        return String.format("andi %s, %s, %s", dest, opA, Integer.toHexString(opB));
     }
 }

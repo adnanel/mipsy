@@ -38,7 +38,7 @@ public class RegistersComponent {
             return;
         }
         String destRegister = Register.getMipsRegisterNames()[writeRegister];
-        logger.accept(String.format("%s: Writing %d into register %s", name, writeData, destRegister));
+        logger.accept(String.format("%s: Writing %s into register %s", name, Integer.toHexString(writeData), destRegister));
         this.writeData = writeData;
 
         Register reg = registers.computeIfAbsent(destRegister, r -> new Register(r, 0));

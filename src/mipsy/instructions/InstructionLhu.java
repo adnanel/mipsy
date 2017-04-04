@@ -49,6 +49,6 @@ public class InstructionLhu extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("lhu %s, %d(%s)", dest, offset, base);
+        return String.format("lhu %s, %s(%s)", dest, Integer.toHexString(offset), base);
     }
 }

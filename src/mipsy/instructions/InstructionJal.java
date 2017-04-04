@@ -36,6 +36,6 @@ public class InstructionJal extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("jal %d", target);
+        return String.format("jal %s", Integer.toHexString(target));
     }
 }

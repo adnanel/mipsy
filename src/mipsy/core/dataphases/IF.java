@@ -28,7 +28,7 @@ public class IF extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) {
-        logger.accept(String.format("IF: Sending PC(%d) into ALU1(OP1) and InstructionMemory(Address)", pc));
+        logger.accept(String.format("IF: Sending PC(%s) into ALU1(OP1) and InstructionMemory(Address)", Integer.toHexString(pc)));
         Instruction currInstruction;
 
         if ( core.instructions.size() <= pc / 4 ) {
@@ -46,13 +46,13 @@ public class IF extends DataPhase {
 
 
         IF_OUT0 = alu1.getResult();
-        logger.accept(String.format("IF: Sending ALU1 output (%d) into IF_OUT0", IF_OUT0));
+        logger.accept(String.format("IF: Sending ALU1 output (%s) into IF_OUT0", Integer.toHexString(IF_OUT0)));
 
         IF_OUT1 = currInstruction.getCoded();
-        logger.accept(String.format("IF: Sending InstructionMemory output (%d) to IF_OUT1", IF_OUT1));
+        logger.accept(String.format("IF: Sending InstructionMemory output (%s) to IF_OUT1", Integer.toHexString(IF_OUT1)));
 
 
-        logger.accept(String.format("IF: Sending InstructionMemory output (%d) to Control", currInstruction.getCoded()));
+        logger.accept(String.format("IF: Sending InstructionMemory output (%s) to Control", Integer.toHexString(currInstruction.getCoded())));
         core.controlComponent.setCurrInstruction(currInstruction);
 
     }
