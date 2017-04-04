@@ -40,6 +40,11 @@ public class InstructionLw extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.IType;
+    }
+
+    @Override
     public int getCoded() {
         int res = 0b100011;
 

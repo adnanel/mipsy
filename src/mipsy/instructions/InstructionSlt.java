@@ -27,6 +27,11 @@ public class InstructionSlt extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.RType;
+    }
+
+    @Override
     public int getCoded() {
         int res = 0;
 

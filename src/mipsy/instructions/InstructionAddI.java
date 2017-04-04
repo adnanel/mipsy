@@ -43,6 +43,11 @@ public class InstructionAddI extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.IType;
+    }
+
+    @Override
     public String toString() {
         return String.format("addi %s, %s, %s", dest, opA, "0x" + Integer.toHexString(opB));
     }

@@ -52,6 +52,11 @@ public class InstructionNor extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.RType;
+    }
+
+    @Override
     public String toString() {
         return String.format("nor %s, %s, %s", dest, opA, opB);
     }

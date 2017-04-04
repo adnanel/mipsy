@@ -40,6 +40,11 @@ public class InstructionJr extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.RType;
+    }
+
+    @Override
     public String toString() {
         return String.format("j %s", targetReg);
     }

@@ -16,6 +16,12 @@ public abstract class Instruction {
 
     public List<String> arguments;
 
+    public static enum Type {
+        RType,
+        JType,
+        IType
+    }
+
     private static HashMap<String, Class> SupportedInstructions = new HashMap<>();
     static {
         //Initialize our supported instructions here
@@ -119,4 +125,6 @@ public abstract class Instruction {
 
         throw new IllegalArgumentException("Invalid instruction! " + instruction);
     }
+
+    public abstract Type getType();
 }

@@ -45,6 +45,11 @@ public class InstructionSrl extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.RType;
+    }
+
+    @Override
     public String toString() {
         return String.format("srl %s, %s, %s", dest, opA, "0x" + Integer.toHexString(opB));
     }

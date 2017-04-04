@@ -36,6 +36,11 @@ public class InstructionJ extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.JType;
+    }
+
+    @Override
     public String toString() {
         return String.format("j %s", "0x" + Integer.toHexString(target));
     }

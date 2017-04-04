@@ -53,6 +53,11 @@ public class InstructionAdd extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.RType;
+    }
+
+    @Override
     public String toString() {
         return String.format("add %s, %s, %s", dest, opA, opB);
     }

@@ -48,6 +48,11 @@ public class InstructionLhu extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.IType;
+    }
+
+    @Override
     public String toString() {
         return String.format("lhu %s, %s(%s)", dest, "0x" + Integer.toHexString(offset), base);
     }

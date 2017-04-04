@@ -41,6 +41,11 @@ public class InstructionLui extends Instruction {
     }
 
     @Override
+    public Type getType() {
+        return Type.IType;
+    }
+
+    @Override
     public String toString() {
         return String.format("lui %s, %s", dest, "0x" + Integer.toHexString(immediate));
     }
