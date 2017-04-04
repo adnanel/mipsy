@@ -41,7 +41,7 @@ public class ControlComponent {
     }
 
     public int getAluOp() {
-        int op1 = 0;
+        int op1 = 1;
         int op0 = 0;
 
         if ( currInstructionClass == InstructionSw.class ) {

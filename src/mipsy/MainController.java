@@ -156,6 +156,8 @@ public class MainController implements Initializable {
         mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
 
         mipsCore.step(logger);
+
+        fillRegisters(mipsCore.registers);
     }
 
     @FXML
@@ -177,6 +179,7 @@ public class MainController implements Initializable {
         } catch ( Exception ex ) {
             logger.accept("MIPS - RUN FINISHED" );
         }
+        fillRegisters(mipsCore.registers);
     }
 
     @FXML
