@@ -29,6 +29,23 @@ public class ALUComponent {
     public static final int CONTROL_SET_ON_LESS_THAN = 7;  // 0111
     public static final int CONTROL_NOR              = 12; // 1100
 
+    private static String getControlName(int control) {
+        switch ( control ) {
+            case CONTROL_ADD:
+                return "ADD";
+            case CONTROL_AND:
+                return "AND";
+            case CONTROL_NOR:
+                return "NOR";
+            case CONTROL_OR:
+                return "OR";
+            case CONTROL_SET_ON_LESS_THAN:
+                return "SET_ON_LESS_THAN";
+            case CONTROL_SUBTRACT:
+                return "SUBTRACT";
+        }
+        return "UNKNOWN";
+    }
 
     private String name;
 
@@ -46,27 +63,13 @@ public class ALUComponent {
         return control;
     }
 
-    public void setControl(int control) {
+    public void setControl(Consumer<String> logger, int control) {
+        logger.accept(String.format("%s: Setting 0x%s as control signal ( operation %s )", name, Integer.toHexString(control), getControlName(control)));
+
         this.control = control;
     }
 
-    public int getResult() {
-        return result;
-    }
-
-    public int getZero() {
-        return result == 0 ? 1 : 0;
-    }
-
-    public void setOpA(int opA) {
-        this.opA = opA;
-    }
-
-    public void setOpB(int opB) {
-        this.opB = opB;
-    }
-
-    public void execute(Consumer<String> logger) {
+    public int getResult(Consumer<String> logger) {
         switch ( control ) {
             case CONTROL_ADD:
                 result = opA + opB;
@@ -94,5 +97,22 @@ public class ALUComponent {
                 logger.accept(String.format("%s: Calculating nor(%s,%s), result is %s", name, "0x" + Integer.toHexString(opA), "0x" + Integer.toHexString(opB), "0x" + Integer.toHexString(result)));
                 break;
         }
+
+        return result;
+    }
+
+    public int getZero() {
+        return result == 0 ? 1 : 0;
+    }
+
+    public void setOpA(Consumer<String> logger, int opA) {
+        logger.accept(String.format("%s: Setting 0x%s as operand 0", name, Integer.toHexString(opA)));
+        this.opA = opA;
+    }
+
+    public void setOpB(Consumer<String> logger, int opB) {
+        logger.accept(String.format("%s: Setting 0x%s as operand 1", name, Integer.toHexString(opB)));
+
+        this.opB = opB;
     }
 }

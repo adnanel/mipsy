@@ -50,6 +50,11 @@ public class InstructionSll extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("sll %s, %s, %s", dest, opA, "0x" + Integer.toHexString(opB));
     }

@@ -44,11 +44,6 @@
                                      <MenuItem mnemonicParsing="false" onAction="#menuOpenFile" text="Open source file..." />
                                  </items>
                              </Menu>
-                             <Menu mnemonicParsing="false" text="Edit">
-                                 <items>
-                                     <MenuItem mnemonicParsing="false" text="Delete" />
-                                 </items>
-                             </Menu>
                              <Menu mnemonicParsing="false" text="Help">
                                  <items>
                                      <MenuItem id="menuAbout" fx:id="menuAbout" mnemonicParsing="false" onAction="#menuAbout" text="About" />
@@ -74,11 +69,6 @@
                 <Tab text="Log">
                   <content>
                       <TextArea fx:id="taLog" editable="false" />
-                  </content>
-                </Tab>
-                <Tab text="Untitled Tab 2">
-                  <content>
-                    <AnchorPane />
                   </content>
                 </Tab>
               </tabs>
@@ -136,14 +126,7 @@
 
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" text="Datapath">
-                    <content>
-                      <AnchorPane>
-                           <children>
 
-                           </children></AnchorPane>
-                    </content>
-                  </TitledPane>
               </panes>
             </Accordion>
          </center></BorderPane>

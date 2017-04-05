@@ -45,6 +45,11 @@ public class InstructionJr extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return String.format("j %s", targetReg);
     }

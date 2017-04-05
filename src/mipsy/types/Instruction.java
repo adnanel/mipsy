@@ -127,4 +127,6 @@ public abstract class Instruction {
     }
 
     public abstract Type getType();
+    public abstract boolean canBranch();
+
 }

@@ -75,6 +75,10 @@ public class ControlComponent {
         return 0;
     }
 
+    public int getBranch() {
+        return currInstructionClass == InstructionBeq.class ? 1 : 0;
+    }
+
     public int getPcSrc(int Alu3ZeroFlag) {
         // http://prntscr.com/es0qri
         // ANDamo Branch (iz tabele iznad) i ALU3 zero flag

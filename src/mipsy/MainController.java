@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
-import mipsy.types.Instruction;
-import mipsy.types.MemoryEntry;
-import mipsy.types.MipsyProject;
-import mipsy.types.Register;
+import mipsy.types.*;
 import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
 
@@ -151,14 +148,20 @@ public class MainController implements Initializable {
 
 
     @FXML
-    protected void toolbarStepMIPS(ActionEvent event) {
+    protected boolean toolbarStepMIPS(ActionEvent event) {
         setInputLock(true);
 
         mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
-
-        mipsCore.step(logger);
+        boolean result = true;
+        try {
+            mipsCore.step(logger);
+        } catch ( NoMoreInstructionsException ex ) {
+            logger.accept("No more instructions left to step!");
+            result = false;
+        }
 
         fillRegisters(mipsCore.registers);
+        return result;
     }
 
     protected void setInputLock(boolean lock) {
@@ -185,7 +188,7 @@ public class MainController implements Initializable {
 
         mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
 
-        taLog.setText(taLog.getText() + "\n\n\n\n\n\n\n\n\n");
+        taLog.setText("");
         taLog.setScrollTop(9999999);
         try {
             logger.accept("MIPS - RUN BEGIN");

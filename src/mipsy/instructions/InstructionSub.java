@@ -57,6 +57,11 @@ public class InstructionSub extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("sub %s, %s, %s", dest, opA, opB);
     }

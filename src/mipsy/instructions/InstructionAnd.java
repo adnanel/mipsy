@@ -57,6 +57,11 @@ public class InstructionAnd extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("and %s, %s, %s", dest, opA, opB);
     }

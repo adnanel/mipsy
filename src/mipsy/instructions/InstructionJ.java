@@ -41,6 +41,11 @@ public class InstructionJ extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return String.format("j %s", "0x" + Integer.toHexString(target));
     }

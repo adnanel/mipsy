@@ -46,6 +46,11 @@ public class InstructionLui extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("lui %s, %s", dest, "0x" + Integer.toHexString(immediate));
     }

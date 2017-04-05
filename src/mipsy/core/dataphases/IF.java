@@ -2,58 +2,65 @@ package mipsy.core.dataphases;
 
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
+import mipsy.core.components.MUXComponent;
 import mipsy.types.Instruction;
+import mipsy.types.NoMoreInstructionsException;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Created on 3/31/2017.
+ * Created by adnan on 05.04.2017..
  */
 public class IF extends DataPhase {
-    public int IF_OUT0;
-    public int IF_OUT1;
-
-    // IF se sastoji od: http://prntscr.com/eqrei3
     private ALUComponent alu1 = new ALUComponent("ALU1");
-    public int pc = 0;
-    // instruction memory uzimamo iz MIPSCore
+    private MUXComponent mux1 = new MUXComponent("MUX1");
+    private int pc = 0;
+    List<Instruction> instructions;
+
+    //povratne sprege
+    public int PCSrc = 0;
+    public int EX_MEM_OUT0 = 0;
+    public int ALU1_RES = 0;
+
+    public void reset() {
+        pc = 0;
+    }
 
     public IF(MIPSCore core) {
         super(core);
-
-        alu1.setOpB(4);
-        alu1.setControl(ALUComponent.CONTROL_ADD);
     }
 
     @Override
-    public void step(Consumer<String> logger) {
-        logger.accept(String.format("IF: Sending PC(%s) into ALU1(OP1) and InstructionMemory(Address)", "0x" + Integer.toHexString(pc)));
+    public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        instructions = core.instructions;
+        logger.accept("IF: Starting IF cycle");
+
+        mux1.setSelector(PCSrc);
+        mux1.setA(ALU1_RES);
+        mux1.setB(EX_MEM_OUT0);
+
+        pc = mux1.getResult(logger);
+        logger.accept(String.format("IF: Current PC is 0x%s", Integer.toHexString(pc)));
+
+        alu1.setControl(logger, ALUComponent.CONTROL_ADD);
+        alu1.setOpB(logger, 4);
+        alu1.setOpA(logger, pc);
+
+        ALU1_RES = alu1.getResult(logger);
+
+
         Instruction currInstruction;
-
-        if ( core.instructions.size() <= pc / 4 ) {
-            logger.accept("IF: WARNING - No instruction at address " + pc + "! Using null instruction...");
-            currInstruction = null; //todo, kada napravim null instrukciju dodaj je ovdje
-        } else
-            currInstruction = core.instructions.get(pc / 4);
-
-        logger.accept("IF: Current instruction is \"" + currInstruction.toString() + "\", coded as 0x" + Integer.toHexString(currInstruction.getCoded()));
-
-        alu1.setOpA(pc);
-
-        logger.accept("IF: ALU1 performs ADD operation, operands are const 4 and PC");
-        alu1.execute(logger);
+        if ( instructions.size() > pc / 4 )
+            currInstruction = instructions.get(pc / 4);
+        else {
+            logger.accept("IF: No instructoin found at current PC address!");
+            throw new NoMoreInstructionsException();
+        }
 
 
-        IF_OUT0 = alu1.getResult();
-        logger.accept(String.format("IF: Sending ALU1 output (%s) into IF_OUT0", "0x" + Integer.toHexString(IF_OUT0)));
-
-        IF_OUT1 = currInstruction.getCoded();
-        logger.accept(String.format("IF: Sending InstructionMemory output (%s) to IF_OUT1", "0x" + Integer.toHexString(IF_OUT1)));
-
-
-        logger.accept(String.format("IF: Sending InstructionMemory output (%s) to Control", "0x" + Integer.toHexString(currInstruction.getCoded())));
-        core.controlComponent.setCurrInstruction(currInstruction);
-
+        logger.accept(String.format("IF: Fetched instruction \"%s\" coded as 0x%s", currInstruction.toString(), Integer.toHexString(currInstruction.getCoded())));
+        core.IFID.OUT0 = ALU1_RES;
+        core.IFID.OUT1 = currInstruction;
     }
 }

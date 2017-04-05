@@ -48,6 +48,11 @@ public class InstructionAddI extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("addi %s, %s, %s", dest, opA, "0x" + Integer.toHexString(opB));
     }

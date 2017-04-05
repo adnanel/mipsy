@@ -53,6 +53,11 @@ public class InstructionLh extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("lh %s, %s(%s)", dest, "0x" + Integer.toHexString(offset), base);
     }

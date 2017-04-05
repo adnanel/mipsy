@@ -4,11 +4,13 @@ import mipsy.core.components.ControlComponent;
 import mipsy.core.dataphases.*;
 import mipsy.types.Instruction;
 import mipsy.types.MemoryEntry;
+import mipsy.types.NoMoreInstructionsException;
 import mipsy.types.Register;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 /**
@@ -17,20 +19,20 @@ import java.util.function.Consumer;
 public class MIPSCore {
     public ControlComponent controlComponent = new ControlComponent();
 
-    public DataPhase[] dataPhases = new DataPhase[] {
-            new IF(this),
-            new ID(this),
-            new EX(this),
-            new MEM(this),
-            new WB(this)
-    };
+    public IF IF = new IF(this);
+    public ID ID = new ID(this);
+    public EX EX = new EX(this);
+    public MEM MEM = new MEM(this);
+    public WB WB = new WB(this);
+
+    public EXMEM EXMEM = new EXMEM();
+    public IFID IFID = new IFID();
+    public IDEX IDEX = new IDEX();
+    public MEMWB MEMWB = new MEMWB();
 
     public void reset() {
-        for ( DataPhase phase : dataPhases )
-            if ( phase instanceof IF )
-                ((IF)phase).pc = 0;
+        IF.reset();
     }
-
 
     public HashMap<String, Register> registers = new HashMap<>();
 
@@ -56,16 +58,19 @@ public class MIPSCore {
     }
 
 
-    public void step(Consumer<String> logger) {
-        ((WB)dataPhases[dataPhases.length - 1]).ifPhase = (IF)dataPhases[0];
+    public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        logger.accept("---BEGIN---");
 
-        logger.accept("----STEP BEGIN----");
-        DataPhase prevPhase = null;
-        for ( DataPhase phase : dataPhases ) {
-            phase.receiveData(prevPhase);
-            phase.step(logger);
-            prevPhase = phase;
-        }
-        logger.accept("----STEP END----");
+        IF.step(logger);
+
+        ID.step(logger);
+
+        EX.step(logger);
+
+        MEM.step(logger);
+
+        WB.step(logger);
+
+        logger.accept("---END---");
     }
 }

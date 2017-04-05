@@ -33,6 +33,11 @@ public class InstructionBne extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return true;
+    }
+
+    @Override
     public int getCoded() {
         int res = 0b000101;
 

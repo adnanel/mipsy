@@ -45,6 +45,11 @@ public class InstructionSw extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public int getCoded() {
         int res = 0b101011;
 

@@ -33,6 +33,11 @@ public class InstructionSlti extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return true;
+    }
+
+    @Override
     public int getCoded() {
         int res = 0b001010;
 

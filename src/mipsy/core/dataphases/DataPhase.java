@@ -1,6 +1,7 @@
 package mipsy.core.dataphases;
 
 import mipsy.core.MIPSCore;
+import mipsy.types.NoMoreInstructionsException;
 
 import java.util.function.Consumer;
 
@@ -9,15 +10,10 @@ import java.util.function.Consumer;
  */
 public abstract class DataPhase {
     MIPSCore core;
-    DataPhase prevPhase;
 
     public DataPhase(MIPSCore core) {
         this.core = core;
     }
 
-    public void receiveData(DataPhase src) {
-        prevPhase = src;
-    }
-
-    public abstract void step(Consumer<String> logger);
+    public abstract void step(Consumer<String> logger) throws NoMoreInstructionsException;
 }

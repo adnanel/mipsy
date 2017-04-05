@@ -57,6 +57,11 @@ public class InstructionOr extends Instruction {
     }
 
     @Override
+    public boolean canBranch() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return String.format("or %s, %s, %s", dest, opA, opB);
     }
