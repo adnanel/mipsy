@@ -152,7 +152,8 @@ public class MainController implements Initializable {
 
     @FXML
     protected void toolbarStepMIPS(ActionEvent event) {
-        taCode.setEditable(false);
+        setInputLock(true);
+
         mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
 
         mipsCore.step(logger);
@@ -160,9 +161,18 @@ public class MainController implements Initializable {
         fillRegisters(mipsCore.registers);
     }
 
+    protected void setInputLock(boolean lock) {
+        taCode.setDisable(lock);
+        lvRegisters.setDisable(lock);
+        lvMem1.setDisable(lock);
+        lvMem2.setDisable(lock);
+        lvMem2.setDisable(lock);
+    }
+
     @FXML
     protected void toolbarResetMIPS(ActionEvent event) {
-        taCode.setEditable(true);
+        setInputLock(false);
+
         mipsCore.reset();
         taLog.setText("");
 
@@ -171,6 +181,10 @@ public class MainController implements Initializable {
 
     @FXML
     protected void toolbarRunMIPS(ActionEvent event) {
+        setInputLock(true);
+
+        mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
+
         taLog.setText(taLog.getText() + "\n\n\n\n\n\n\n\n\n");
         taLog.setScrollTop(9999999);
         try {
@@ -180,6 +194,8 @@ public class MainController implements Initializable {
             logger.accept("MIPS - RUN FINISHED" );
         }
         fillRegisters(mipsCore.registers);
+
+        setInputLock(false);
     }
 
     @FXML
@@ -206,6 +222,8 @@ public class MainController implements Initializable {
 
             fillCode(project.instructions);
             fillRegisters(mipsCore.registers);
+
+            toolbarResetMIPS(event);
         }
     }
 }
