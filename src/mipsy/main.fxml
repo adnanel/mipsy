@@ -14,7 +14,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -22,6 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ScrollPane?>
 <GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mipsy.MainController">
    <columnConstraints>
       <ColumnConstraints />
@@ -127,6 +129,19 @@
                   </content>
                 </TitledPane>
 
+                  <TitledPane animated="false" text="Datapath">
+                      <content>
+                          <ScrollPane>
+                              <content>
+                                  <ImageView pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                      <image>
+                                          <Image url="@ui/ra_mipsy.png" />
+                                      </image>
+                                  </ImageView>
+                              </content>
+                          </ScrollPane>
+                      </content>
+                  </TitledPane>
               </panes>
             </Accordion>
          </center></BorderPane>

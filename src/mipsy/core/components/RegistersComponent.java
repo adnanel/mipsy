@@ -12,7 +12,6 @@ public class RegistersComponent {
     //input pins
     private int readRegister1;
     private int readRegister2;
-    private int writeData;
     private int regWrite;
     private int writeRegister;
 
@@ -39,7 +38,6 @@ public class RegistersComponent {
         }
         String destRegister = Register.getMipsRegisterNames()[writeRegister];
         logger.accept(String.format("%s: Writing %s into register %s", name, "0x" + Integer.toHexString(writeData), destRegister));
-        this.writeData = writeData;
 
         Register reg = registers.computeIfAbsent(destRegister, r -> new Register(r, 0));
         reg.value = writeData;
