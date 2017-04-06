@@ -16,10 +16,17 @@ public class MEM extends DataPhase {
         super(core);
     }
 
+    private int MemToReg;
+    private int RegWrite;
+    private int exmemOUT2;
+    private int exmemOUT4;
+
+    private boolean isHalt;
+
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
         EXMEM exmem = core.EXMEM;
-        MEMWB memwb = core.MEMWB;
+        if ( exmem.OUT3 == null ) return;
 
         core.IF.PCSrc = exmem.Branch * exmem.OUT1;
         core.IF.EX_MEM_OUT0 = exmem.OUT0;
@@ -32,10 +39,23 @@ public class MEM extends DataPhase {
 
         memoryComponent.execute(logger);
 
+        MemToReg = exmem.MemToReg;
+        RegWrite = exmem.RegWrite;
+        exmemOUT2 = exmem.OUT2;
+        exmemOUT4 = exmem.OUT4;
+
+        isHalt = exmem.isHalt;
+    }
+
+    @Override
+    public void writeResults(Consumer<String> logger) {
+        MEMWB memwb = core.MEMWB;
+
         memwb.OUT0 = memoryComponent.getReadData(logger);
-        memwb.OUT1 = exmem.OUT2;
-        memwb.OUT2 = exmem.OUT4;
-        memwb.MemToReg = exmem.MemToReg;
-        memwb.RegWrite = exmem.RegWrite;
+        memwb.OUT1 = exmemOUT2;
+        memwb.OUT2 = exmemOUT4;
+        memwb.MemToReg = MemToReg;
+        memwb.RegWrite = RegWrite;
+        memwb.isHalt = isHalt;
     }
 }

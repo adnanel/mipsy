@@ -8,4 +8,6 @@ import mipsy.types.Instruction;
 public class IFID {
     public int OUT0;
     public Instruction OUT1;
+
+    public boolean isHalt;
 }

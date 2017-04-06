@@ -32,6 +32,9 @@ public class MIPSCore {
 
     public void reset() {
         IF.reset();
+        if ( this.dataPath != null ) this.dataPath.dispose();
+
+        this.dataPath = new DataPath(this, IF, ID, MEM, EX, WB);
     }
 
     public HashMap<String, Register> registers = new HashMap<>();
@@ -42,10 +45,17 @@ public class MIPSCore {
 
     public List<Instruction> instructions = new ArrayList<>();
 
+    private static DataPath dataPath;
+
+    public static void Dispose() {
+        if ( dataPath != null ) dataPath.dispose();
+    }
+
     public MIPSCore(HashMap<String, Register> registers, HashMap<Integer, MemoryEntry> memory, List<Instruction> instructions) {
         this.registers = registers;
         this.memory = memory;
         this.instructions = instructions;
+        this.dataPath = new DataPath(this, IF, ID, MEM, EX, WB);
     }
 
 
@@ -55,21 +65,26 @@ public class MIPSCore {
             this.registers.put( reg.name, reg );
 
         this.memory = memory;
+        this.dataPath = new DataPath(this, IF, ID, MEM, EX, WB);
     }
 
 
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger.accept("---BEGIN---");
 
-        IF.step(logger);
+        while ( !WB.isHalt ) {
+            IF.step(logger);
+            ID.step(logger);
+            EX.step(logger);
+            MEM.step(logger);
+            WB.step(logger);
 
-        ID.step(logger);
-
-        EX.step(logger);
-
-        MEM.step(logger);
-
-        WB.step(logger);
+            IF.writeResults(logger);
+            ID.writeResults(logger);
+            EX.writeResults(logger);
+            MEM.writeResults(logger);
+            WB.writeResults(logger);
+        }
 
         logger.accept("---END---");
     }

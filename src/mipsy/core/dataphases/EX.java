@@ -6,6 +6,7 @@ import mipsy.core.components.ALUComponent;
 import mipsy.core.components.ALUControllerComponent;
 import mipsy.core.components.MUXComponent;
 import mipsy.types.NoMoreInstructionsException;
+import mipsy.types.Register;
 
 import java.util.function.Consumer;
 
@@ -25,12 +26,22 @@ public class EX extends DataPhase {
         super(core);
     }
 
+    private Register idexout2;
+    private int Branch;
+    private int MemRead;
+    private int MemToReg;
+    private int MemWrite;
+    private int RegWrite;
+    private boolean isHalt;
+
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
         IDEX idex = core.IDEX;
-        EXMEM exmem = core.EXMEM;
+        if ( idex.OUT1 == null ) return;
 
-        logger.accept("EX: Starting EX cycle, data received from IDEX:");
+        isHalt = idex.isHalt;
+
+        logger.accept("EX: START");
 
         mux2.setA(idex.OUT4);
         mux2.setB(idex.OUT5);
@@ -51,15 +62,32 @@ public class EX extends DataPhase {
         alu2.setOpA(logger, idex.OUT0);
         alu2.setControl(logger, ALUComponent.CONTROL_ADD);
 
+        idexout2 = idex.OUT2;
+
+        Branch = idex.Branch;
+        MemRead = idex.MemRead;
+        MemToReg = idex.MemToReg;
+        MemWrite = idex.MemWrite;
+        RegWrite = idex.RegWrite;
+
+        logger.accept("EX: START");
+    }
+
+    @Override
+    public void writeResults(Consumer<String> logger) {
+        EXMEM exmem = core.EXMEM;
+
         exmem.OUT4 = mux2.getResult(logger);
-        exmem.OUT3 = idex.OUT2;
+        exmem.OUT3 = idexout2;
         exmem.OUT2 = alu3.getResult(logger);
         exmem.OUT1 = alu3.getZero();
         exmem.OUT0 = alu2.getResult(logger);
-        exmem.Branch = idex.Branch;
-        exmem.MemRead = idex.MemRead;
-        exmem.MemToReg = idex.MemToReg;
-        exmem.MemWrite = idex.MemWrite;
-        exmem.RegWrite = idex.RegWrite;
+        exmem.Branch = Branch;
+        exmem.MemRead = MemRead;
+        exmem.MemToReg = MemToReg;
+        exmem.MemWrite = MemWrite;
+        exmem.RegWrite = RegWrite;
+
+        exmem.isHalt = isHalt;
     }
 }

@@ -16,4 +16,5 @@ public abstract class DataPhase {
     }
 
     public abstract void step(Consumer<String> logger) throws NoMoreInstructionsException;
+    public abstract void writeResults(Consumer<String> logger);
 }

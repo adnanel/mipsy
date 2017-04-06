@@ -22,4 +22,6 @@ public class IDEX {
     public int OUT3;
     public int OUT4;
     public int OUT5;
+
+    public boolean isHalt;
 }

@@ -3,6 +3,7 @@ package mipsy.core.dataphases;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
 import mipsy.core.components.MUXComponent;
+import mipsy.instructions.InstructionHalt;
 import mipsy.types.Instruction;
 import mipsy.types.NoMoreInstructionsException;
 
@@ -17,6 +18,7 @@ public class IF extends DataPhase {
     private MUXComponent mux1 = new MUXComponent("MUX1");
     private int pc = 0;
     List<Instruction> instructions;
+    private Instruction currInstruction;
 
     //povratne sprege
     public int PCSrc = 0;
@@ -58,9 +60,15 @@ public class IF extends DataPhase {
             throw new NoMoreInstructionsException();
         }
 
+    }
+
+    @Override
+    public void writeResults(Consumer<String> logger) {
+        if ( currInstruction == null ) return;
 
         logger.accept(String.format("IF: Fetched instruction \"%s\" coded as 0x%s", currInstruction.toString(), Integer.toHexString(currInstruction.getCoded())));
         core.IFID.OUT0 = ALU1_RES;
         core.IFID.OUT1 = currInstruction;
+        core.IFID.isHalt = currInstruction instanceof InstructionHalt;
     }
 }

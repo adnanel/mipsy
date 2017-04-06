@@ -14,6 +14,8 @@ import mipsy.ui.listviewcells.ListViewCellRegister;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class MainController implements Initializable {
@@ -42,12 +44,19 @@ public class MainController implements Initializable {
     private TextArea taCode;
 
     Consumer<String> logger = new Consumer<String>() {
+        Lock lock = new ReentrantLock();
+
         @Override
         public void accept(String s) {
-            Date date = new Date();
-            String timestamp = String.format("%02d:%02d:%02d: ", date.getHours(), date.getMinutes(), date.getSeconds());
-            taLog.setText(taLog.getText() + timestamp + s + "\n");
-            taLog.positionCaret(taLog.getText().length());
+            lock.lock();
+            try {
+                Date date = new Date();
+                String timestamp = String.format("%02d:%02d:%02d: ", date.getHours(), date.getMinutes(), date.getSeconds());
+                taLog.setText(taLog.getText() + timestamp + s + "\n");
+                taLog.positionCaret(taLog.getText().length());
+            } finally {
+                lock.unlock();
+            }
         }
     };
 

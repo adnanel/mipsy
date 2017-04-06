@@ -17,4 +17,6 @@ public class EXMEM {
     public int OUT2;
     public Register OUT3;
     public int OUT4;
+
+    public boolean isHalt;
 }

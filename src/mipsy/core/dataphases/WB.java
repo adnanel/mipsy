@@ -16,6 +16,8 @@ public class WB extends DataPhase {
         super(core);
     }
 
+    public boolean isHalt = false;
+
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
         MEMWB memwb = core.MEMWB;
@@ -27,5 +29,12 @@ public class WB extends DataPhase {
         core.ID.registersComponent.setRegWrite(memwb.RegWrite);
         core.ID.registersComponent.setWriteRegister(memwb.OUT2);
         core.ID.registersComponent.setWriteData(logger, mux4.getResult(logger));
+
+        isHalt = memwb.isHalt;
+    }
+
+    @Override
+    public void writeResults(Consumer<String> logger) {
+
     }
 }

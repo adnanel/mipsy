@@ -18,8 +18,12 @@ public class ID extends DataPhase {
     // http://prntscr.com/esxho2
 
     RegistersComponent registersComponent = new RegistersComponent();
-    ControlComponent control = new ControlComponent();
+    private ControlComponent control = new ControlComponent();
 
+
+    private Register reg1;
+    private Register reg2;
+    private int currInst;
 
     public ID(MIPSCore core) {
         super(core);
@@ -28,8 +32,9 @@ public class ID extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        if ( core.IFID.OUT1 == null ) return;
 
-        int currInst = core.IFID.OUT1.getCoded();
+        currInst = core.IFID.OUT1.getCoded();
 
         int readReg1 = Utility.SubBits(currInst, 21, 26);
         int readReg2 = Utility.SubBits(currInst, 16, 21);
@@ -39,11 +44,15 @@ public class ID extends DataPhase {
         registersComponent.setReadRegister1(readReg1);
         registersComponent.setReadRegister2(readReg2);
 
-        Register reg1 = registersComponent.getReadData1(logger);
-        Register reg2 = registersComponent.getReadData2(logger);
+        reg1 = registersComponent.getReadData1(logger);
+        reg2 = registersComponent.getReadData2(logger);
 
         control.setCurrInstruction(core.IFID.OUT1);
 
+    }
+
+    @Override
+    public void writeResults(Consumer<String> logger) {
         core.IDEX.AluOp = control.getAluOp();
         core.IDEX.AluSrc = control.getAluSrc();
         core.IDEX.MemRead = control.getMemRead();
@@ -60,5 +69,7 @@ public class ID extends DataPhase {
         core.IDEX.OUT3 = SignExtendComponent.extend(Utility.SubBits(currInst, 0, 16));
         core.IDEX.OUT4 = Utility.SubBits(currInst,16, 21);
         core.IDEX.OUT5 = Utility.SubBits(currInst,11,16);
+
+        core.IDEX.isHalt = currInst == 0;
     }
 }

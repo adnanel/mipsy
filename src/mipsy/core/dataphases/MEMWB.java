@@ -10,4 +10,6 @@ public class MEMWB {
     public int OUT0;
     public int OUT1;
     public int OUT2;
+
+    public boolean isHalt;
 }
