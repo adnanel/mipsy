@@ -21,13 +21,6 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                MIPSCore.Dispose();
-            }
-        });
     }
 
 

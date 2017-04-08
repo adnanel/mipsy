@@ -5,6 +5,7 @@ import mipsy.core.MIPSCore;
 import mipsy.core.components.ControlComponent;
 import mipsy.core.components.RegistersComponent;
 import mipsy.core.components.SignExtendComponent;
+import mipsy.types.Instruction;
 import mipsy.types.NoMoreInstructionsException;
 import mipsy.types.Register;
 
@@ -25,6 +26,8 @@ public class ID extends DataPhase {
     private Register reg2;
     private int currInst;
 
+    private Instruction currInstruction;
+
     public ID(MIPSCore core) {
         super(core);
 
@@ -32,12 +35,47 @@ public class ID extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
-        if ( core.IFID.OUT1 == null ) return;
+        logger = Utility.appendToLogger("ID - ", logger);
+
+        if ( core.IFID.OUT1 == null ) {
+            logger.accept("No work to do, skipping...");
+            return;
+        }
+
+        logger.accept("START");
 
         currInst = core.IFID.OUT1.getCoded();
+        currInstruction = core.IFID.OUT1;
 
         int readReg1 = Utility.SubBits(currInst, 21, 26);
         int readReg2 = Utility.SubBits(currInst, 16, 21);
+
+        //provjera hazarda
+        boolean isStalling = false;
+        if ( control.getRegWrite() == 1 ) {
+            if ( readReg1 != 0 &&
+                    (readReg1 == core.IDEX.OUT5 || core.IDEX.OUT4 == readReg1) ) {
+                logger.accept(String.format("Current instruction is accessing register 0x%s, stalling!", Integer.toHexString(readReg1)));
+                isStalling = true;
+            }
+
+            if ( readReg2 != 0 &&
+                    (readReg2 == core.IDEX.OUT5 || core.IDEX.OUT4 == readReg2) ) {
+                logger.accept(String.format("Current instruction is accessing register 0x%s, stalling!", Integer.toHexString(readReg2)));
+                isStalling = true;
+            }
+        }
+
+
+        if ( isStalling ) {
+            //logger.accept("Current instruction is writing to at least 1 register the new instruction needs to write to, stalling!");
+            core.IF.isStalling = true;
+
+            logger.accept("END");
+            return;
+        } else core.IF.isStalling = false;
+
+
 
 
         registersComponent.setRegisters(core.registers);
@@ -49,10 +87,13 @@ public class ID extends DataPhase {
 
         control.setCurrInstruction(core.IFID.OUT1);
 
+        logger.accept("END");
     }
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        if ( core.IF.isStalling ) return;
+
         core.IDEX.AluOp = control.getAluOp();
         core.IDEX.AluSrc = control.getAluSrc();
         core.IDEX.MemRead = control.getMemRead();
@@ -71,5 +112,6 @@ public class ID extends DataPhase {
         core.IDEX.OUT5 = Utility.SubBits(currInst,11,16);
 
         core.IDEX.isHalt = currInst == 0;
+        core.IDEX.currentInstruction = currInstruction;
     }
 }

@@ -163,7 +163,7 @@ public class MainController implements Initializable {
         mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
         boolean result = true;
         try {
-            mipsCore.step(logger);
+            mipsCore.step(logger, true);
         } catch ( NoMoreInstructionsException ex ) {
             logger.accept("No more instructions left to step!");
             result = false;
@@ -185,7 +185,8 @@ public class MainController implements Initializable {
     protected void toolbarResetMIPS(ActionEvent event) {
         setInputLock(false);
 
-        mipsCore.reset();
+        mipsCore = new MIPSCore(mipsCore.registers, mipsCore.memory, mipsCore.instructions);
+
         taLog.setText("");
 
         logger.accept("MIPSY RESET - PC SET TO 0");
@@ -201,7 +202,7 @@ public class MainController implements Initializable {
         taLog.setScrollTop(9999999);
         try {
             logger.accept("MIPS - RUN BEGIN");
-            while ( true ) mipsCore.step(logger);
+            mipsCore.step(logger, false);
         } catch ( Exception ex ) {
             logger.accept("MIPS - RUN FINISHED" );
         }

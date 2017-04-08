@@ -1,5 +1,6 @@
 package mipsy.instructions;
 
+import mipsy.core.MIPSCore;
 import mipsy.types.Instruction;
 import mipsy.types.Register;
 
@@ -61,6 +62,7 @@ public class InstructionAdd extends Instruction {
     public boolean canBranch() {
         return false;
     }
+
 
     @Override
     public String toString() {

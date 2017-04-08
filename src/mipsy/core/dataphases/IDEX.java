@@ -1,5 +1,6 @@
 package mipsy.core.dataphases;
 
+import mipsy.types.Instruction;
 import mipsy.types.Register;
 
 /**
@@ -24,4 +25,6 @@ public class IDEX {
     public int OUT5;
 
     public boolean isHalt;
+
+    public Instruction currentInstruction;
 }

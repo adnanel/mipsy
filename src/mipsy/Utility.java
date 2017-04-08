@@ -1,5 +1,7 @@
 package mipsy;
 
+import java.util.function.Consumer;
+
 /**
  * Created on 3/30/2017.
  */
@@ -29,5 +31,9 @@ public class Utility {
         s = ReverseString(s.substring( from, to ));
 
         return Integer.parseInt( s, 2 );
+    }
+
+    public static Consumer<String> appendToLogger(final String prefix, final Consumer<String> logger) {
+        return s -> logger.accept(prefix + s);
     }
 }

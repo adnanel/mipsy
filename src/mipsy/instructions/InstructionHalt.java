@@ -29,4 +29,8 @@ public class InstructionHalt extends Instruction {
     }
 
 
+    @Override
+    public String toString() {
+        return "halt";
+    }
 }

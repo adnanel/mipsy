@@ -1,6 +1,7 @@
 package mipsy.types;
 
 
+import mipsy.core.MIPSCore;
 import mipsy.instructions.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -131,5 +132,4 @@ public abstract class Instruction {
 
     public abstract Type getType();
     public abstract boolean canBranch();
-
 }

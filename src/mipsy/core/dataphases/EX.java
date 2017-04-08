@@ -36,12 +36,17 @@ public class EX extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        logger = Utility.appendToLogger("EX - ", logger);
+
         IDEX idex = core.IDEX;
-        if ( idex.OUT1 == null ) return;
+        if ( idex.OUT1 == null ) {
+            logger.accept("No work to do, skipping...");
+            return;
+        }
 
         isHalt = idex.isHalt;
 
-        logger.accept("EX: START");
+        logger.accept("START");
 
         mux2.setA(idex.OUT4);
         mux2.setB(idex.OUT5);
@@ -70,7 +75,7 @@ public class EX extends DataPhase {
         MemWrite = idex.MemWrite;
         RegWrite = idex.RegWrite;
 
-        logger.accept("EX: START");
+        logger.accept("END");
     }
 
     @Override

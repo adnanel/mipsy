@@ -1,5 +1,6 @@
 package mipsy.core.dataphases;
 
+import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.MemoryComponent;
 import mipsy.types.NoMoreInstructionsException;
@@ -25,8 +26,15 @@ public class MEM extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        logger = Utility.appendToLogger("MEM - ", logger);
+
         EXMEM exmem = core.EXMEM;
-        if ( exmem.OUT3 == null ) return;
+        if ( exmem.OUT3 == null ) {
+            logger.accept("No work to do, skipping...");
+            return;
+        }
+
+        logger.accept("START");
 
         core.IF.PCSrc = exmem.Branch * exmem.OUT1;
         core.IF.EX_MEM_OUT0 = exmem.OUT0;
@@ -45,6 +53,8 @@ public class MEM extends DataPhase {
         exmemOUT4 = exmem.OUT4;
 
         isHalt = exmem.isHalt;
+
+        logger.accept("END");
     }
 
     @Override

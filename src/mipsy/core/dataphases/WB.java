@@ -1,5 +1,6 @@
 package mipsy.core.dataphases;
 
+import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.MUXComponent;
 import mipsy.types.NoMoreInstructionsException;
@@ -20,6 +21,10 @@ public class WB extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        logger = Utility.appendToLogger("WB - ", logger);
+
+        logger.accept("START");
+
         MEMWB memwb = core.MEMWB;
 
         mux4.setA(memwb.OUT1);
@@ -31,6 +36,9 @@ public class WB extends DataPhase {
         core.ID.registersComponent.setWriteData(logger, mux4.getResult(logger));
 
         isHalt = memwb.isHalt;
+
+        logger.accept("END");
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package mipsy.core.dataphases;
 
+import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
 import mipsy.core.components.MUXComponent;
@@ -25,8 +26,13 @@ public class IF extends DataPhase {
     public int EX_MEM_OUT0 = 0;
     public int ALU1_RES = 0;
 
+    public boolean isStalling = false;
+
     public void reset() {
         pc = 0;
+        ALU1_RES = 0;
+        EX_MEM_OUT0 = 0;
+        PCSrc = 0;
     }
 
     public IF(MIPSCore core) {
@@ -35,15 +41,28 @@ public class IF extends DataPhase {
 
     @Override
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+        logger = Utility.appendToLogger("IF - ", logger);
+
+        if ( isStalling ) {
+            logger.accept("STALLING");
+            return;
+        }
+
+        if ( core.IDEX.Branch == 1 ) {
+            logger.accept("Current instruction is a branching instruction, stalling!");
+            isStalling = true;
+            return;
+        }
+
         instructions = core.instructions;
-        logger.accept("IF: Starting IF cycle");
+        logger.accept("START");
 
         mux1.setSelector(PCSrc);
         mux1.setA(ALU1_RES);
         mux1.setB(EX_MEM_OUT0);
 
         pc = mux1.getResult(logger);
-        logger.accept(String.format("IF: Current PC is 0x%s", Integer.toHexString(pc)));
+        logger.accept(String.format("Current PC is 0x%s", Integer.toHexString(pc)));
 
         alu1.setControl(logger, ALUComponent.CONTROL_ADD);
         alu1.setOpB(logger, 4);
@@ -52,19 +71,20 @@ public class IF extends DataPhase {
         ALU1_RES = alu1.getResult(logger);
 
 
-        Instruction currInstruction;
         if ( instructions.size() > pc / 4 )
             currInstruction = instructions.get(pc / 4);
         else {
-            logger.accept("IF: No instructoin found at current PC address!");
-            throw new NoMoreInstructionsException();
+            logger.accept("No instruction found at current PC address!");
+            currInstruction = new InstructionHalt(null);
         }
 
+        logger.accept("END");
     }
 
     @Override
     public void writeResults(Consumer<String> logger) {
         if ( currInstruction == null ) return;
+        if ( isStalling ) return;
 
         logger.accept(String.format("IF: Fetched instruction \"%s\" coded as 0x%s", currInstruction.toString(), Integer.toHexString(currInstruction.getCoded())));
         core.IFID.OUT0 = ALU1_RES;
