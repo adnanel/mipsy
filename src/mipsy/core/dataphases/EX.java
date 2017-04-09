@@ -75,6 +75,8 @@ public class EX extends DataPhase {
         MemWrite = idex.MemWrite;
         RegWrite = idex.RegWrite;
 
+        idex.clear();
+
         logger.accept("END");
     }
 

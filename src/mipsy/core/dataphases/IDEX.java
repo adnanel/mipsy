@@ -27,4 +27,9 @@ public class IDEX {
     public boolean isHalt;
 
     public Instruction currentInstruction;
+
+    public void clear() {
+        RegWrite = RegDst = AluSrc = AluOp = MemWrite = MemRead = Branch = MemToReg
+                 = OUT0 = OUT3 = OUT4 = OUT5 = 0;
+    }
 }

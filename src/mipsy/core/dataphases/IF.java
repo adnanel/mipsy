@@ -28,6 +28,9 @@ public class IF extends DataPhase {
 
     public boolean isStalling = false;
 
+    private int backupPC = 0;
+    private boolean wasBranching = false;
+
     public void reset() {
         pc = 0;
         ALU1_RES = 0;
@@ -45,12 +48,18 @@ public class IF extends DataPhase {
 
         if ( isStalling ) {
             logger.accept("STALLING");
-            return;
-        }
 
-        if ( core.IDEX.Branch == 1 ) {
+            if ( wasBranching && pc != backupPC ) {
+                wasBranching = false;
+                isStalling = false;
+            } else
+                return;
+        } else if ( core.IDEX.Branch == 1 ) {
             logger.accept("Current instruction is a branching instruction, stalling!");
             isStalling = true;
+            wasBranching = true;
+            backupPC = pc;
+
             return;
         }
 

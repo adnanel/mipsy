@@ -66,6 +66,26 @@ public class ID extends DataPhase {
             }
         }
 
+        if (core.EXMEM.RegWrite == 1) {
+            if (core.EXMEM.OUT4 == readReg1 || core.EXMEM.OUT4 == readReg2) {
+                if (core.EXMEM.OUT4 != 0) {
+                    logger.accept(String.format("EXMEM.OUT4 is 0x%s, which is a register I need, stalling!", Integer.toHexString(core.EXMEM.OUT4)));
+                    isStalling = true;
+                }
+            }
+        }
+
+        if (core.MEMWB.RegWrite == 1) {
+            if (core.MEMWB.OUT2 == readReg1 || core.MEMWB.OUT2 == readReg2) {
+                if (core.MEMWB.OUT2 != 0) {
+                    logger.accept(String.format("MEMWB.OUT2 is 0x%s, which is a register I need, stalling!", Integer.toHexString(core.MEMWB.OUT2)));
+                    isStalling = true;
+                }
+            }
+        }
+
+
+
 
         if ( isStalling ) {
             //logger.accept("Current instruction is writing to at least 1 register the new instruction needs to write to, stalling!");

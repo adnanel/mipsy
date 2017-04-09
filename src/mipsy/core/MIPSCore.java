@@ -57,9 +57,10 @@ public class MIPSCore {
 
 
     public void step(Consumer<String> logger, boolean justOne) throws NoMoreInstructionsException {
+        int i = 1;
         logger.accept("---BEGIN---");
         while ( !WB.isHalt ) {
-            logger.accept("--CYCLE BEGIN--");
+            logger.accept(String.format("--CYCLE %d BEGIN--", i++));
             IF.step(logger);
             ID.step(logger);
             EX.step(logger);
