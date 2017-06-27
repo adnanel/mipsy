@@ -1,15 +1,24 @@
 package mipsy;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
 import mipsy.types.*;
+import mipsy.ui.PCLineNumberFactory;
 import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+import org.omg.CORBA.Environment;
 
 import java.io.File;
 import java.net.URL;
@@ -17,6 +26,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
+import java.util.function.IntFunction;
 
 public class MainController implements Initializable {
     private MIPSCore mipsCore;
@@ -41,7 +51,7 @@ public class MainController implements Initializable {
     private TextArea taLog;
 
     @FXML
-    private TextArea taCode;
+    private CodeArea taCode;
 
     Consumer<String> logger = new Consumer<String>() {
         Lock lock = new ReentrantLock();
@@ -96,7 +106,7 @@ public class MainController implements Initializable {
             sb.append(i).append('\n');
         }
 
-        taCode.setText(sb.toString());
+        taCode.replaceText(sb.toString());
     }
 
     private void fillRegisters(HashMap<String, Register> registers) {
@@ -114,6 +124,18 @@ public class MainController implements Initializable {
         mipsCore = new MIPSCore(registers, new HashMap<>());
 
         fillRegisters(mipsCore.registers);
+        taCode.replaceText("add $s1, $s2, $s3;\nadd $s4, $s5, $s6;\nhalt;\n");
+
+        IntFunction<Node> numberFactory = PCLineNumberFactory.get(taCode);
+        IntFunction<Node> graphicFactory = line -> {
+            HBox hbox = new HBox(
+                    numberFactory.apply(line));
+            hbox.setAlignment(Pos.CENTER_LEFT);
+            return hbox;
+        };
+
+        taCode.setParagraphGraphicFactory(graphicFactory);
+
     }
 
     private int getMemTo() {
