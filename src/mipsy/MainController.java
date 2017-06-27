@@ -46,13 +46,16 @@ public class MainController implements Initializable {
     Consumer<String> logger = new Consumer<String>() {
         Lock lock = new ReentrantLock();
 
+        StringBuilder sb = new StringBuilder();
+
         @Override
         public void accept(String s) {
             lock.lock();
             try {
                 Date date = new Date();
                 String timestamp = String.format("%02d:%02d:%02d: ", date.getHours(), date.getMinutes(), date.getSeconds());
-                taLog.setText(taLog.getText() + timestamp + s + "\n");
+                sb.append(timestamp).append(s).append('\n');
+                taLog.setText(sb.toString());
                 taLog.positionCaret(taLog.getText().length());
             } finally {
                 lock.unlock();

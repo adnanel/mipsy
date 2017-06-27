@@ -5,6 +5,7 @@ import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
 import mipsy.core.components.ALUControllerComponent;
 import mipsy.core.components.MUXComponent;
+import mipsy.types.Instruction;
 import mipsy.types.NoMoreInstructionsException;
 import mipsy.types.Register;
 
@@ -56,7 +57,11 @@ public class EX extends DataPhase {
         mux3.setB(idex.OUT3);
         mux3.setSelector(idex.AluSrc);
 
-        aluControl.setInstruction(Utility.SubBits(idex.OUT3, 0, 6));
+        if ( idex.currentInstruction.getType() == Instruction.Type.RType )
+            aluControl.setInstruction(Utility.SubBits(idex.OUT3, 0, 6));
+        else
+            aluControl.setInstruction(Utility.SubBits(idex.currentInstruction.getCoded(), 32 - 6, 32));
+
         aluControl.setAluOp(idex.AluOp);
 
         alu3.setControl(logger, aluControl.getResult(logger));

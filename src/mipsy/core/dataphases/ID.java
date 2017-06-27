@@ -106,13 +106,17 @@ public class ID extends DataPhase {
         reg2 = registersComponent.getReadData2(logger);
 
         control.setCurrInstruction(core.IFID.OUT1);
+        core.IFID.OUT1 = null;
 
         logger.accept("END");
     }
 
     @Override
     public void writeResults(Consumer<String> logger) {
-        if ( core.IF.isStalling ) return;
+        if ( core.IF.isStalling ) {
+            control.reset();
+            return;
+        }
 
         core.IDEX.AluOp = control.getAluOp();
         core.IDEX.AluSrc = control.getAluSrc();
@@ -122,6 +126,7 @@ public class ID extends DataPhase {
         core.IDEX.Branch = control.getBranch();
         core.IDEX.RegDst = control.getRegDst();
         core.IDEX.RegWrite = control.getRegWrite();
+        control.reset();
 
         core.IDEX.OUT0 = core.IFID.OUT0;
         core.IDEX.OUT1 = reg1;

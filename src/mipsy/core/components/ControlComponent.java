@@ -20,6 +20,11 @@ public class ControlComponent {
         this.currInstructionClass = currInstruction.getClass();
     }
 
+    public void reset() {
+        currInstruction = 0;
+        currInstructionClass = null;
+    }
+
     public int getRegWrite() {
         if ( currInstructionClass == InstructionLw.class )
             return 1;

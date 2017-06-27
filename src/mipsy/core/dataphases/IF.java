@@ -4,6 +4,7 @@ import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.ALUComponent;
 import mipsy.core.components.MUXComponent;
+import mipsy.instructions.InstructionBeq;
 import mipsy.instructions.InstructionHalt;
 import mipsy.types.Instruction;
 import mipsy.types.NoMoreInstructionsException;
@@ -54,11 +55,12 @@ public class IF extends DataPhase {
                 isStalling = false;
             } else
                 return;
-        } else if ( core.IDEX.Branch == 1 ) {
+        } else if ( core.IDEX.Branch == 1 || (core.IFID.OUT1 != null && core.IFID.OUT1.getClass() == InstructionBeq.class) ) {
             logger.accept("Current instruction is a branching instruction, stalling!");
             isStalling = true;
             wasBranching = true;
             backupPC = pc;
+            currInstruction = null;
 
             return;
         }
@@ -92,6 +94,9 @@ public class IF extends DataPhase {
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        if (core.IFID.OUT1 != null && core.IFID.OUT1.getClass() == InstructionBeq.class) {
+            core.IFID.OUT1 = null;
+        }
         if ( currInstruction == null ) return;
         if ( isStalling ) return;
 
