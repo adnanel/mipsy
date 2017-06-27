@@ -1,14 +1,17 @@
 package mipsy;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
@@ -136,6 +139,32 @@ public class MainController implements Initializable {
 
         taCode.setParagraphGraphicFactory(graphicFactory);
 
+        initParallelScroll();
+    }
+
+    private static ScrollBar getListViewScrollBar(ListView src) {
+        Node n = src.lookup(".scroll-bar");
+        if (n instanceof ScrollBar) {
+            return (ScrollBar)n;
+        }
+        return null;
+    }
+    private static void bindScrollBars(ListView... targets) {
+        Platform.runLater(() -> {
+            ArrayList<ScrollBar> bars = new ArrayList<>(targets.length);
+            for ( ListView lv : targets ) bars.add(getListViewScrollBar(lv));
+
+            for ( ScrollBar sb : bars ) {
+                for ( ScrollBar other : bars ) {
+                    if ( other == sb ) continue;
+
+                    sb.valueProperty().bindBidirectional(other.valueProperty());
+                }
+            }
+        });
+    }
+    private void initParallelScroll() {
+        bindScrollBars(lvMem1, lvMem2, lvMem3);
     }
 
     private int getMemTo() {
@@ -237,8 +266,8 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    protected void memScroll(ActionEvent event) {
-        // todo probaj nekako da se sva tri LVa skrolaju paralelno...
+    protected void memScroll(ScrollEvent event) {
+
     }
 
     @FXML

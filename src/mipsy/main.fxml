@@ -117,9 +117,9 @@
                               </HBox>
                               <HBox>
                                  <children>
-                                    <ListView fx:id="lvMem1" HBox.hgrow="ALWAYS" />
-                                    <ListView fx:id="lvMem2" HBox.hgrow="ALWAYS" />
-                                    <ListView fx:id="lvMem3" HBox.hgrow="ALWAYS" />
+                                    <ListView fx:id="lvMem1" onScroll="#memScroll" HBox.hgrow="ALWAYS" />
+                                    <ListView fx:id="lvMem2" onScroll="#memScroll" HBox.hgrow="ALWAYS" />
+                                    <ListView fx:id="lvMem3" onScroll="#memScroll" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />
