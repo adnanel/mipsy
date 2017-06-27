@@ -127,7 +127,7 @@ public class MainController implements Initializable {
         mipsCore = new MIPSCore(registers, new HashMap<>());
 
         fillRegisters(mipsCore.registers);
-        taCode.replaceText("add $s1, $s2, $s3;\nadd $s4, $s5, $s6;\nhalt;\n");
+        taCode.replaceText("add $s1, $s2, $s3\nadd $s4, $s5, $s6\nhalt\n");
 
         IntFunction<Node> numberFactory = PCLineNumberFactory.get(taCode);
         IntFunction<Node> graphicFactory = line -> {
@@ -213,8 +213,13 @@ public class MainController implements Initializable {
     @FXML
     protected boolean toolbarStepMIPS(ActionEvent event) {
         setInputLock(true);
+        try {
+            mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
+        } catch ( FailedToParseInstructionException ex ) {
+            logger.accept("Failed to parse at line " + ex.line + " (" + ex.lineText + ")");
+            return false;
+        }
 
-        mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
         boolean result = true;
         try {
             mipsCore.step(logger, true);
@@ -250,19 +255,27 @@ public class MainController implements Initializable {
     protected void toolbarRunMIPS(ActionEvent event) {
         setInputLock(true);
 
-        mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
-
-        taLog.setText("");
-        taLog.setScrollTop(9999999);
         try {
-            logger.accept("MIPS - RUN BEGIN");
-            mipsCore.step(logger, false);
-        } catch ( Exception ex ) {
-            logger.accept("MIPS - RUN FINISHED" );
-        }
-        fillRegisters(mipsCore.registers);
+            mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
 
-        setInputLock(false);
+
+            taLog.setText("");
+            taLog.setScrollTop(9999999);
+            try {
+                logger.accept("MIPS - RUN BEGIN");
+                mipsCore.step(logger, false);
+            } catch ( Exception ex ) {
+                logger.accept("MIPS - RUN FINISHED" );
+            }
+            fillRegisters(mipsCore.registers);
+
+        } catch ( FailedToParseInstructionException ex ) {
+            logger.accept("Failed to parse at line " + ex.line + " (" + ex.lineText + ")");
+        } finally {
+
+            setInputLock(false);
+        }
+
     }
 
     @FXML

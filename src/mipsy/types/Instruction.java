@@ -81,14 +81,21 @@ public abstract class Instruction {
         this.arguments = args;
     }
 
-    public static List<Instruction> parseInstructions(String code) {
+    public static List<Instruction> parseInstructions(String code) throws FailedToParseInstructionException {
         List<Instruction> res = new ArrayList<>();
         code = code.replace(System.lineSeparator(), "\n");
         code = code.replace("\r\n", "\n");
 
+        int i = 1;
         for ( String line : code.split("\n") ) {
-            Instruction instruction = Instruction.fromString(line);
-            res.add(instruction);
+            try {
+                Instruction instruction = Instruction.fromString(line);
+                res.add(instruction);
+                ++ i;
+            } catch ( Exception ex ) {
+                ex.printStackTrace();
+                throw new FailedToParseInstructionException(i, line, ex);
+            }
         }
 
         return res;
