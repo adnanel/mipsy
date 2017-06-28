@@ -4,38 +4,38 @@ Work in progress
 
 # Supported instructions
 
-Instruction |      Example     | Working 
-------------|------------------|--------
-Add         |  add $s1,$s2,$s3 |   YES   
-AddI        |  addi $s1,$s2,50 |   YES   
-And         |  and $s1,$s2,$s3 |   YES   
-AndI        |                  |   NO     
-Beq         |                  |   NO   
-Bne         |                  |   NO   
-Halt        |  halt            |   YES   
-J           |                  |   NO   
-Jal         |                  |   NO   
-Jr          |                  |   NO   
-Lb          |                  |   NO   
-Lbu         |                  |   NO   
-Lh          |                  |   NO   
-Lhu         |                  |   NO   
-Ll          |                  |   NO   
-Lui         |                  |   NO   
-Lw          |  lw $s1, 0($s2)  |   YES  
-Nor         |                  |   NO   
-Or          |                  |   NO   
-OrI         |                  |   NO   
-Sb          |                  |   NO   
-Sc          |                  |   NO   
-Sh          |                  |   NO   
-Sll         |                  |   NO   
-Slt         |                  |   NO   
-SltI        |                  |   NO   
-SltIU       |                  |   NO   
-Srl         |                  |   NO   
-Sub         |                  |   NO   
-Sw          |                  |   NO   
+Instruction |      Example     | Working |    Pseudo   
+------------|------------------|------------------------
+Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s1 + $s3
+AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
+And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
+AndI        |                  |   NO    |              
+Beq         |                  |   NO    |             
+Bne         |                  |   NO    |             
+Halt        |  halt            |   YES   |             
+J           |                  |   NO    |             
+Jal         |                  |   NO    |             
+Jr          |                  |   NO    |             
+Lb          |                  |   NO    |             
+Lbu         |                  |   NO    |             
+Lh          |                  |   NO    |             
+Lhu         |                  |   NO    |             
+Ll          |                  |   NO    |             
+Lui         |                  |   NO    |             
+Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]           
+Nor         |                  |   NO    |             
+Or          |                  |   NO    |             
+OrI         |                  |   NO    |             
+Sb          |                  |   NO    |             
+Sc          |                  |   NO    |             
+Sh          |                  |   NO    |             
+Sll         |                  |   NO    |             
+Slt         |                  |   NO    |             
+SltI        |                  |   NO    |             
+SltIU       |                  |   NO    |             
+Srl         |                  |   NO    |             
+Sub         |                  |   NO    |             
+Sw          |                  |   NO    |             
 
 Total:   31
 Working: 5
