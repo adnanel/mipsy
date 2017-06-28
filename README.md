@@ -40,6 +40,12 @@ Sw          |                  |   NO    |
 Total:   31
 Working: 5
 
+# Hazard detection
+
+Currently, hazards are detected and avoided by stalling the pipeline. 
+Forwarding isn't supported right now.
+
+
 # Input files 
 
 MIPSy supports importing source, data and register values from an input file. 
@@ -79,3 +85,4 @@ halt
 # Note: These 3 segments don't have to be in a particular order, also they can be fragmented (e.g. you can define
 #       multiple code segments, MIPSy will combine them into one while loading)
 ```
+
