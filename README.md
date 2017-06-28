@@ -10,13 +10,13 @@ Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
 AndI        |  andi $s1,$s2,50 |   NO    |  $s1 = band( $s2, 50 )
-Beq         |                  |   NO    |             
-Bne         |                  |   NO    |             
+Beq         |  beq $s1,$s2,15  |   NO    |  if $s1 == $s2 then pc += 15 * 4           
+Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
 Halt        |  halt            |   YES   |             
 J           |  j 5             |   NO    |  pc = 4 * 5
-Jal         |                  |   NO    |             
-Jr          |                  |   NO    |             
-Lb          |                  |   NO    |             
+Jal         |  jal 15          |   NO    |              
+Jr          |  jr $s1          |   NO    |  pc = $s1    
+Lb          |  lb $s1, 15($s2) |   NO    |  $s1 = MEMORY[ $s2 + 15 ] & 0xFFFFFF
 Lbu         |                  |   NO    |             
 Lh          |                  |   NO    |             
 Lhu         |                  |   NO    |             
