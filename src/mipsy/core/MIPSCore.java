@@ -30,6 +30,7 @@ public class MIPSCore {
     public IDEX IDEX = new IDEX();
     public MEMWB MEMWB = new MEMWB();
 
+    private int cycleCounter = 0;
 
     public HashMap<String, Register> registers = new HashMap<>();
 
@@ -55,12 +56,16 @@ public class MIPSCore {
         this.memory = memory;
     }
 
+    public int getCycleCount() {
+        return cycleCounter;
+    }
 
     public void step(Consumer<String> logger, boolean justOne) throws NoMoreInstructionsException {
-        int i = 1;
+        if ( WB.isHalt ) throw new NoMoreInstructionsException();
+
         logger.accept("---BEGIN---");
         while ( !WB.isHalt ) {
-            logger.accept(String.format("--CYCLE %d BEGIN--", i++));
+            logger.accept(String.format("--CYCLE %d BEGIN--", ++cycleCounter));
             IF.step(logger);
             ID.step(logger);
             EX.step(logger);

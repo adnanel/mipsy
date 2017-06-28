@@ -35,6 +35,16 @@ public class MainController implements Initializable {
     private MIPSCore mipsCore;
 
     @FXML
+    public Button btStep;
+    @FXML
+    public Button btRun;
+    @FXML
+    public Button btReset;
+
+    @FXML
+    public Label topText;
+
+    @FXML
     private ListView lvRegisters;
 
     @FXML
@@ -185,6 +195,11 @@ public class MainController implements Initializable {
         }
     }
 
+    private void calculateCPI() {
+        logger.accept(String.format("Instructions executed (incl. halt): %d, Total Cycles: %d, CPI: %.2f",
+                mipsCore.instructions.size(), mipsCore.getCycleCount(), ((float)mipsCore.getCycleCount() / mipsCore.instructions.size())));
+    }
+
     @FXML
     protected void memRangeShow(ActionEvent event) {
         fillMemory(getMemFrom(), getMemTo(), mipsCore.memory);
@@ -226,6 +241,9 @@ public class MainController implements Initializable {
         } catch ( NoMoreInstructionsException ex ) {
             logger.accept("No more instructions left to step!");
             result = false;
+            btRun.setDisable(true);
+            btStep.setDisable(true);
+            calculateCPI();
         }
 
         fillRegisters(mipsCore.registers);
@@ -249,11 +267,17 @@ public class MainController implements Initializable {
         taLog.setText("");
 
         logger.accept("MIPSY RESET - PC SET TO 0");
+
+        btRun.setDisable(false);
+        btStep.setDisable(false);
     }
 
     @FXML
     protected void toolbarRunMIPS(ActionEvent event) {
         setInputLock(true);
+
+        btRun.setDisable(true);
+        btStep.setDisable(true);
 
         try {
             mipsCore.instructions = Instruction.parseInstructions(taCode.getText());
@@ -264,8 +288,11 @@ public class MainController implements Initializable {
             try {
                 logger.accept("MIPS - RUN BEGIN");
                 mipsCore.step(logger, false);
+
+                calculateCPI();
             } catch ( Exception ex ) {
                 logger.accept("MIPS - RUN FINISHED" );
+
             }
             fillRegisters(mipsCore.registers);
 

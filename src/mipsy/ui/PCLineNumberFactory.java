@@ -45,7 +45,7 @@ public class PCLineNumberFactory implements IntFunction<Node> {
 
     public Node apply(int idx) {
         Val<String> formatted = this.nParagraphs.map((n) -> {
-            return this.format(idx * 4, n.intValue());
+            return this.format(idx + 1 , n.intValue());
         });
         Label lineNo = new Label();
         lineNo.setFont(DEFAULT_FONT);

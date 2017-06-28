@@ -56,9 +56,10 @@
                      </MenuBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
-                      <Button mnemonicParsing="false" onAction="#toolbarRunMIPS" text="Run" />
-                        <Button mnemonicParsing="false" onAction="#toolbarStepMIPS" text="Step" />
-                        <Button mnemonicParsing="false" onAction="#toolbarResetMIPS" text="Reset" />
+                      <Button fx:id="btRun" mnemonicParsing="false" onAction="#toolbarRunMIPS" text="Run" />
+                        <Button fx:id="btStep" mnemonicParsing="false" onAction="#toolbarStepMIPS" text="Step" />
+                        <Button fx:id="btReset" mnemonicParsing="false" onAction="#toolbarResetMIPS" text="Reset" />
+                        <Label fx:id="topText" />
                     </items>
                   </ToolBar>
 

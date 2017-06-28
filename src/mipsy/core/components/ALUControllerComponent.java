@@ -47,7 +47,6 @@ public class ALUControllerComponent {
             if ( instruction == 4 ) return 0b0000;
             if ( instruction == 5 || instruction == 13 ) return 0b0001;
             if ( instruction == 10) return 0b0111;
-
             //todo, NOR ne prepoznaje, [F3:F3] je 0111 ( dec. 7 )
             //todo sto ovi gore IFovi ne prepoznaju...
 
