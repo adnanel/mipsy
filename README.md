@@ -23,9 +23,9 @@ Lhu         |                  |   NO    |
 Ll          |                  |   NO    |             
 Lui         |                  |   NO    |             
 Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]           
-Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 | $s3 )
-Or          |   or $s1,$s2,$s3 |   YES   |  $s1 = $s2 | $s3            
-OrI         |   ori $s1,$s2,10 |   NO    |  $s1 = $s2 | 10
+Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 \| $s3 )
+Or          |   or $s1,$s2,$s3 |   YES   |  $s1 = $s2 \| $s3            
+OrI         |   ori $s1,$s2,10 |   NO    |  $s1 = $s2 \| 10
 Sb          |                  |   NO    |             
 Sc          |                  |   NO    |             
 Sh          |                  |   NO    |             
