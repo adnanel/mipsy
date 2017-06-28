@@ -6,14 +6,14 @@ Work in progress
 
 Instruction |      Example     | Working |    Pseudo   
 ------------|------------------|---------|--------------
-Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s1 + $s3
+Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
-AndI        |                  |   NO    |              
+AndI        |  andi $s1,$s2,50 |   NO    |  $s1 = band( $s2, 50 )
 Beq         |                  |   NO    |             
 Bne         |                  |   NO    |             
 Halt        |  halt            |   YES   |             
-J           |                  |   NO    |             
+J           |  j 5             |   NO    |  pc = 4 * 5
 Jal         |                  |   NO    |             
 Jr          |                  |   NO    |             
 Lb          |                  |   NO    |             
@@ -23,9 +23,9 @@ Lhu         |                  |   NO    |
 Ll          |                  |   NO    |             
 Lui         |                  |   NO    |             
 Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]           
-Nor         |                  |   NO    |             
-Or          |                  |   NO    |             
-OrI         |                  |   NO    |             
+Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 | $s3 )
+Or          |   or $s1,$s2,$s3 |   NO    |  $s1 = $s2 | $s3            
+OrI         |   or $s1,$s2,10  |   NO    |  $s1 = $s2 | 10
 Sb          |                  |   NO    |             
 Sc          |                  |   NO    |             
 Sh          |                  |   NO    |             
