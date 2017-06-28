@@ -1,13 +1,10 @@
 package mipsy;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -15,14 +12,11 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
-import mipsy.core.components.SignExtendComponent;
 import mipsy.types.*;
 import mipsy.ui.PCLineNumberFactory;
 import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
-import org.omg.CORBA.Environment;
 
 import java.io.File;
 import java.net.URL;
@@ -67,7 +61,7 @@ public class MainController implements Initializable {
     @FXML
     private CodeArea taCode;
 
-    Consumer<String> logger = new Consumer<String>() {
+    private Consumer<String> logger = new Consumer<String>() {
         Lock lock = new ReentrantLock();
 
         StringBuilder sb = new StringBuilder();
@@ -251,7 +245,7 @@ public class MainController implements Initializable {
         return result;
     }
 
-    protected void setInputLock(boolean lock) {
+    private void setInputLock(boolean lock) {
         taCode.setDisable(lock);
         lvRegisters.setDisable(lock);
         lvMem1.setDisable(lock);
