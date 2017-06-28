@@ -87,6 +87,7 @@ public class IF extends DataPhase {
         else {
             logger.accept("No instruction found at current PC address!");
             currInstruction = new InstructionHalt(null);
+            instructions.add(currInstruction);
         }
 
         logger.accept("END");
