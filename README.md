@@ -34,8 +34,8 @@ Slt         |                  |   NO    |
 SltI        |                  |   NO    |             
 SltIU       |                  |   NO    |             
 Srl         |                  |   NO    |             
-Sub         |                  |   NO    |             
-Sw          |                  |   NO    |             
+Sub         |  sub $s1,$s1,$s2 |   YES   | $s1 = $s1 - $s2
+Sw          |  sw $s1, 0($s2)  |   YES   | MEMORY[ 0 + $s2 ] = $s1
 
 Total:   31
 Working: 5

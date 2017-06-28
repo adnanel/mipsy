@@ -191,8 +191,9 @@ public class MainController implements Initializable {
     }
 
     private void calculateCPI() {
-        logger.accept(String.format("Instructions executed (incl. halt): %d, Total Cycles: %d, CPI: %.2f",
-                mipsCore.instructions.size(), mipsCore.getCycleCount(), ((float)mipsCore.getCycleCount() / mipsCore.instructions.size())));
+        //todo fix the CPI calculation. Currently halt makes it completely wrong most of the time.
+        //logger.accept(String.format("Instructions executed (incl. halt): %d, Total Cycles: %d, CPI: %.2f",
+        //        mipsCore.instructions.size(), mipsCore.getCycleCount(), ((float)mipsCore.getCycleCount() / mipsCore.instructions.size())));
     }
 
     @FXML
