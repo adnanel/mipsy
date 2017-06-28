@@ -1,4 +1,4 @@
-# mipsy - A MIPS simulator
+# mipsy - A simple pipelined MIPS simulator
 
 Work in progress
 
