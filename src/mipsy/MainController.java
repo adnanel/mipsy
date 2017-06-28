@@ -15,6 +15,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
+import mipsy.core.components.SignExtendComponent;
 import mipsy.types.*;
 import mipsy.ui.PCLineNumberFactory;
 import mipsy.ui.listviewcells.ListViewCellMemory;
