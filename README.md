@@ -7,10 +7,6 @@ Work in progress
 
 Instruction |      Example     | Working |    Pseudo   
 ------------|------------------|---------|--------------
-Add         |  add $s1,$s2,$s3 |  ```diff
-+ this will be highlighted in green
-- this will be highlighted in red ```
-|  $s1 = $s2 + $s3
 Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
