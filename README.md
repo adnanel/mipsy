@@ -6,7 +6,7 @@ Work in progress
 
 Instruction |      Example     | Working |    Pseudo   
 ------------|------------------|---------|--------------
-Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
+Add         |  add $s1,$s2,$s3 |   ```diff +YES```   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
 AndI        |  andi $s1,$s2,50 |   NO    |  $s1 = band( $s2, 50 )
