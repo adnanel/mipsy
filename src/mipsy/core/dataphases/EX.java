@@ -40,7 +40,7 @@ public class EX extends DataPhase {
         logger = Utility.appendToLogger("EX - ", logger);
 
         IDEX idex = core.IDEX;
-        if ( idex.OUT1 == null ) {
+        if ( idex.OUT1 == null || idex.currentInstruction == null ) {
             logger.accept("No work to do, skipping...");
             return;
         }

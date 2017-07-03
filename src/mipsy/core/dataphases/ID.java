@@ -26,7 +26,7 @@ public class ID extends DataPhase {
     private Register reg2;
     private int currInst;
 
-    private Instruction currInstruction;
+    private Instruction currInstruction = null;
 
     public ID(MIPSCore core) {
         super(core);
@@ -37,15 +37,17 @@ public class ID extends DataPhase {
     public void step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("ID - ", logger);
 
-        if ( core.IFID.OUT1 == null ) {
+        if ( core.IFID.OUT1 == null && currInstruction == null ) {
             logger.accept("No work to do, skipping...");
             return;
         }
 
         logger.accept("START");
 
-        currInst = core.IFID.OUT1.getCoded();
-        currInstruction = core.IFID.OUT1;
+
+        if ( core.IFID.OUT1 != null )
+            currInstruction = core.IFID.OUT1;
+        currInst = currInstruction.getCoded();
 
         int readReg1 = Utility.SubBits(currInst, 21, 26);
         int readReg2 = Utility.SubBits(currInst, 16, 21);
@@ -105,7 +107,7 @@ public class ID extends DataPhase {
         reg1 = registersComponent.getReadData1(logger);
         reg2 = registersComponent.getReadData2(logger);
 
-        control.setCurrInstruction(core.IFID.OUT1);
+        control.setCurrInstruction(currInstruction);
         core.IFID.OUT1 = null;
 
         logger.accept("END");
@@ -140,5 +142,8 @@ public class ID extends DataPhase {
 
         core.IDEX.isHalt = currInst == 0;
         core.IDEX.currentInstruction = currInstruction;
+
+        currInst = 0;
+        currInstruction = null;
     }
 }

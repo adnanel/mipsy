@@ -38,6 +38,8 @@ public class MEM extends DataPhase {
 
         core.IF.PCSrc = exmem.Branch * exmem.OUT1;
         core.IF.EX_MEM_OUT0 = exmem.OUT0;
+        if ( exmem.Branch == 1 )
+            core.IF.isStalling = false;
 
         memoryComponent.setMemory(core.memory);
         memoryComponent.setMemWrite(exmem.MemWrite);

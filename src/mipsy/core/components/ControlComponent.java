@@ -53,7 +53,9 @@ public class ControlComponent {
             if (currInstruction.getClass() == InstructionLw.class) return 1;
             if (currInstruction.getClass() == InstructionSw.class) return 1;
 
-            // I tip instrukcija trazi da se na MUX3 pusti Operand B
+            if ( currInstruction.getClass() == InstructionBeq.class ) return 0;
+
+            // Ostale I tip instrukcije traze da se na MUX3 pusti Operand B
             if (currInstruction.getType() == Instruction.Type.IType) return 1;
         }
 
