@@ -16,9 +16,9 @@ OrI         |  ori $s1,$s2,10  |   YES   |  $s1 = $s2 \| 10
 Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]
 Sw          |  sw $s1, 0($s2)  |   YES   |  MEMORY[ 0 + $s2 ] = $s1
 Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
+Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 \| $s3 )
 Beq         |  beq $s1,$s2,15  |   NO    |  if $s1 == $s2 then pc += 15 * 4           
 Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
-Halt        |  halt            |   YES   |             
 J           |  j 5             |   NO    |  pc = 4 * 5
 Jal         |  jal 15          |   NO    |              
 Jr          |  jr $s1          |   NO    |  pc = $s1    
@@ -28,7 +28,6 @@ Lh          |                  |   NO    |
 Lhu         |                  |   NO    |             
 Ll          |                  |   NO    |             
 Lui         |                  |   NO    |                        
-Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 \| $s3 )
 Sb          |                  |   NO    |             
 Sc          |                  |   NO    |             
 Sh          |                  |   NO    |             
@@ -37,6 +36,7 @@ Slt         |                  |   NO    |
 SltI        |                  |   NO    |             
 SltIU       |                  |   NO    |             
 Srl         |                  |   NO    |             
+Halt        |  halt            |   YES   |             
 
 Total:   30  
 Working: 10
@@ -50,7 +50,7 @@ Forwarding isn't supported right now.
 # Input files 
 
 MIPSy supports importing source, data and register values from an input file. 
-An example input file is given below:
+An example input file is given below ( for simple examples see /test_programs ):
 
 ```
 # Comments are supported and start with the # character.
