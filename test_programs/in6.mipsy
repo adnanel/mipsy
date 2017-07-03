@@ -1,0 +1,5 @@
+.regs
+$s2 = 2
+
+.code
+ori $s1, $s2, 1

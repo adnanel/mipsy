@@ -1,0 +1,5 @@
+.regs
+$s2 = 6
+
+.code
+andi $s2, $s2, 2

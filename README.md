@@ -10,7 +10,12 @@ Instruction |      Example     | Working |    Pseudo
 Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
-AndI        |  andi $s1,$s2,50 |   NO    |  $s1 = band( $s2, 50 )
+AndI        |  andi $s1,$s2,50 |   YES   |  $s1 = band( $s2, 50 )
+Or          |   or $s1,$s2,$s3 |   YES   |  $s1 = $s2 \| $s3            
+OrI         |   ori $s1,$s2,10 |   YES   |  $s1 = $s2 \| 10
+Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]
+Sw          |  sw $s1, 0($s2)  |   YES   |  MEMORY[ 0 + $s2 ] = $s1
+Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
 Beq         |  beq $s1,$s2,15  |   NO    |  if $s1 == $s2 then pc += 15 * 4           
 Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
 Halt        |  halt            |   YES   |             
@@ -22,11 +27,8 @@ Lbu         |                  |   NO    |
 Lh          |                  |   NO    |             
 Lhu         |                  |   NO    |             
 Ll          |                  |   NO    |             
-Lui         |                  |   NO    |             
-Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]           
+Lui         |                  |   NO    |                        
 Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 \| $s3 )
-Or          |   or $s1,$s2,$s3 |   YES   |  $s1 = $s2 \| $s3            
-OrI         |   ori $s1,$s2,10 |   NO    |  $s1 = $s2 \| 10
 Sb          |                  |   NO    |             
 Sc          |                  |   NO    |             
 Sh          |                  |   NO    |             
@@ -35,11 +37,9 @@ Slt         |                  |   NO    |
 SltI        |                  |   NO    |             
 SltIU       |                  |   NO    |             
 Srl         |                  |   NO    |             
-Sub         |  sub $s1,$s1,$s2 |   YES   | $s1 = $s1 - $s2
-Sw          |  sw $s1, 0($s2)  |   YES   | MEMORY[ 0 + $s2 ] = $s1
 
-Total:   31
-Working: 8
+Total:   30
+Working: 10
 
 # Hazard detection
 

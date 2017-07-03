@@ -387,7 +387,7 @@ public class MainController implements Initializable {
                 return;
             }
             toolbarResetMIPS(null);
-            logger.accept(String.format("-- ALL %d TESTS PASSED --", i));
+            logger.accept(String.format("-- ALL %d TESTS PASSED --", i - 1));
         }
     }
 }
