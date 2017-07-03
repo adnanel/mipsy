@@ -21,11 +21,13 @@ public class MUXComponent {
         this.selector = selector;
     }
 
-    public void setA(int a) {
+    public void setA(int a, Consumer<String> logger) {
+        logger.accept(String.format("%s: Setting operand a to 0x%s", name, Integer.toHexString(a)));
         this.a = a;
     }
 
-    public void setB(int b) {
+    public void setB(int b, Consumer<String> logger) {
+        logger.accept(String.format("%s: Setting operand b to 0x%s", name, Integer.toHexString(b)));
         this.b = b;
     }
 

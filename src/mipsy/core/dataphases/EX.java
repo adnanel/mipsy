@@ -49,12 +49,12 @@ public class EX extends DataPhase {
 
         logger.accept("START");
 
-        mux2.setA(idex.OUT4);
-        mux2.setB(idex.OUT5);
+        mux2.setA(idex.OUT4, logger);
+        mux2.setB(idex.OUT5, logger);
         mux2.setSelector(idex.RegDst);
 
-        mux3.setA(idex.OUT2.value);
-        mux3.setB(idex.OUT3);
+        mux3.setA(idex.OUT2.value, logger);
+        mux3.setB(idex.OUT3, logger);
         mux3.setSelector(idex.AluSrc);
 
         if ( idex.currentInstruction.getType() == Instruction.Type.RType )

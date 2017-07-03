@@ -69,8 +69,8 @@ public class IF extends DataPhase {
         logger.accept("START");
 
         mux1.setSelector(PCSrc);
-        mux1.setA(ALU1_RES);
-        mux1.setB(EX_MEM_OUT0);
+        mux1.setA(ALU1_RES, logger);
+        mux1.setB(EX_MEM_OUT0, logger);
 
         pc = mux1.getResult(logger);
         logger.accept(String.format("Current PC is 0x%s", Integer.toHexString(pc)));

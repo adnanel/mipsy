@@ -27,8 +27,8 @@ public class WB extends DataPhase {
 
         MEMWB memwb = core.MEMWB;
 
-        mux4.setA(memwb.OUT1);
-        mux4.setB(memwb.OUT0);
+        mux4.setA(memwb.OUT1, logger);
+        mux4.setB(memwb.OUT0, logger);
         mux4.setSelector(memwb.MemToReg);
 
         core.ID.registersComponent.setRegWrite(memwb.RegWrite);
