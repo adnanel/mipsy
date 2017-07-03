@@ -120,21 +120,22 @@ public abstract class Instruction {
         for ( String arg : s.split("," ) )
             operands.add(arg.trim());
 
+        String err = "";
         if ( SupportedInstructions.containsKey(instruction) )
             try {
                 return (Instruction)SupportedInstructions.get(instruction).getConstructors()[0].newInstance(operands);
             } catch (InstantiationException e) {
                 e.printStackTrace();
-                throw new RuntimeException("Internal error!");
+                err = e.getMessage();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-                throw new RuntimeException("Internal error!");
+                err = e.getMessage();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
-                throw new RuntimeException("Internal error!");
+                err = e.getMessage();
             }
 
-        throw new IllegalArgumentException("Invalid instruction! " + instruction);
+        throw new IllegalArgumentException("Invalid instruction! " + instruction + " (" + err + ")");
     }
 
     public abstract Type getType();

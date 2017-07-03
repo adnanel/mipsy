@@ -113,6 +113,8 @@ public class ID extends DataPhase {
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        logger = Utility.appendToLogger("ID - ", logger);
+
         if ( core.IF.isStalling ) {
             control.reset();
             return;

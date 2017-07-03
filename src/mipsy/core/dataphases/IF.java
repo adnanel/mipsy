@@ -95,13 +95,15 @@ public class IF extends DataPhase {
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        logger = Utility.appendToLogger("IF - ", logger);
+
         if (core.IFID.OUT1 != null && core.IFID.OUT1.getClass() == InstructionBeq.class) {
             core.IFID.OUT1 = null;
         }
         if ( currInstruction == null ) return;
         if ( isStalling ) return;
 
-        logger.accept(String.format("IF: Fetched instruction \"%s\" coded as 0x%s", currInstruction.toString(), Integer.toHexString(currInstruction.getCoded())));
+        logger.accept(String.format("Fetched instruction \"%s\" coded as 0x%s", currInstruction.toString(), Integer.toHexString(currInstruction.getCoded())));
         core.IFID.OUT0 = ALU1_RES;
         core.IFID.OUT1 = currInstruction;
         core.IFID.isHalt = currInstruction instanceof InstructionHalt;

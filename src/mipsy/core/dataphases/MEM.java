@@ -59,6 +59,8 @@ public class MEM extends DataPhase {
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        logger = Utility.appendToLogger("MEM - ", logger);
+
         MEMWB memwb = core.MEMWB;
 
         memwb.OUT0 = memoryComponent.getReadData(logger);

@@ -87,6 +87,8 @@ public class EX extends DataPhase {
 
     @Override
     public void writeResults(Consumer<String> logger) {
+        logger = Utility.appendToLogger("EX - ", logger);
+
         EXMEM exmem = core.EXMEM;
 
         exmem.OUT4 = mux2.getResult(logger);
