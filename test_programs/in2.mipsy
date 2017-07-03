@@ -1,0 +1,5 @@
+.regs
+$s1 = 1
+
+.code
+addi $s1, $s1, 5

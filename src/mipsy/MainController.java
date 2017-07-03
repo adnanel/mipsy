@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import mipsy.core.MIPSCore;
 import mipsy.types.*;
@@ -19,6 +20,7 @@ import mipsy.ui.listviewcells.ListViewCellRegister;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -35,6 +37,8 @@ public class MainController implements Initializable {
     public Button btRun;
     @FXML
     public Button btReset;
+    @FXML
+    public Button btRunTests;
 
     @FXML
     public Label topText;
@@ -327,6 +331,63 @@ public class MainController implements Initializable {
             fillRegisters(mipsCore.registers);
 
             toolbarResetMIPS(event);
+        }
+    }
+
+    private void runTestFile(File srcFile, File resFile) throws FileNotFoundException, TestFailedException {
+        if ( srcFile == null || !srcFile.exists() ) throw new FileNotFoundException("SrcFile not found!");
+        if ( resFile == null || !resFile.exists() ) throw new FileNotFoundException("ResFile not found!");
+
+        MipsyProject project = MipsyProject.loadFile(srcFile.getAbsolutePath(), logger );
+
+        mipsCore = new MIPSCore(project.registers, project.memory, project.instructions);
+
+        fillCode(project.instructions);
+        fillRegisters(mipsCore.registers);
+
+        toolbarResetMIPS(null);
+        toolbarRunMIPS(null);
+
+
+        //read the out file
+        MipsyProject out = MipsyProject.loadFile(resFile.getAbsolutePath(), logger);
+
+        for ( Map.Entry<String,Register> r : out.registers.entrySet() ) {
+            Register evaluated = mipsCore.registers.get(r.getKey());
+
+            if ( evaluated.value != r.getValue().value ) {
+                throw new TestFailedException(String.format("Test failed! Value in register %s is expected to be %s, found %s",
+                        r.getKey(), r.getValue().value, evaluated.value));
+            }
+        }
+    }
+
+    @FXML
+    protected void menuRunTests(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select the directory containing the tests");
+
+        File f = directoryChooser.showDialog(Main.PrimaryStage);
+
+        if ( f != null && f.exists() && f.isDirectory() ) {
+            int i = 1;
+            try {
+                while ( true ) {
+                    File src = new File(f, "in" + i + ".mipsy");
+                    File testOut = new File(f, "out" + i + ".txt");
+
+                    if ( src.exists() && testOut.exists() ) runTestFile(src, testOut);
+                    else break;
+
+                    ++i;
+                }
+            } catch ( Exception ex ) {
+                ex.printStackTrace();
+                logger.accept(String.format("Test %d failed, inner exception: " + ex.getMessage(), i) );
+                return;
+            }
+            toolbarResetMIPS(null);
+            logger.accept(String.format("-- ALL %d TESTS PASSED --", i));
         }
     }
 }

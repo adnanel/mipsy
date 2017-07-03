@@ -59,6 +59,7 @@
                       <Button fx:id="btRun" mnemonicParsing="false" onAction="#toolbarRunMIPS" text="Run" />
                         <Button fx:id="btStep" mnemonicParsing="false" onAction="#toolbarStepMIPS" text="Step" />
                         <Button fx:id="btReset" mnemonicParsing="false" onAction="#toolbarResetMIPS" text="Reset" />
+                        <Button fx:id="btRunTests" mnemonicParsing="false" onAction="#menuRunTests" text="Run tests" />
                         <Label fx:id="topText" />
                     </items>
                   </ToolBar>

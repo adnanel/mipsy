@@ -1,0 +1,6 @@
+.regs
+$s1 = 1
+$s2 = 2
+
+.code
+add $s1, $s1, $s2
