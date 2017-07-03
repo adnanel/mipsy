@@ -37,10 +37,15 @@ public class RegistersComponent {
             return;
         }
         String destRegister = Register.getMipsRegisterNames()[writeRegister];
-        logger.accept(String.format("%s: Writing %s into register %s", name, "0x" + Integer.toHexString(writeData), destRegister));
 
-        Register reg = registers.computeIfAbsent(destRegister, r -> new Register(r, 0));
-        reg.value = writeData;
+        if ( destRegister.equalsIgnoreCase("$zero") ) {
+            logger.accept(String.format("%s: Attempt to write into $zero register, action has no effect.", name));
+        } else {
+            logger.accept(String.format("%s: Writing %s into register %s", name, "0x" + Integer.toHexString(writeData), destRegister));
+
+            Register reg = registers.computeIfAbsent(destRegister, r -> new Register(r, 0));
+            reg.value = writeData;
+        }
     }
 
     public void setRegWrite(int regWrite) {
