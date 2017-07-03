@@ -352,12 +352,23 @@ public class MainController implements Initializable {
         //read the out file
         MipsyProject out = MipsyProject.loadFile(resFile.getAbsolutePath(), logger);
 
+        //compare the register values
         for ( Map.Entry<String,Register> r : out.registers.entrySet() ) {
             Register evaluated = mipsCore.registers.get(r.getKey());
 
             if ( evaluated.value != r.getValue().value ) {
                 throw new TestFailedException(String.format("Test failed! Value in register %s is expected to be %s, found %s",
                         r.getKey(), r.getValue().value, evaluated.value));
+            }
+        }
+
+        //compare the memory values
+        for ( Map.Entry<Integer, MemoryEntry> m : out.memory.entrySet() ) {
+            MemoryEntry evaluated = mipsCore.memory.get(m.getKey());
+
+            if (!Objects.equals(evaluated.value, m.getValue().value)) {
+                throw new TestFailedException(String.format("Test failed! Value in memory at addr %s is expected to be %s, found %s",
+                        Integer.toHexString(m.getKey()), m.getValue().value, evaluated.value));
             }
         }
     }
