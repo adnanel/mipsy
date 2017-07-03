@@ -11,8 +11,8 @@ Add         |  add $s1,$s2,$s3 |   YES   |  $s1 = $s2 + $s3
 AddI        |  addi $s1,$s2,50 |   YES   |  $s1 = $s2 + 50           
 And         |  and $s1,$s2,$s3 |   YES   |  $s1 = band( $s2, $s3 )           
 AndI        |  andi $s1,$s2,50 |   YES   |  $s1 = band( $s2, 50 )
-Or          |   or $s1,$s2,$s3 |   YES   |  $s1 = $s2 \| $s3            
-OrI         |   ori $s1,$s2,10 |   YES   |  $s1 = $s2 \| 10
+Or          |  or $s1,$s2,$s3  |   YES   |  $s1 = $s2 \| $s3            
+OrI         |  ori $s1,$s2,10  |   YES   |  $s1 = $s2 \| 10
 Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]
 Sw          |  sw $s1, 0($s2)  |   YES   |  MEMORY[ 0 + $s2 ] = $s1
 Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
@@ -38,7 +38,7 @@ SltI        |                  |   NO    |
 SltIU       |                  |   NO    |             
 Srl         |                  |   NO    |             
 
-Total:   30
+Total:   30  
 Working: 10
 
 # Hazard detection
