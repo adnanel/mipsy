@@ -16,7 +16,7 @@ OrI         |  ori $s1,$s2,10  |   YES   |  $s1 = $s2 \| 10
 Lw          |  lw $s1, 0($s2)  |   YES   |  $s1 = MEMORY[ 0 + $s2 ]
 Sw          |  sw $s1, 0($s2)  |   YES   |  MEMORY[ 0 + $s2 ] = $s1
 Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
-Nor         |  nor $s1,$s2,$s3 |   NO    |  $s1 = !( $s2 \| $s3 )
+Nor         |  nor $s1,$s2,$s3 |   YES   |  $s1 = !( $s2 \| $s3 )
 Beq         |  beq $s1,$s2,15  |   NO    |  if $s1 == $s2 then pc += 15 * 4           
 Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
 J           |  j 5             |   NO    |  pc = 4 * 5
@@ -39,7 +39,7 @@ Srl         |                  |   NO    |
 Halt        |  halt            |   YES   |             
 
 Total:   30  
-Working: 10
+Working: 11
 
 # Hazard detection
 

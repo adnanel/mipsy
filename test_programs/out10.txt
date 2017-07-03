@@ -1,0 +1,4 @@
+.regs
+# Since we have no unsigned int in java, we'll get this in our register
+$s2 = -4
+$s1 = 1
