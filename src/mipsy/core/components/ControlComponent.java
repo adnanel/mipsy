@@ -1,9 +1,6 @@
 package mipsy.core.components;
 
-import mipsy.instructions.InstructionAddI;
-import mipsy.instructions.InstructionBeq;
-import mipsy.instructions.InstructionLw;
-import mipsy.instructions.InstructionSw;
+import mipsy.instructions.*;
 import mipsy.types.Instruction;
 
 /**
@@ -54,6 +51,7 @@ public class ControlComponent {
             if (currInstruction.getClass() == InstructionSw.class) return 1;
 
             if ( currInstruction.getClass() == InstructionBeq.class ) return 0;
+            if ( currInstruction.getClass() == InstructionBne.class ) return 0;
 
             // Ostale I tip instrukcije traze da se na MUX3 pusti Operand B
             if (currInstruction.getType() == Instruction.Type.IType) return 1;
@@ -101,7 +99,7 @@ public class ControlComponent {
 
     public int getBranch() {
         if ( currInstruction != null ) {
-            if ( currInstruction.getClass() == InstructionBeq.class ) return 1;
+            if ( currInstruction.canBranch() ) return 1;
         }
         return 0;
     }

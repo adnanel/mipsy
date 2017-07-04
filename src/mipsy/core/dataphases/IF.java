@@ -55,7 +55,7 @@ public class IF extends DataPhase {
                 isStalling = false;
             } else
                 return;
-        } else if ( core.IDEX.Branch == 1 || (core.IFID.OUT1 != null && core.IFID.OUT1.getClass() == InstructionBeq.class) ) {
+        } else if ( core.IDEX.Branch == 1 || (core.IFID.OUT1 != null && core.IFID.OUT1.canBranch()) ) {
             logger.accept("Current instruction is a branching instruction, stalling!");
             isStalling = true;
             wasBranching = true;

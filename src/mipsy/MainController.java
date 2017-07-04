@@ -380,6 +380,9 @@ public class MainController implements Initializable {
 
         File f = directoryChooser.showDialog(Main.PrimaryStage);
 
+        int passed = 0;
+        int failed = 0;
+
         if ( f != null && f.exists() && f.isDirectory() ) {
             int i = 1;
             try {
@@ -387,18 +390,20 @@ public class MainController implements Initializable {
                     File src = new File(f, "in" + i + ".mipsy");
                     File testOut = new File(f, "out" + i + ".txt");
 
-                    if ( src.exists() && testOut.exists() ) runTestFile(src, testOut);
+                    if ( src.exists() && testOut.exists() ) {
+                        ++i;
+                        runTestFile(src, testOut);
+                        ++passed;
+                    }
                     else break;
-
-                    ++i;
                 }
             } catch ( Exception ex ) {
                 ex.printStackTrace();
                 logger.accept(String.format("Test %d failed, inner exception: " + ex.getMessage(), i) );
-                return;
+                ++failed;
             }
             toolbarResetMIPS(null);
-            logger.accept(String.format("-- ALL %d TESTS PASSED --", i - 1));
+            logger.accept(String.format("-- ALL %d TESTS FINISHED, PASSED %d, FAILED %d --", i - 1, passed, failed));
         }
     }
 }
