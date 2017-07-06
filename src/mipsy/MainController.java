@@ -403,22 +403,23 @@ public class MainController implements Initializable {
 
         if ( f != null && f.exists() && f.isDirectory() ) {
             int i = 1;
-            try {
-                while ( true ) {
-                    File src = new File(f, "in" + i + ".mipsy");
-                    File testOut = new File(f, "out" + i + ".txt");
 
-                    if ( src.exists() && testOut.exists() ) {
-                        ++i;
-                        runTestFile(src, testOut);
-                        ++passed;
-                    }
-                    else break;
+            while ( true ) {
+                try {
+                        File src = new File(f, "in" + i + ".mipsy");
+                        File testOut = new File(f, "out" + i + ".txt");
+
+                        if ( src.exists() && testOut.exists() ) {
+                            ++i;
+                            runTestFile(src, testOut);
+                            ++passed;
+                        }
+                        else break;
+                } catch ( Exception ex ) {
+                    ex.printStackTrace();
+                    logger.accept(String.format("Test %d failed, inner exception: " + ex.getMessage(), i) );
+                    ++failed;
                 }
-            } catch ( Exception ex ) {
-                ex.printStackTrace();
-                logger.accept(String.format("Test %d failed, inner exception: " + ex.getMessage(), i) );
-                ++failed;
             }
             toolbarResetMIPS(null);
             logger.accept(String.format("-- ALL %d TESTS FINISHED, PASSED %d, FAILED %d --", i - 1, passed, failed));
