@@ -25,13 +25,13 @@ public class MEM extends DataPhase {
     private boolean isHalt;
 
     @Override
-    public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("MEM - ", logger);
 
         EXMEM exmem = core.EXMEM;
         if ( exmem.OUT3 == null ) {
             logger.accept("No work to do, skipping...");
-            return;
+            return false;
         }
 
         logger.accept("START");
@@ -57,6 +57,8 @@ public class MEM extends DataPhase {
         isHalt = exmem.isHalt;
 
         logger.accept("END");
+
+        return true;
     }
 
     @Override

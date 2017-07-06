@@ -244,6 +244,7 @@ public class MainController implements Initializable {
             btRun.setDisable(true);
             btStep.setDisable(true);
             calculateCPI();
+            showCycleActions();
         }
 
         fillRegisters(mipsCore.registers);
@@ -272,6 +273,22 @@ public class MainController implements Initializable {
         btStep.setDisable(false);
     }
 
+    private void showCycleActions() {
+        ArrayList<ArrayList<CycleAction>> actions = mipsCore.cycleActions;
+
+        StringBuilder sb = new StringBuilder("\n");
+
+        int i = 0;
+        for ( ArrayList<CycleAction> cycle : actions ) {
+            sb.append(String.format("Cycle %2d:\t", ++i));
+            for ( CycleAction action : cycle ) {
+                sb.append(action.action).append("\t");
+            }
+            sb.append('\n');
+        }
+        logger.accept(sb.toString());
+    }
+
     @FXML
     protected void toolbarRunMIPS(ActionEvent event) {
         setInputLock(true);
@@ -290,6 +307,7 @@ public class MainController implements Initializable {
                 mipsCore.step(logger, false);
 
                 calculateCPI();
+                showCycleActions();
             } catch ( Exception ex ) {
                 logger.accept("MIPS - RUN FINISHED" );
 

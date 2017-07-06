@@ -12,4 +12,5 @@ public class MEMWB {
     public int OUT2;
 
     public boolean isHalt;
+
 }

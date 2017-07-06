@@ -20,12 +20,17 @@ public class WB extends DataPhase {
     public boolean isHalt = false;
 
     @Override
-    public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("WB - ", logger);
+        MEMWB memwb = core.MEMWB;
+
+        // wb can't occur before the 5th cycle
+        if ( core.getCycleCount() < 5 ) {
+            logger.accept("No work to do, skipping...");
+            return false;
+        }
 
         logger.accept("START");
-
-        MEMWB memwb = core.MEMWB;
 
         mux4.setA(memwb.OUT1, logger);
         mux4.setB(memwb.OUT0, logger);
@@ -39,6 +44,7 @@ public class WB extends DataPhase {
 
         logger.accept("END");
 
+        return true;
     }
 
     @Override

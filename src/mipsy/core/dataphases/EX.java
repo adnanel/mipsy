@@ -36,13 +36,13 @@ public class EX extends DataPhase {
     private boolean isHalt;
 
     @Override
-    public void step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("EX - ", logger);
 
         IDEX idex = core.IDEX;
         if ( idex.OUT1 == null || idex.currentInstruction == null ) {
             logger.accept("No work to do, skipping...");
-            return;
+            return false;
         }
 
         isHalt = idex.isHalt;
@@ -83,6 +83,7 @@ public class EX extends DataPhase {
         idex.clear();
 
         logger.accept("END");
+        return true;
     }
 
     @Override

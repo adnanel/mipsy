@@ -2,10 +2,7 @@ package mipsy.core;
 
 import mipsy.core.components.ControlComponent;
 import mipsy.core.dataphases.*;
-import mipsy.types.Instruction;
-import mipsy.types.MemoryEntry;
-import mipsy.types.NoMoreInstructionsException;
-import mipsy.types.Register;
+import mipsy.types.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +38,8 @@ public class MIPSCore {
     public List<Instruction> instructions = new ArrayList<>();
 
 
+    public ArrayList<ArrayList<CycleAction>> cycleActions = new ArrayList<>();
+
     public MIPSCore(HashMap<String, Register> registers, HashMap<Integer, MemoryEntry> memory, List<Instruction> instructions) {
         this.registers = registers;
         this.memory = memory;
@@ -60,17 +59,30 @@ public class MIPSCore {
         return cycleCounter;
     }
 
+    private static void stepPhase(DataPhase phase, int cycleCounter, Consumer<String> logger, List<CycleAction> actionLogger, String phaseName) throws NoMoreInstructionsException {
+        if ( phase.step(logger) )
+            actionLogger.add(new CycleAction(cycleCounter, phaseName));
+        else {
+            actionLogger.add(new CycleAction(cycleCounter));
+        }
+    }
+
     public void step(Consumer<String> logger, boolean justOne) throws NoMoreInstructionsException {
         if ( WB.isHalt ) throw new NoMoreInstructionsException();
+
 
         logger.accept("---BEGIN---");
         while ( !WB.isHalt ) {
             logger.accept(String.format("--CYCLE %d BEGIN--", ++cycleCounter));
-            IF.step(logger);
-            ID.step(logger);
-            EX.step(logger);
-            MEM.step(logger);
-            WB.step(logger);
+            ArrayList<CycleAction> actions = new ArrayList<>(5);
+            cycleActions.add(actions);
+
+            stepPhase(IF, cycleCounter, logger, actions, "IF");
+            stepPhase(ID, cycleCounter, logger, actions, "ID");
+            stepPhase(EX, cycleCounter, logger, actions, "EX");
+            stepPhase(MEM, cycleCounter, logger, actions, "MEM");
+            stepPhase(WB, cycleCounter, logger, actions, "WB");
+
 
             IF.writeResults(logger);
             ID.writeResults(logger);
@@ -85,3 +97,4 @@ public class MIPSCore {
         logger.accept("---END---");
     }
 }
+

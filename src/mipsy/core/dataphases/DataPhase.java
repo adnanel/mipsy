@@ -15,6 +15,7 @@ public abstract class DataPhase {
         this.core = core;
     }
 
-    public abstract void step(Consumer<String> logger) throws NoMoreInstructionsException;
+    // return false is step didn't occur (e.g. a stall is in progress)
+    public abstract boolean step(Consumer<String> logger) throws NoMoreInstructionsException;
     public abstract void writeResults(Consumer<String> logger);
 }
