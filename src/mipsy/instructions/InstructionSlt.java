@@ -55,6 +55,6 @@ public class InstructionSlt extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("slt %s, %s, %s", opA, opB, dest);
+        return String.format("slt %s, %s, %s", dest, opA, opB);
     }
 }
