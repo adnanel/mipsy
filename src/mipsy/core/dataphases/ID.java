@@ -57,13 +57,13 @@ public class ID extends DataPhase {
         if ( control.getRegWrite() == 1 ) {
             if ( readReg1 != 0 &&
                     (readReg1 == core.IDEX.OUT5 || core.IDEX.OUT4 == readReg1) ) {
-                logger.accept(String.format("Current instruction is accessing register 0x%s, stalling!", Integer.toHexString(readReg1)));
+                logger.accept(String.format("Current instruction is accessing register 0x%s (%s), stalling!", Integer.toHexString(readReg1), Register.getMipsRegisterNames()[readReg1]));
                 isStalling = true;
             }
 
             if ( readReg2 != 0 &&
                     (readReg2 == core.IDEX.OUT5 || core.IDEX.OUT4 == readReg2) ) {
-                logger.accept(String.format("Current instruction is accessing register 0x%s, stalling!", Integer.toHexString(readReg2)));
+                logger.accept(String.format("Current instruction is accessing register 0x%s (%s), stalling!", Integer.toHexString(readReg2), Register.getMipsRegisterNames()[readReg2]));
                 isStalling = true;
             }
         }
@@ -71,7 +71,7 @@ public class ID extends DataPhase {
         if (core.EXMEM.RegWrite == 1) {
             if (core.EXMEM.OUT4 == readReg1 || core.EXMEM.OUT4 == readReg2) {
                 if (core.EXMEM.OUT4 != 0) {
-                    logger.accept(String.format("EXMEM.OUT4 is 0x%s, which is a register I need, stalling!", Integer.toHexString(core.EXMEM.OUT4)));
+                    logger.accept(String.format("EXMEM.OUT4 is 0x%s (%s), which is a register I need, stalling!", Integer.toHexString(core.EXMEM.OUT4), Register.getMipsRegisterNames()[core.EXMEM.OUT4]));
                     isStalling = true;
                 }
             }
