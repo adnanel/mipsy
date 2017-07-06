@@ -34,7 +34,7 @@ public class InstructionSlti extends Instruction {
 
     @Override
     public boolean canBranch() {
-        return true;
+        return false;
     }
 
     @Override

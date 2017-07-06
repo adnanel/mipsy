@@ -21,9 +21,10 @@ public class InstructionSlt extends Instruction {
         if ( args.size() != 3 )
             throw new IllegalArgumentException("Invalid arguments passed to slt! Expected 3, given " + args.size());
 
-        opA = args.get(0);
-        opB = args.get(1);
-        dest = args.get(2);
+
+        dest = args.get(0);
+        opA = args.get(1);
+        opB = args.get(2);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class InstructionSlt extends Instruction {
 
     @Override
     public boolean canBranch() {
-        return true;
+        return false;
     }
 
     @Override
