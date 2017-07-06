@@ -1,0 +1,11 @@
+.code
+# set $s1 to 1
+slti $s1, $s1, 10
+
+# must not set $s2 to 1
+slti $s2, $s1, 1
+
+# set $s1 to 0
+slti $s1, $s2, 0
+
+halt
