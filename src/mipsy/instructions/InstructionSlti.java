@@ -41,8 +41,8 @@ public class InstructionSlti extends Instruction {
     public int getCoded() {
         int res = 0b001010;
 
-        res = (res << 5) | Register.getRegisterNumber(opA);
         res = (res << 5) | Register.getRegisterNumber(opB);
+        res = (res << 5) | Register.getRegisterNumber(opA);
         res = (res << 16) | offset;
 
         return res;
