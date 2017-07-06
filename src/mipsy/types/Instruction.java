@@ -89,6 +89,9 @@ public abstract class Instruction {
         int i = 1;
         for ( String line : code.split("\n") ) {
             try {
+                if ( line.trim().length() == 0 ) continue;
+                if ( line.trim().startsWith("#")) continue;
+
                 Instruction instruction = Instruction.fromString(line);
                 res.add(instruction);
                 ++ i;
