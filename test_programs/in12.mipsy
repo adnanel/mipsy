@@ -1,0 +1,13 @@
+.code
+#must not take this branch
+bne $s1, $s2, 30
+
+#must execute this
+addi $s2, $s2, 1
+
+#must take this branch
+bne $s1, $s2, 30
+
+#this must not be executed
+addi $s1, $s1, 100
+halt
