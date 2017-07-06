@@ -19,6 +19,7 @@ Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
 Nor         |  nor $s1,$s2,$s3 |   YES   |  $s1 = !( $s2 \| $s3 )
 Beq         |  beq $s1,$s2,15  |   YES   |  if $s1 == $s2 then pc += 15 * 4           
 Slt         |  slt $s1,$s2,$s3 |   YES   |  if $s2 < $s3 then $s1 = 1 else $s1 = 0           
+SltI        |  slt $s1,$s2,10  |   YES   |  if $s2 < 10 then $s1 = 1 else $s1 = 0           
 Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
 J           |  j 5             |   NO    |  pc = 4 * 5
 Jal         |  jal 15          |   NO    |              
@@ -33,13 +34,12 @@ Sb          |                  |   NO    |
 Sc          |                  |   NO    |             
 Sh          |                  |   NO    |             
 Sll         |                  |   NO    |             
-SltI        |  slt $s1,$s2,10  |   NO    |  if $s2 < 10 then $s1 = 1 else $s1 = 0           
 SltIU       |                  |   NO    |             
 Srl         |                  |   NO    |             
 Halt        |  halt            |   YES   |             
 
 Total:   30  
-Working: 13
+Working: 14
 
 # Hazard detection
 
