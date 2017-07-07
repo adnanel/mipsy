@@ -6,6 +6,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="mipsy" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/richtextfx-fat-0.6.10.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
