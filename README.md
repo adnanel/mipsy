@@ -44,7 +44,6 @@ Working: 14
 # Hazard detection
 
 Currently, hazards are detected and avoided by stalling the pipeline. 
-Forwarding isn't supported right now.
 
 
 # Input files 
