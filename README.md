@@ -1,6 +1,6 @@
 # mipsy - A simple pipelined MIPS simulator
 
-MIPSy is a (very) simple pipelined MIPS simulator based on the MIPS architecture described in the book "Computer Organization and Design MIPS Edition - 5th Edition" by David Patterson and John Hennessy.
+MIPSy is a (very) simple pipelined MIPS simulator based on the MIPS architecture described in the book *"Computer Organization and Design MIPS Edition - 5th Edition" by David Patterson and John Hennessy*.
 
 It's basically a Java implementation of all units described mostly in chapters 4.3 and 4.4 of the book.
 
