@@ -63,7 +63,7 @@ Currently, hazards are detected and avoided by stalling the pipeline.
 # Input files 
 
 MIPSy supports importing source, data and register values from an input file. 
-An example input file is given below ( for simple examples see /test_programs ):
+An example input file is given below ( for simple examples see `/test_programs`):
 
 ```
 # Comments are supported and start with the # character.
@@ -100,3 +100,11 @@ halt
 #       multiple code segments, MIPSy will combine them into one while loading)
 ```
 
+# Running tests
+MIPSy comes with a set of short test sources (inside of `/test_programs`) which can be used to test this feature.
+It allows the user to select a directory, and then executes all source files with file names matching the pattern `in#.mipsy`
+(where # is a positive integer, starting from 1). MIPSy also looks for `out#.txt` files which have to be in the same format
+as input files (`.code` segments are loaded, but ignored here). After executing the input file, MIPSy compares the memory and register
+values with the out text file. If they don't match, the test fails.
+The sources in `/test_programs` are used to test each supported instruction and can be used as templates for
+writing more complicated source files.
