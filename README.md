@@ -1,6 +1,11 @@
 # mipsy - A simple pipelined MIPS simulator
 
-Work in progress
+MIPSy is a (very) simple pipelined MIPS simulator based on the MIPS architecture described in the book "Computer Organization and Design MIPS Edition - 5th Edition" by David Patterson and John Hennessy.
+
+It's basically a Java implementation of all units described mostly in chapters 4.3 and 4.4 of the book.
+
+The GUI is written in JavaFX 2.  
+![gui](https://github.com/adnanel/mipsy/blob/master/src/mipsy/gui.png?raw=true "Logo Title Text 1")
 
 
 # Supported instructions
@@ -40,6 +45,15 @@ Halt        |  halt            |   YES   |
 
 Total:   30  
 Working: 14
+
+# The simulated data path
+Below is a picture of the simulated pipeline. It's a slightly modified book version with added labels and a clear distinction of the phases and named temp registers which are used to transfer data between stages.   
+![datapath](https://github.com/adnanel/mipsy/blob/master/src/mipsy/ui/ra_mipsy.png?raw=true "Logo Title Text 1")
+  
+## Not working instructions
+All instructions which are currently supported, but don't work as intended *cannot* work with the current architecture design. 
+In order to implement them, certain changes to the design need to be applied (as described in the end of chapter 4.4 of the earlier mentioned book)which is planned when I find the time.
+
 
 # Hazard detection
 
