@@ -51,7 +51,7 @@ Below is a picture of the simulated pipeline. It's a slightly modified book vers
 ![datapath](https://github.com/adnanel/mipsy/blob/master/src/mipsy/ui/ra_mipsy.png?raw=true "Logo Title Text 1")
   
 ## Not working instructions
-All instructions which are currently supported, but don't work as intended *cannot* work with the current architecture design. 
+All instructions which are currently supported, but don't work as intended *cannot* work with the current architecture design. (e.g. jump instructions are impossible to implement without a way to directly write to PC) 
 In order to implement them, certain changes to the design need to be applied (as described in the end of chapter 4.4 of the earlier mentioned book) which is planned as soon as I find some free time.
 
 
