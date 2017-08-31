@@ -15,7 +15,7 @@ public class ListViewCellRegister extends ListCell<Register>
         super.updateItem(register,empty);
         if(register != null)
         {
-            boolean readOnly = register.name.equalsIgnoreCase("$zero") || register.name.equalsIgnoreCase("$at");
+            boolean readOnly = register.name.equalsIgnoreCase("$zero");
 
             RegisterCell data = new RegisterCell(register, readOnly);
 
