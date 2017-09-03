@@ -143,4 +143,10 @@ public abstract class Instruction {
 
     public abstract Type getType();
     public abstract boolean canBranch();
+
+    public String toShortString() {
+        //by default return the substring of toString() until the first space
+        String res = toString();
+        return res.substring(0, res.indexOf(' '));
+    }
 }

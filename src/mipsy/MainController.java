@@ -287,7 +287,7 @@ public class MainController implements Initializable {
     private void showCycleActions() {
         ArrayList<ArrayList<CycleAction>> actions = mipsCore.cycleActions;
 
-        StringBuilder sb = new StringBuilder("\n");
+        StringBuilder sb = new StringBuilder("\nActions per cycle:\n");
 
         int i = 0;
         for ( ArrayList<CycleAction> cycle : actions ) {
@@ -297,6 +297,32 @@ public class MainController implements Initializable {
             }
             sb.append('\n');
         }
+
+        sb.append("\nCycles per instruction (currently wrong if there are loops):\n");
+        for ( Instruction instruction : mipsCore.instructions ) {
+            InstructionLifeCycle ilc = new InstructionLifeCycle(instruction, actions);
+
+            if ( ilc.isInvalid() ) continue;
+            sb.append(String.format("%4s\t", instruction.toShortString()));
+
+            String stall = "\t";
+
+            for ( i = 0; i < ilc.ifCycle; ++ i ) sb.append(stall);
+            sb.append("IF").append(stall);
+            for ( i = ilc.ifCycle + 1; i < ilc.idCycle; ++ i ) sb.append(stall);
+            sb.append("ID").append(stall);
+            for ( i = ilc.idCycle + 1; i < ilc.exCycle; ++ i ) sb.append(stall);
+            sb.append("EX").append(stall);
+            for ( i = ilc.exCycle + 1; i < ilc.memCycle; ++ i ) sb.append(stall);
+            sb.append("ME").append(stall);
+            for ( i = ilc.memCycle + 1; i < ilc.wbCycle; ++ i ) sb.append(stall);
+            sb.append("WB").append(stall);
+
+            sb.append('\n');
+        }
+
+
+
         logger.accept(sb.toString());
     }
 

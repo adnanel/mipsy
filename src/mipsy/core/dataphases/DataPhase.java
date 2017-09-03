@@ -12,9 +12,14 @@ import java.util.function.Consumer;
 public abstract class DataPhase {
     MIPSCore core;
 
-    public DataPhase(MIPSCore core) {
+    private String name;
+
+    public DataPhase(MIPSCore core, String name) {
         this.core = core;
+        this.name = name;
     }
+
+    public String getName() {return name;}
 
     public abstract PhaseResult step(Consumer<String> logger) throws NoMoreInstructionsException;
     public abstract void writeResults(Consumer<String> logger);
@@ -34,5 +39,13 @@ public abstract class DataPhase {
         }
 
         public static PhaseResult NO_ACTION = new PhaseResult(false, null);
+    }
+
+    public static class PhaseNames {
+        public static String IF = "IF";
+        public static String ID = "ID";
+        public static String EX = "EX";
+        public static String MEM = "MEM";
+        public static String WB = "WB";
     }
 }

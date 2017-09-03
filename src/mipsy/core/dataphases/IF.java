@@ -44,7 +44,7 @@ public class IF extends DataPhase {
     }
 
     public IF(MIPSCore core) {
-        super(core);
+        super(core, PhaseNames.IF);
     }
 
     @Override
@@ -123,5 +123,6 @@ public class IF extends DataPhase {
         core.IFID.OUT0 = ALU1_RES;
         core.IFID.OUT1 = currInstruction;
         core.IFID.isHalt = currInstruction instanceof InstructionHalt;
+        currInstruction = null;
     }
 }

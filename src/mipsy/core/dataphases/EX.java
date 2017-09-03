@@ -24,7 +24,7 @@ public class EX extends DataPhase {
     private ALUControllerComponent aluControl = new ALUControllerComponent("ALU_C");
 
     public EX(MIPSCore core) {
-        super(core);
+        super(core, PhaseNames.EX);
     }
 
     private Register idexout2;
@@ -117,5 +117,6 @@ public class EX extends DataPhase {
         exmem.OUT5 = idexout6;
 
         exmem.currentInstruction = currentInstruction;
+        currentInstruction = null;
     }
 }

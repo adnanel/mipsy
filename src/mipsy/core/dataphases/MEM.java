@@ -16,7 +16,7 @@ public class MEM extends DataPhase {
     private MemoryComponent memoryComponent = new MemoryComponent("DataMem");
 
     public MEM(MIPSCore core) {
-        super(core);
+        super(core, PhaseNames.MEM);
     }
 
     private int MemToReg;
@@ -84,5 +84,6 @@ public class MEM extends DataPhase {
         memwb.MemToReg = MemToReg;
         memwb.RegWrite = RegWrite;
         memwb.currentInstruction = currentInstruction;
+        currentInstruction = null;
     }
 }

@@ -59,10 +59,10 @@ public class MIPSCore {
         return cycleCounter;
     }
 
-    private static void stepPhase(DataPhase phase, int cycleCounter, Consumer<String> logger, List<CycleAction> actionLogger, String phaseName) throws NoMoreInstructionsException {
+    private static void stepPhase(DataPhase phase, int cycleCounter, Consumer<String> logger, List<CycleAction> actionLogger) throws NoMoreInstructionsException {
         DataPhase.PhaseResult res = phase.step(logger);
         if ( res.stepOccured )
-            actionLogger.add(new CycleAction(cycleCounter, phaseName, res.processedInstruction));
+            actionLogger.add(new CycleAction(cycleCounter, phase.getName(), res.processedInstruction));
         else {
             actionLogger.add(new CycleAction(cycleCounter));
         }
@@ -78,11 +78,11 @@ public class MIPSCore {
             ArrayList<CycleAction> actions = new ArrayList<>(5);
             cycleActions.add(actions);
 
-            stepPhase(IF, cycleCounter, logger, actions, "IF");
-            stepPhase(ID, cycleCounter, logger, actions, "ID");
-            stepPhase(EX, cycleCounter, logger, actions, "EX");
-            stepPhase(MEM, cycleCounter, logger, actions, "MEM");
-            stepPhase(WB, cycleCounter, logger, actions, "WB");
+            stepPhase(IF, cycleCounter, logger, actions);
+            stepPhase(ID, cycleCounter, logger, actions);
+            stepPhase(EX, cycleCounter, logger, actions);
+            stepPhase(MEM, cycleCounter, logger, actions);
+            stepPhase(WB, cycleCounter, logger, actions);
 
 
             IF.writeResults(logger);

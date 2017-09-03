@@ -29,7 +29,7 @@ public class ID extends DataPhase {
     private Instruction currInstruction = null;
 
     public ID(MIPSCore core) {
-        super(core);
+        super(core, PhaseNames.ID);
 
     }
 

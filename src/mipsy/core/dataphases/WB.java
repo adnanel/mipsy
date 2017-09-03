@@ -15,7 +15,7 @@ public class WB extends DataPhase {
     private MUXComponent mux5 = new MUXComponent("MUX5");
 
     public WB(MIPSCore core) {
-        super(core);
+        super(core, PhaseNames.WB);
     }
 
     public boolean isHalt = false;
