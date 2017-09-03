@@ -34,12 +34,12 @@ public class ID extends DataPhase {
     }
 
     @Override
-    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public PhaseResult step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("ID - ", logger);
 
         if ( core.IFID.OUT1 == null && currInstruction == null ) {
             logger.accept("No work to do, skipping...");
-            return false;
+            return PhaseResult.NO_ACTION;
         }
 
         logger.accept("START");
@@ -94,7 +94,7 @@ public class ID extends DataPhase {
             core.IF.isStalling = true;
 
             logger.accept("END");
-            return false;
+            return PhaseResult.NO_ACTION;
         } else core.IF.isStalling = false;
 
 
@@ -111,7 +111,8 @@ public class ID extends DataPhase {
         core.IFID.OUT1 = null;
 
         logger.accept("END");
-        return !core.IFID.isHalt;
+        if ( core.IFID.isHalt ) return PhaseResult.NO_ACTION;
+        return new PhaseResult(currInstruction);
     }
 
     @Override

@@ -48,12 +48,12 @@ public class IF extends DataPhase {
     }
 
     @Override
-    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public PhaseResult step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("IF - ", logger);
 
         if ( core.IFID.isHalt ) {
             logger.accept("IS HALTING");
-            return false;
+            return PhaseResult.NO_ACTION;
         }
 
         if ( isStalling ) {
@@ -63,7 +63,7 @@ public class IF extends DataPhase {
                 wasBranching = false;
                 isStalling = false;
             } else
-                return false;
+                return PhaseResult.NO_ACTION;
         } else if ( core.IDEX.Branch == 1 || (core.IFID.OUT1 != null && core.IFID.OUT1.canBranch()) ) {
             logger.accept("Current instruction is a branching instruction, stalling!");
             isStalling = true;
@@ -71,7 +71,7 @@ public class IF extends DataPhase {
             backupPC = pc;
             currInstruction = null;
 
-            return false;
+            return PhaseResult.NO_ACTION;
         }
 
         instructions = core.instructions;
@@ -105,7 +105,8 @@ public class IF extends DataPhase {
         }
 
         logger.accept("END");
-        return true;
+        if ( currInstruction instanceof InstructionHalt ) return PhaseResult.NO_ACTION;
+        return new PhaseResult(currInstruction);
     }
 
     @Override

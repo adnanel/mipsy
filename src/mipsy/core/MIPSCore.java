@@ -60,8 +60,9 @@ public class MIPSCore {
     }
 
     private static void stepPhase(DataPhase phase, int cycleCounter, Consumer<String> logger, List<CycleAction> actionLogger, String phaseName) throws NoMoreInstructionsException {
-        if ( phase.step(logger) )
-            actionLogger.add(new CycleAction(cycleCounter, phaseName));
+        DataPhase.PhaseResult res = phase.step(logger);
+        if ( res.stepOccured )
+            actionLogger.add(new CycleAction(cycleCounter, phaseName, res.processedInstruction));
         else {
             actionLogger.add(new CycleAction(cycleCounter));
         }

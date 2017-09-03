@@ -29,13 +29,13 @@ public class MEM extends DataPhase {
     private Instruction currentInstruction;
 
     @Override
-    public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
+    public PhaseResult step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("MEM - ", logger);
 
         EXMEM exmem = core.EXMEM;
         if ( exmem.OUT3 == null ) {
             logger.accept("No work to do, skipping...");
-            return false;
+            return PhaseResult.NO_ACTION;
         }
 
         logger.accept("START");
@@ -67,7 +67,9 @@ public class MEM extends DataPhase {
 
         logger.accept("END");
 
-        return !isHalt;
+
+        if ( isHalt ) return PhaseResult.NO_ACTION;
+        return new PhaseResult(currentInstruction);
     }
 
     @Override
