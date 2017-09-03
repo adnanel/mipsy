@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  * Created by adnan on 05.04.2017..
  */
 public class WB extends DataPhase {
-    private MUXComponent mux4 = new MUXComponent("MUX4");
+    private MUXComponent mux5 = new MUXComponent("MUX5");
 
     public WB(MIPSCore core) {
         super(core);
@@ -32,19 +32,19 @@ public class WB extends DataPhase {
 
         logger.accept("START");
 
-        mux4.setA(memwb.OUT1, logger);
-        mux4.setB(memwb.OUT0, logger);
-        mux4.setSelector(memwb.MemToReg);
+        mux5.setA(memwb.OUT1, logger);
+        mux5.setB(memwb.OUT0, logger);
+        mux5.setSelector(memwb.MemToReg);
 
         core.ID.registersComponent.setRegWrite(memwb.RegWrite);
         core.ID.registersComponent.setWriteRegister(memwb.OUT2);
-        core.ID.registersComponent.setWriteData(logger, mux4.getResult(logger));
+        core.ID.registersComponent.setWriteData(logger, mux5.getResult(logger));
 
         isHalt = memwb.isHalt;
 
         logger.accept("END");
 
-        return true;
+        return !isHalt;
     }
 
     @Override

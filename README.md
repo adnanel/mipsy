@@ -5,7 +5,7 @@ MIPSy is a (very) simple pipelined MIPS simulator based on the MIPS architecture
 It's basically a Java implementation of all units described mostly in chapters 4.3 and 4.4 of the book.
 
 The GUI is written in JavaFX 2.  
-![gui](https://github.com/adnanel/mipsy/raw/master/gui.png "Logo Title Text 1")
+![gui](https://github.com/adnanel/mipsy/raw/master/gui.png "GUI screenshot")
 
 
 # Supported instructions
@@ -24,9 +24,9 @@ Sub         |  sub $s1,$s1,$s2 |   YES   |  $s1 = $s1 - $s2
 Nor         |  nor $s1,$s2,$s3 |   YES   |  $s1 = !( $s2 \| $s3 )
 Beq         |  beq $s1,$s2,15  |   YES   |  if $s1 == $s2 then pc += 15 * 4           
 Slt         |  slt $s1,$s2,$s3 |   YES   |  if $s2 < $s3 then $s1 = 1 else $s1 = 0           
-SltI        |  slt $s1,$s2,10  |   YES   |  if $s2 < 10 then $s1 = 1 else $s1 = 0           
-Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4          
-J           |  j 5             |   NO    |  pc = 4 * 5
+SltI        |  slt $s1,$s2,10  |   YES   |  if $s2 < 10 then $s1 = 1 else $s1 = 0            
+J           |  j 5             |   YES   |  pc = 4 * 5         
+Bne         |  bne $s1,$s2,15  |   NO    |  if $s1 != $s2 then pc += 15 * 4
 Jal         |  jal 15          |   NO    |              
 Jr          |  jr $s1          |   NO    |  pc = $s1    
 Lb          |  lb $s1, 15($s2) |   NO    |  $s1 = MEMORY[ $s2 + 15 ] & 0xFFFFFF
@@ -44,15 +44,15 @@ Srl         |                  |   NO    |
 Halt        |  halt            |   YES   |             
 
 Total:   30  
-Working: 14
+Working: 15
 
 # The simulated data path
 Below is a picture of the simulated pipeline. It's a slightly modified book version with added labels and a clear distinction of the phases and named temp registers which are used to transfer data between stages.   
-![datapath](https://github.com/adnanel/mipsy/blob/master/src/mipsy/ui/ra_mipsy.png?raw=true "Logo Title Text 1")
+![datapath](https://github.com/adnanel/mipsy/blob/master/src/mipsy/ui/ra_mipsy.png?raw=true "MIPSy simulated architecture")
   
 ## Not working instructions
-All instructions which are currently supported, but don't work as intended *cannot* work with the current architecture design. (e.g. jump instructions are impossible to implement without a way to write immediate values to PC). 
-In order to implement them, certain changes to the design need to be applied (as described in the end of chapter 4.4 of the earlier mentioned book) which is planned as soon as I find some free time.
+All instructions which are currently supported, but don't work as intended *cannot* work with the current architecture design. 
+In order to implement them, certain changes to the design need to be applied, which is planned as soon as I find some free time.
 
 
 # Hazard detection

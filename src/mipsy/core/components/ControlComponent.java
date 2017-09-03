@@ -38,7 +38,7 @@ public class ControlComponent {
         if ( currInstruction != null ) {
             if (currInstruction.getClass() == InstructionLw.class) return 0;
 
-            //I tip instrukcija mora na MUX2 pustiti operand a
+            //I tip instrukcija mora na MUX3 pustiti operand a
             if (currInstruction.getType() == Instruction.Type.IType) return 0;
         }
 
@@ -53,7 +53,7 @@ public class ControlComponent {
             if ( currInstruction.getClass() == InstructionBeq.class ) return 0;
             if ( currInstruction.getClass() == InstructionBne.class ) return 0;
 
-            // Ostale I tip instrukcije traze da se na MUX3 pusti Operand B
+            // Ostale I tip instrukcije traze da se na MUX4 pusti Operand B
             if (currInstruction.getType() == Instruction.Type.IType) return 1;
         }
 
@@ -108,6 +108,16 @@ public class ControlComponent {
         if ( currInstruction != null ) {
             if (currInstruction.getClass() == InstructionLw.class) return 1;
         }
+
+        return 0;
+    }
+
+
+    public int getJump() {
+        if ( currInstruction == null ) return 0;
+
+        if ( currInstruction.getType() == Instruction.Type.JType )
+            return 1;
 
         return 0;
     }

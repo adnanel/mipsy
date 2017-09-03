@@ -11,12 +11,14 @@ public class EXMEM {
     public int MemRead;
     public int MemToReg;
     public int RegWrite;
+    public int Jump;
 
     public int OUT0;
     public int OUT1;
     public int OUT2;
     public Register OUT3;
     public int OUT4;
+    public int OUT5; //JumpAddr
 
     public boolean isHalt;
 }

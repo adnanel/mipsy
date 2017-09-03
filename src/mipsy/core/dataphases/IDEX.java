@@ -15,7 +15,7 @@ public class IDEX {
     public int MemRead;
     public int Branch;
     public int MemToReg;
-
+    public int Jump;
 
     public int OUT0;
     public Register OUT1;
@@ -23,6 +23,7 @@ public class IDEX {
     public int OUT3;
     public int OUT4;
     public int OUT5;
+    public int OUT6; //JumpAddr
 
     public boolean isHalt;
 

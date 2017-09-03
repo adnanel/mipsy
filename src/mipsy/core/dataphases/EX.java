@@ -18,8 +18,8 @@ public class EX extends DataPhase {
     private ALUComponent alu2 = new ALUComponent("ALU2");
     private ALUComponent alu3 = new ALUComponent("ALU3");
 
+    private MUXComponent mux4 = new MUXComponent("MUX4");
     private MUXComponent mux3 = new MUXComponent("MUX3");
-    private MUXComponent mux2 = new MUXComponent("MUX2");
 
     private ALUControllerComponent aluControl = new ALUControllerComponent("ALU_C");
 
@@ -33,7 +33,10 @@ public class EX extends DataPhase {
     private int MemToReg;
     private int MemWrite;
     private int RegWrite;
+    private int Jump;
     private boolean isHalt;
+
+    private int idexout6;
 
     @Override
     public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
@@ -49,13 +52,13 @@ public class EX extends DataPhase {
 
         logger.accept("START");
 
-        mux2.setA(idex.OUT4, logger);
-        mux2.setB(idex.OUT5, logger);
-        mux2.setSelector(idex.RegDst);
+        mux3.setA(idex.OUT4, logger);
+        mux3.setB(idex.OUT5, logger);
+        mux3.setSelector(idex.RegDst);
 
-        mux3.setA(idex.OUT2.value, logger);
-        mux3.setB(idex.OUT3, logger);
-        mux3.setSelector(idex.AluSrc);
+        mux4.setA(idex.OUT2.value, logger);
+        mux4.setB(idex.OUT3, logger);
+        mux4.setSelector(idex.AluSrc);
 
         if ( idex.currentInstruction.getType() == Instruction.Type.RType )
             aluControl.setInstruction(Utility.SubBits(idex.OUT3, 0, 6));
@@ -66,24 +69,27 @@ public class EX extends DataPhase {
 
         alu3.setControl(logger, aluControl.getResult(logger));
         alu3.setOpA(logger, idex.OUT1.value);
-        alu3.setOpB(logger, mux3.getResult(logger));
+        alu3.setOpB(logger, mux4.getResult(logger));
 
         alu2.setOpB(logger, idex.OUT3 << 2);
         alu2.setOpA(logger, idex.OUT0);
         alu2.setControl(logger, ALUComponent.CONTROL_ADD);
 
         idexout2 = idex.OUT2;
+        idexout6 = idex.OUT6;
 
         Branch = idex.Branch;
         MemRead = idex.MemRead;
         MemToReg = idex.MemToReg;
         MemWrite = idex.MemWrite;
         RegWrite = idex.RegWrite;
+        Jump = idex.Jump;
+        idex.Jump = 0; // "consume" this jump
 
         idex.clear();
 
         logger.accept("END");
-        return true;
+        return !core.IDEX.isHalt;
     }
 
     @Override
@@ -92,7 +98,7 @@ public class EX extends DataPhase {
 
         EXMEM exmem = core.EXMEM;
 
-        exmem.OUT4 = mux2.getResult(logger);
+        exmem.OUT4 = mux3.getResult(logger);
         exmem.OUT3 = idexout2;
         exmem.OUT2 = alu3.getResult(logger);
         exmem.OUT1 = alu3.getZero();
@@ -102,6 +108,8 @@ public class EX extends DataPhase {
         exmem.MemToReg = MemToReg;
         exmem.MemWrite = MemWrite;
         exmem.RegWrite = RegWrite;
+        exmem.Jump = Jump;
+        exmem.OUT5 = idexout6;
 
         exmem.isHalt = isHalt;
     }

@@ -37,6 +37,9 @@ public class MEM extends DataPhase {
         logger.accept("START");
 
         core.IF.PCSrc = exmem.Branch * exmem.OUT1;
+        core.IF.Jump = exmem.Jump;
+
+        core.IF.EX_MEM_OUT5 = exmem.OUT5;
         core.IF.EX_MEM_OUT0 = exmem.OUT0;
         if ( exmem.Branch == 1 )
             core.IF.isStalling = false;
@@ -58,7 +61,7 @@ public class MEM extends DataPhase {
 
         logger.accept("END");
 
-        return true;
+        return !exmem.isHalt;
     }
 
     @Override

@@ -111,7 +111,7 @@ public class ID extends DataPhase {
         core.IFID.OUT1 = null;
 
         logger.accept("END");
-        return true;
+        return !core.IFID.isHalt;
     }
 
     @Override
@@ -131,6 +131,8 @@ public class ID extends DataPhase {
         core.IDEX.Branch = control.getBranch();
         core.IDEX.RegDst = control.getRegDst();
         core.IDEX.RegWrite = control.getRegWrite();
+        core.IDEX.Jump = control.getJump();
+
         control.reset();
 
         core.IDEX.OUT0 = core.IFID.OUT0;
@@ -140,6 +142,15 @@ public class ID extends DataPhase {
         core.IDEX.OUT3 = SignExtendComponent.extend(Utility.SubBits(currInst, 0, 16));
         core.IDEX.OUT4 = Utility.SubBits(currInst,16, 21);
         core.IDEX.OUT5 = Utility.SubBits(currInst,11,16);
+
+        //This one is a bit tricky, we take the [25-0] bits from the instruction,
+        //do a left shift 2 to get 28 bits,
+        //and finally, fill the remaining bits 4 ( [31-28] ) with the [31-28] bits from
+        //PC + 4
+        core.IDEX.OUT6 =
+                (Utility.SubBits(currInst, 0, 26) << 2) |
+                Utility.SubBits( core.IFID.OUT0, 28, 32 );
+
 
         core.IDEX.isHalt = currInst == 0;
         core.IDEX.currentInstruction = currInstruction;

@@ -375,8 +375,8 @@ public class MainController implements Initializable {
             Register evaluated = mipsCore.registers.get(r.getKey());
 
             if ( evaluated.value != r.getValue().value ) {
-                throw new TestFailedException(String.format("Test failed! Value in register %s is expected to be %s, found %s",
-                        r.getKey(), r.getValue().value, evaluated.value));
+                throw new TestFailedException(String.format("Test failed! Value in register %s is expected to be %s, found %s (src file name %s)",
+                        r.getKey(), r.getValue().value, evaluated.value, srcFile.getName()));
             }
         }
 

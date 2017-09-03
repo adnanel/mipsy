@@ -18,13 +18,17 @@ import java.util.function.Consumer;
 public class IF extends DataPhase {
     private ALUComponent alu1 = new ALUComponent("ALU1");
     private MUXComponent mux1 = new MUXComponent("MUX1");
+    private MUXComponent mux2 = new MUXComponent("MUX2");
+
     private int pc = 0;
     List<Instruction> instructions;
     private Instruction currInstruction;
 
     //povratne sprege
     public int PCSrc = 0;
+    public int Jump = 0;
     public int EX_MEM_OUT0 = 0;
+    public int EX_MEM_OUT5 = 0; //JumpAddr
     public int ALU1_RES = 0;
 
     public boolean isStalling = false;
@@ -46,6 +50,11 @@ public class IF extends DataPhase {
     @Override
     public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("IF - ", logger);
+
+        if ( core.IFID.isHalt ) {
+            logger.accept("IS HALTING");
+            return false;
+        }
 
         if ( isStalling ) {
             logger.accept("STALLING");
@@ -72,7 +81,12 @@ public class IF extends DataPhase {
         mux1.setA(ALU1_RES, logger);
         mux1.setB(EX_MEM_OUT0, logger);
 
-        pc = mux1.getResult(logger);
+        mux2.setSelector(Jump);
+        mux2.setA(mux1.getResult(logger), logger);
+        mux2.setB(EX_MEM_OUT5, logger);
+
+
+        pc = mux2.getResult(logger);
         logger.accept(String.format("Current PC is 0x%s", Integer.toHexString(pc)));
 
         alu1.setControl(logger, ALUComponent.CONTROL_ADD);

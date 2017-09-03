@@ -1,0 +1,22 @@
+.code
+# jump to pc = 16
+j 4
+
+#this must not be executed
+addi $s1, $s1, 1
+
+#this should be executed, but after the increment of $s3
+addi $s2, $s3, 1
+halt
+
+
+#should jump here
+addi $s3, $s3, 1
+
+#how abot we jump back?
+j 2
+
+#this must not be executed
+addi $s4, $s4, 1
+halt
+
