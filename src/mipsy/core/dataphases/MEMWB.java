@@ -1,5 +1,7 @@
 package mipsy.core.dataphases;
 
+import mipsy.types.Instruction;
+
 /**
  * Created by adnan on 05.04.2017..
  */
@@ -11,6 +13,6 @@ public class MEMWB {
     public int OUT1;
     public int OUT2;
 
-    public boolean isHalt;
+    public Instruction currentInstruction;
 
 }

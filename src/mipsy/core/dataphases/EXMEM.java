@@ -1,5 +1,6 @@
 package mipsy.core.dataphases;
 
+import mipsy.types.Instruction;
 import mipsy.types.Register;
 
 /**
@@ -20,5 +21,5 @@ public class EXMEM {
     public int OUT4;
     public int OUT5; //JumpAddr
 
-    public boolean isHalt;
+    public Instruction currentInstruction;
 }

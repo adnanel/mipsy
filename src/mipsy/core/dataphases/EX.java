@@ -38,6 +38,8 @@ public class EX extends DataPhase {
 
     private int idexout6;
 
+    private Instruction currentInstruction;
+
     @Override
     public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
         logger = Utility.appendToLogger("EX - ", logger);
@@ -59,6 +61,8 @@ public class EX extends DataPhase {
         mux4.setA(idex.OUT2.value, logger);
         mux4.setB(idex.OUT3, logger);
         mux4.setSelector(idex.AluSrc);
+
+        currentInstruction = idex.currentInstruction;
 
         if ( idex.currentInstruction.getType() == Instruction.Type.RType )
             aluControl.setInstruction(Utility.SubBits(idex.OUT3, 0, 6));
@@ -111,6 +115,6 @@ public class EX extends DataPhase {
         exmem.Jump = Jump;
         exmem.OUT5 = idexout6;
 
-        exmem.isHalt = isHalt;
+        exmem.currentInstruction = currentInstruction;
     }
 }

@@ -3,6 +3,8 @@ package mipsy.core.dataphases;
 import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.MemoryComponent;
+import mipsy.instructions.InstructionHalt;
+import mipsy.types.Instruction;
 import mipsy.types.NoMoreInstructionsException;
 
 import java.util.function.Consumer;
@@ -23,6 +25,8 @@ public class MEM extends DataPhase {
     private int exmemOUT4;
 
     private boolean isHalt;
+
+    private Instruction currentInstruction;
 
     @Override
     public boolean step(Consumer<String> logger) throws NoMoreInstructionsException {
@@ -57,11 +61,13 @@ public class MEM extends DataPhase {
         exmemOUT2 = exmem.OUT2;
         exmemOUT4 = exmem.OUT4;
 
-        isHalt = exmem.isHalt;
+        isHalt = exmem.currentInstruction instanceof InstructionHalt;
+
+        currentInstruction = exmem.currentInstruction;
 
         logger.accept("END");
 
-        return !exmem.isHalt;
+        return !isHalt;
     }
 
     @Override
@@ -75,6 +81,6 @@ public class MEM extends DataPhase {
         memwb.OUT2 = exmemOUT4;
         memwb.MemToReg = MemToReg;
         memwb.RegWrite = RegWrite;
-        memwb.isHalt = isHalt;
+        memwb.currentInstruction = currentInstruction;
     }
 }

@@ -3,6 +3,7 @@ package mipsy.core.dataphases;
 import mipsy.Utility;
 import mipsy.core.MIPSCore;
 import mipsy.core.components.MUXComponent;
+import mipsy.instructions.InstructionHalt;
 import mipsy.types.NoMoreInstructionsException;
 
 import java.util.function.Consumer;
@@ -40,7 +41,7 @@ public class WB extends DataPhase {
         core.ID.registersComponent.setWriteRegister(memwb.OUT2);
         core.ID.registersComponent.setWriteData(logger, mux5.getResult(logger));
 
-        isHalt = memwb.isHalt;
+        isHalt = memwb.currentInstruction instanceof InstructionHalt;
 
         logger.accept("END");
 
