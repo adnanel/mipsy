@@ -19,6 +19,7 @@ import mipsy.ui.listviewcells.ListViewCellMemory;
 import mipsy.ui.listviewcells.ListViewCellRegister;
 import org.fxmisc.richtext.CodeArea;
 
+import javax.xml.bind.annotation.XmlList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -64,6 +65,16 @@ public class MainController implements Initializable {
 
     @FXML
     private CodeArea taCode;
+
+    @FXML
+    private CheckBox cbDetailedLogging;
+
+    private Consumer<String> nullLogger = new Consumer<String>() {
+        @Override
+        public void accept(String s) {
+            //intentionally empty
+        }
+    };
 
     private Consumer<String> logger = new Consumer<String>() {
         Lock lock = new ReentrantLock();
@@ -237,7 +248,7 @@ public class MainController implements Initializable {
 
         boolean result = true;
         try {
-            mipsCore.step(logger, true);
+            mipsCore.step(cbDetailedLogging.isSelected() ? logger : nullLogger, true);
         } catch ( NoMoreInstructionsException ex ) {
             logger.accept("No more instructions left to step!");
             result = false;
@@ -304,7 +315,7 @@ public class MainController implements Initializable {
             taLog.setScrollTop(9999999);
             try {
                 logger.accept("MIPS - RUN BEGIN");
-                mipsCore.step(logger, false);
+                mipsCore.step(cbDetailedLogging.isSelected() ? logger : nullLogger, false);
 
                 calculateCPI();
                 showCycleActions();

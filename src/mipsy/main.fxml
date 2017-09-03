@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -25,7 +26,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.fxmisc.richtext.CodeArea?>
 
-<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mipsy.MainController">
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mipsy.MainController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -60,6 +61,7 @@
                         <Button fx:id="btStep" mnemonicParsing="false" onAction="#toolbarStepMIPS" text="Step" />
                         <Button fx:id="btReset" mnemonicParsing="false" onAction="#toolbarResetMIPS" text="Reset" />
                         <Button fx:id="btRunTests" mnemonicParsing="false" onAction="#menuRunTests" text="Run tests" />
+                        <CheckBox fx:id="cbDetailedLogging" mnemonicParsing="false" selected="true" text="Detailed logging (very slow)" />
                         <Label fx:id="topText" />
                     </items>
                   </ToolBar>
