@@ -293,7 +293,7 @@ public class MainController implements Initializable {
         for ( ArrayList<CycleAction> cycle : actions ) {
             sb.append(String.format("Cycle %2d:\t", ++i));
             for ( CycleAction action : cycle ) {
-                sb.append(action.action).append("\t");
+                sb.append(action.action.substring(0, Math.min(action.action.length(), 2))).append("\t");
             }
             sb.append('\n');
         }
