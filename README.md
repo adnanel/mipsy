@@ -57,8 +57,11 @@ In order to implement them, certain changes to the design need to be applied, wh
 
 # Hazard detection
 
-Currently, hazards are detected and avoided by stalling the pipeline. 
-
+Currently, hazards are detected and avoided by stalling the pipeline, even though the pictured architecture 
+obviously doesn't have the required components to supports this. This is done in a hack-ish way through code
+to avoid making the architecture more complicated for beginners, while still giving correct results.  
+It is planned to make this toggleable in case anyone wants to intentionally simulate the ill effects hazards
+have on the pipeline.
 
 # Input files 
 
